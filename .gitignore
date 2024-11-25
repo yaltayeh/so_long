@@ -1,0 +1,7 @@
+*.o
+*.a
+build
+*a.out*
+
+test/*
+!test/*.c
