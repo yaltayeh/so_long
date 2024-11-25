@@ -1,0 +1,8 @@
+direction: back, left, front, right
+path: bow_and_shield.xpm
+
+hand_up:		0-3, 7
+stab:			4-7, 8
+walk_shield:	8-11, 9
+sword_pull:		12-15, 6
+throw_arrow:	16-19, 13
