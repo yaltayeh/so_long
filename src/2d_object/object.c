@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/11/25 15:18:41 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:49:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ t_2d_object	*init_character(void *mlx_ptr, char *sprites_path)
 	if (load_image(&obj->object) == -1)
 		return (destroy_object(&obj));
 	obj->col = obj->sprites.width / obj->object.width;
-	obj->col = 7;
+	obj->col = 9;
 	obj->row = obj->sprites.height / obj->object.height;
-	obj->r = 19;
+	obj->r = 8;
 	obj->c = 0;
 	return (obj);
 }

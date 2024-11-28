@@ -1,13 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
+/*   Updated: 2024/11/27 20:02:43 by yaltayeh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
+#include <sys/time.h>
+#include "X11/keysym.h"
 
 int end_program(t_mlx_data *data)
 {
-	destroy_object(&data->player_character);
+	destroy_object(&data->player);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	printf("Bye\n");
 	exit(0);
 }
-
 
 void	rander_character_image(t_mlx_data *data, t_2d_object *obj)
 {
@@ -24,26 +37,85 @@ void	rander_character_image(t_mlx_data *data, t_2d_object *obj)
 		x = 0;
 		while (x < obj->object.width)
 		{
-			// ft_fprintf(2, "%5d ", y * obj->object.width + x);
-			// ft_fprintf(2, "%5d ", (y_offset + y) * obj->sprites.width  + x_offset + x);
 			obj->object.buffer[y * obj->object.width + x] = \
 				obj->sprites.buffer[(y_offset + y) * obj->sprites.width  + x_offset + x];
-			//obj->sprites.buffer[(y_offset + y) * obj->sprites.width  + x_offset + x] = 0xFFFFFFFF;
 			x++;
 		}
 		y++;
-		// ft_fprintf(2, "\n");
 	}
-	// ft_fprintf(2, "\n");
 	obj->c = (obj->c + 1) % obj->col;
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, obj->object.img_ptr, 0, 0);
 }
 
-
 int rander(t_mlx_data	*data)
 {
+	static void *bg_img;
+	static int *bg_buf;
+
+	data->time++;
+	if (data->time - data->last_rander < 1100)
+		return (0);
+	data->last_rander = data->time;
+
+	if (bg_img == NULL)
+	{
+		int a, b, c;
+		bg_img = mlx_new_image(data->mlx_ptr, data->width, data->height);
+		bg_buf = (int *)mlx_get_data_addr(bg_img, &a, &b, &c);
+		int y = 0;
+		while (y < data->height)
+		{
+			int x = 0;
+			while (x < data->width)
+			{
+				bg_buf[y * data->width + x] = 0xAAFFFFFF;
+				x++;
+			}
+			y++;
+		}
+	}
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	rander_character_image(data, data->player_character);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, bg_img, 0, 0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, bg_img, 128, 128);
+	rander_character_image(data, data->player);
+	return (0);
+}
+
+
+int	player_walk(int	keycode, t_mlx_data *data)
+{
+	int	new_r;
+	
+	new_r = data->player->r;
+	if (keycode == 126) // UP
+	{
+		new_r = 8;
+		data->player->col = 9;
+	}
+	else if (keycode == 125) // DOWN
+	{
+		new_r = 10;
+		data->player->col = 9;
+	}
+	else if (keycode == 124) // RIGHT
+	{
+		new_r = 11;
+		data->player->col = 9;
+	}
+	else if (keycode == 123) // LEFT
+	{
+		new_r = 9;
+		data->player->col = 9;
+	}
+	else if (keycode == 49)
+	{
+		new_r -= 8;
+		data->player->col = 7;
+		data->player->c = 0;
+	}
+	if (new_r != data->player->r)
+		data->last_rander = 0;
+	data->player->r = new_r;
 	return (0);
 }
 
@@ -52,22 +124,7 @@ int handle_keypress(int keycode, t_mlx_data	*data)
 	printf("Key pressed: %d\n", keycode);
     if (keycode == ESC_KEYCODE)
 		end_program(data);
-	else if (keycode == 49)
-		rander(data);
-	else if (keycode == 126)
-	{
-		data->player_character->r -= 1;
-		data->player_character->c = 0;
-	}
-	else if (keycode == 125)
-	{
-		data->player_character->r += 1;
-		data->player_character->c = 0;
-	}
-	if (data->player_character->r < 0)
-		data->player_character->r = 0;
-	if (data->player_character->r >= data->player_character->row)
-		data->player_character->r = data->player_character->row - 1;
+	player_walk(keycode, data);
 	return (0);
 }
 
@@ -88,7 +145,7 @@ int handle_mouse(int button, int x, int y, void *param)
 int main(void)
 {
     t_mlx_data	data;
-	char *sprites_path = "resources/character/bow_and_shield.xpm";
+	char *sprites_path = "resources/character/body.xpm";
 
     data.width = 256;
     data.height = 256;
@@ -99,17 +156,19 @@ int main(void)
     if (data.win_ptr == NULL)
         return (EXIT_FAILURE);
 
-	data.player_character = init_character(data.mlx_ptr, sprites_path);
+	data.player = init_character(data.mlx_ptr, sprites_path);
 
 	mlx_key_hook(data.win_ptr, handle_keypress, &data);
 	// mlx_mouse_hook(data.win_ptr, handle_mouse, &data);
 	mlx_hook(data.win_ptr, 17, 0, end_program, &data);
 
-	data.player_character = init_character(data.mlx_ptr, sprites_path);
+	data.player = init_character(data.mlx_ptr, sprites_path);
 
-	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.player_character->object.img_ptr, 100, 100);
+	mlx_put_image_to_window(data.mlx_ptr, data.win_ptr, data.player->object.img_ptr, 100, 100);
 	// start loop
-	//mlx_loop_hook(data.mlx_ptr, rander, &data);
+	data.last_rander = 0;
+	data.time = 0;
+	mlx_loop_hook(data.mlx_ptr, rander, &data);
     mlx_loop(data.mlx_ptr);
     return (EXIT_SUCCESS);
 }

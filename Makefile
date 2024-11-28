@@ -22,7 +22,7 @@ endif
 
 SOURCES = src/main.c src/2d_object/object.c
 
-OBJECTS = $(SOURCES:.c=.o)
+OBJECTS = $(SOURCES:src/%.c=build/%.o)
 
 
 all: submodules $(NAME)
@@ -38,10 +38,11 @@ mlx:
 libft:
 	@$(MAKE) -C libft
 
-$(NAME): $(OBJECTS) | libft mlx 
-	$(CC) $(CFLAGS) $(OBJECTS) $(FT_FLAGS) $(MLX_FLAGS) $(INCLUDE) -o $@ 
+$(NAME): $(OBJECTS) | libft mlx
+	$(CC) $(CFLAGS) $(OBJECTS) $(FT_FLAGS) $(MLX_FLAGS) $(INCLUDE) -o $@
 
-%.o: %.c
+build/%.o: src/%.c
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/11/25 19:46:52 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/11/27 20:02:43 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <mlx.h>
 # include <libft.h>
 # include <fcntl.h>
+# include <sys/time.h>
 
 // Mouse button codes
 #define LEFT_CLICK 1
@@ -70,7 +71,9 @@ typedef struct s_mlx_data
 	void	*win_ptr;
 	int		width;
 	int		height;
-	t_2d_object	*player_character;
+	t_2d_object	*player;
+	clock_t	last_rander;
+	unsigned long time;
 }	t_mlx_data;
 
 

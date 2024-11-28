@@ -66,42 +66,42 @@ int	mlx_int_str_str_cote(char *str,char *find,int len)
 
 char	**mlx_int_str_to_wordtab(char *str)
 {
-  char	**tab;
-  int	pos;
-  int	nb_word;
-  int	len;
+	char	**tab;
+	int		pos;
+	int		nb_word;
+	int		len;
 
-  len = strlen(str);
-  nb_word = 0;
-  pos = 0;
-  while (pos<len)
-  {
-    while (*(str+pos)==' ' || *(str+pos)=='\t')
-      pos ++;
-    if (*(str+pos))
-      nb_word ++;
-    while (*(str+pos) && *(str+pos)!=' ' && *(str+pos)!='\t')
-      pos ++;
-  }
-  if (!(tab = malloc((1+nb_word)*sizeof(*tab))))
-    return ((char **)0);
-  nb_word = 0;
-  pos = 0;
-  while (pos<len)
+	len = strlen(str);
+	nb_word = 0;
+	pos = 0;
+	while (pos < len)
+	{
+		while (*(str + pos) == ' ' || *(str + pos) == '\t')
+			pos++;
+		if (*(str + pos))
+			nb_word++;
+		while (*(str + pos) && *(str + pos) != ' ' && *(str + pos) != '\t')
+			pos++;
+	}
+	if (!(tab = malloc((1 + nb_word) * sizeof(*tab))))
+		return ((char **)0);
+	nb_word = 0;
+	pos = 0;
+ 	while (pos < len)
     {
-      while (*(str+pos)==' ' || *(str+pos)=='\t')
-	{
-	  *(str+pos) = 0;
-	  pos ++;
-	}
-      if (*(str+pos))
-	{
-	  tab[nb_word] = str+pos;
-	  nb_word ++;
-	}
-      while (*(str+pos) && *(str+pos)!=' ' && *(str+pos)!='\t')
-	pos ++;
+    	while (*(str + pos) == ' ' || *(str + pos) == '\t')
+		{
+			*(str + pos) = 0;
+			pos++;
+		}
+		if (*(str + pos))
+		{
+			tab[nb_word] = str + pos;
+			nb_word++;
+		}
+		while (*(str + pos) && *(str + pos) != ' ' && *(str + pos) != '\t')
+			pos++;
     }
-  tab[nb_word] = 0;
-  return (tab);
+	tab[nb_word] = 0;
+	return (tab);
 }

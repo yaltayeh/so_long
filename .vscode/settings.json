@@ -1,0 +1,10 @@
+{
+	"files.associations": {
+		"*.py": "python",
+		"x.h": "c",
+		"xpm.h": "c",
+		"keysym.h": "c",
+		"keysymdef.h": "c",
+		"mlx_int.h": "c"
+	}
+}

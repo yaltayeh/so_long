@@ -94,17 +94,17 @@ int	mlx_int_get_text_rgb(char *name, char *end)
 	if (*name == '#')
 		return (strtol(name+1,0,16));
 	if (end)
-		{
-			snprintf(buff, 64, "%s %s", name, end);
-			name = buff;
-		}
+	{
+		snprintf(buff, 64, "%s %s", name, end);
+		name = buff;
+	}
 	i = 0;
 	while (mlx_col_name[i].name)
-		{
-			if (!strcasecmp(mlx_col_name[i].name, name))
-	return (mlx_col_name[i].color);
-			i ++;
-		}
+	{
+		if (!strcasecmp(mlx_col_name[i].name, name))
+			return (mlx_col_name[i].color);
+		i ++;
+	}
 	return (0);
 }
 
@@ -170,11 +170,10 @@ void	*mlx_int_parse_xpm(mlx_ptr_t *xvar,void *info,int info_size,char *(*f)())
 	{
 		method = 1;
 		if (!(colors_direct = malloc((cpp==2?65536:256)*sizeof(int))))
-			RETURN;
+		RETURN;
 	}
-	else 
-		if (!(colors = malloc(nc*sizeof(*colors))))
-			RETURN;
+	else if (!(colors = malloc(nc*sizeof(*colors))))
+		RETURN;
 
 	clip_data = 0;
 
@@ -182,29 +181,27 @@ void	*mlx_int_parse_xpm(mlx_ptr_t *xvar,void *info,int info_size,char *(*f)())
 	while (i--)
 	{
 		if (!(line = f(info,&pos,info_size)) ||
-				!(tab = mlx_int_str_to_wordtab(line+cpp)) )
+			!(tab = mlx_int_str_to_wordtab(line+cpp)) )
 			RETURN;
 		j = 0;
 		while (tab[j] && strcmp(tab[j++],"c"));
-
-		if (!tab[j])
-			RETURN;
-
+			if (!tab[j])
+				RETURN;
 		rgb_col = mlx_int_get_text_rgb(tab[j], tab[j+1]);
 		/*			
 		if ((rgb_col = mlx_int_get_text_rgb(tab[j], tab[j+1]))==-1)
 		{
 			if (!(clip_data = malloc(4*width*height)) ||	 // ok, nice size ..
-					!(clip_img = XCreateImage(xvar->display, xvar->visual,
-						1, XYPixmap, 0, clip_data,
-						width, height, 8, (width+7)/8)) )
+				!(clip_img = XCreateImage(xvar->display, xvar->visual,
+					1, XYPixmap, 0, clip_data,
+					width, height, 8, (width+7)/8)) )
 				RETURN;
 			memset(clip_data, 0xFF, 4*width*height);
 		}
 		*/
 		if (method)
 			colors_direct[mlx_int_get_col_name(line,cpp)] = rgb_col;
-		//	rgb_col>=0?mlx_get_color_value(xvar, rgb_col):rgb_col;
+			//		rgb_col>=0?mlx_get_color_value(xvar, rgb_col):rgb_col;
 		else
 		{
 			colors[i].name = mlx_int_get_col_name(line,cpp);
@@ -243,9 +240,9 @@ void	*mlx_int_parse_xpm(mlx_ptr_t *xvar,void *info,int info_size,char *(*f)())
 						j = 0;
 					}
 			}
-			//		if (col==-1)
-			//			XPutPixel(clip_img, x, height-1-i, 0);
-			//		else
+			// if (col==-1)
+			// 	XPutPixel(clip_img, x, height-1-i, 0);
+			// else
 			if (col==-1)
 				col = 0xFF000000;
 			mlx_int_xpm_set_pixel(img, data, opp, col, x);
