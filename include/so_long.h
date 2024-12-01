@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/11/27 20:02:43 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/01 14:13:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,15 @@
 # include <string.h>
 # include <mlx.h>
 # include <libft.h>
+# include <ft_stack.h>
 # include <fcntl.h>
 # include <sys/time.h>
+
+#ifndef __darwin__
+# define DELAY 1100
+#else
+# define DELAY 5500
+#endif
 
 // Mouse button codes
 #define LEFT_CLICK 1
@@ -27,16 +34,49 @@
 
 #define ESC_KEYCODE 53
 
-struct s_image
+
+enum e_error_code
 {
+	SUCCESS,
+	MAP_RECTANGULAR,
+	MAP_SURROUNDED,
+	FILE_OPEN,
+	CHARACTER,
+	MALLOC,
+};
+
+typedef struct s_image
+{
+	void	*img_ptr;
+	int		*buffer;
 	int		bpp;
 	int		size_line;
 	int		endian;
-	int		*buffer;
-	void	*img_ptr;
 	int		width;
 	int		height;
-};
+}	t_image;
+
+typedef struct s_clip
+{
+	int	x;
+	int	y;
+	int	width;
+	int	height;
+}	t_clip;
+
+
+typedef struct s_tile
+{
+	struct s_image	img;
+	struct s_clip	main_tile;
+	struct s_clip	small_spot;
+	struct s_clip	big_spot;
+	struct s_clip	inner_corners[4];
+	struct s_clip	outer_corners[4];
+	struct s_clip	edges[4];
+	struct s_clip	alternate[3];
+}	t_tile;
+
 
 enum directions
 {
@@ -64,20 +104,38 @@ typedef struct s_2d_object
 	int		c;
 }	t_2d_object;
 
-
 typedef struct s_mlx_data
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	int		width;
-	int		height;
-	t_2d_object	*player;
-	clock_t	last_rander;
-	unsigned long time;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	int				width;
+	int				height;
+	struct s_map
+	{
+		char	**map;
+		int		rows;
+		int		cols;
+	}	map;
+
+	t_2d_object		*player;
+	clock_t			last_rander;
+	clock_t			time;
+
+	t_tile	tiles[3];
 }	t_mlx_data;
 
 
 void *destroy_object(t_2d_object	**obj);
 t_2d_object	*init_character(void *mlx_ptr, char *sprites_path);
 
+int map_parser(const char *map_path, t_mlx_data *ctx);
+
+int	**convert_map_to_2d_array(t_stack *map);
+
+int	load_image(struct s_image *img);
+
+t_tile	xpm_file_to_tile(char *tile_path, t_mlx_data *ctx);
+
+void	put_image_to_image(t_image *dst, t_image *src, \
+						int dest_x, int dest_y, t_clip clip);
 #endif

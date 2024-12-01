@@ -4,7 +4,9 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/opt/X11/include"
+                "/opt/homebrew/include/**",
+                "/opt/homebrew/Cellar/hidapi/0.14.0/include/hidapi",
+                "/opt/homebrew/Cellar/hidapi/0.14.0/include/hidapi"
             ],
             "defines": [],
             "macFrameworkPath": [

@@ -15,13 +15,21 @@ ifeq ($(UNAME_S), Linux)
 else ifeq ($(UNAME_S), Darwin)
 	MLX_DIR = ./minilibx_macos
 	MLX_FLAGS += -L$(MLX_DIR) -L/usr/X11/lib	\
-				-lmlx -lXext -lX11				\
+				-L /opt/homebrew/lib			\
+				-lmlx -lXext -lX11		 \
 				-framework OpenGL -framework AppKit 
 	INCLUDE += -I/usr/X11/include -I$(MLX_DIR)
 endif
 
-SOURCES = src/main.c src/2d_object/object.c
+SOURCES = main.c \
+			load_image.c \
+			2d_object/object.c \
+			map/tile_parser.c \
+			put_image_to_image.c \
+			
+# map/map_parser.c
 
+SOURCES := $(addprefix src/, $(SOURCES))
 OBJECTS = $(SOURCES:src/%.c=build/%.o)
 
 

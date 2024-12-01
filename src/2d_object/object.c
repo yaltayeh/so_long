@@ -6,20 +6,11 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/11/27 18:49:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/11/30 22:41:21 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-int	load_image(struct s_image *img)
-{
-	img->buffer = (int *)mlx_get_data_addr(img->img_ptr, &img->bpp, \
-									&img->size_line, &img->endian);
-	if (!img->buffer)
-		return (-1);
-	return (0);
-}
 
 int	load_sprites(t_2d_object *obj, char *sprites_path)
 {

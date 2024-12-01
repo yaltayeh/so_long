@@ -1,10 +1,13 @@
 {
 	"files.associations": {
 		"*.py": "python",
-		"x.h": "c",
-		"xpm.h": "c",
+		"hidapi.h": "c",
+		"so_long.h": "c",
+		"__locale": "c",
 		"keysym.h": "c",
-		"keysymdef.h": "c",
-		"mlx_int.h": "c"
+		"eventi.h": "c",
+		"hookobji.h": "c",
+		"x.h": "c",
+		"libft.h": "c"
 	}
 }
