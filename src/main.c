@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/02 08:13:14 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:14:30 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,22 @@ int	player_walk(int	keycode, t_mlx_data *data)
 	int walk_row = 8;
 
 	new_r = data->player->r;
-	if (keycode == 126) // UP
+	if (keycode == KEY_UP) // UP
 	{
 		new_r = walk_row;
 		data->player->col = 8;
 	}
-	else if (keycode == 125) // DOWN
+	else if (keycode == KEY_DOWN) // DOWN
 	{
 		new_r = walk_row + 2;
 		data->player->col = 8;
 	}
-	else if (keycode == 124) // RIGHT
+	else if (keycode == KEY_RIGHT) // RIGHT
 	{
 		new_r = walk_row + 3;
 		data->player->col = 8;
 	}
-	else if (keycode == 123) // LEFT
+	else if (keycode == KEY_LEFT) // LEFT
 	{
 		new_r = walk_row + 1;
 		data->player->col = 8;
@@ -103,88 +103,8 @@ int rander(t_mlx_data	*ctx)
 	}
 	ctx->last_rander = ctx->time;
 
-	char map[8][8] = {
-		"11111111",
-		"11111111",
-		"11001111",
-		"11001111",
-		"11110011",
-		"11110011",
-		"11111111",
-		"11111111"
-	};
-
-
-	for (int y = 0; y < 8; y++)
-	{
-
-		for (int x = 0; x < 8; x++)
-		{
-			if (map[y][x] == '1')
-			{
-				unsigned int count = 0;
-				for (int i = y - 1; i <= y + 1; i++)
-					for (int j = x - 1; j <= x + 1; j++)
-					{
-						if (i == y && j == x)
-							continue;
-						count <<= 1;
-						if (i < 0 || i >= 8 || j < 0 || j >= 8)
-							continue;
-						if (map[i][j] == '0')
-							count |= 1;
-					}
-				if (count > 0)
-				{
-					if (count & 1 << 6)
-					{
-						put_image_to_image(bg, &ctx->tiles[0].img, 32 * x, 32 * y, ctx->tiles[1].edges[3]);
-						put_image_to_image(bg, &ctx->tiles[1].img, 32 * x, 32 * y, ctx->tiles[1].edges[0]);
-					}
-					else if (count & 1 << 4)
-					{
-						put_image_to_image(bg, &ctx->tiles[0].img, 32 * x, 32 * y, ctx->tiles[1].edges[2]);
-						put_image_to_image(bg, &ctx->tiles[1].img, 32 * x, 32 * y, ctx->tiles[1].edges[1]);
-					}
-					else if (count & 1 << 3)
-					{
-						put_image_to_image(bg, &ctx->tiles[0].img, 32 * x, 32 * y, ctx->tiles[1].edges[1]);
-						put_image_to_image(bg, &ctx->tiles[1].img, 32 * x, 32 * y, ctx->tiles[1].edges[2]);
-					}
-					else if (count & 1 << 1)
-					{
-						put_image_to_image(bg, &ctx->tiles[0].img, 32 * x, 32 * y, ctx->tiles[1].edges[0]);
-						put_image_to_image(bg, &ctx->tiles[1].img, 32 * x, 32 * y, ctx->tiles[1].edges[3]);
-					}
-					else if (count & 1 << 7)
-					{
-						put_image_to_image(bg, &ctx->tiles[0].img, 32 * x, 32 * y, ctx->tiles[1].outer_corners[3]);
-						put_image_to_image(bg, &ctx->tiles[1].img, 32 * x, 32 * y, ctx->tiles[1].inner_corners[3]);
-					}
-					else if (count & 1 << 5)
-					{
-						put_image_to_image(bg, &ctx->tiles[0].img, 32 * x, 32 * y, ctx->tiles[1].outer_corners[2]);
-						put_image_to_image(bg, &ctx->tiles[1].img, 32 * x, 32 * y, ctx->tiles[1].inner_corners[2]);
-					}
-					else if (count & 1 << 2)
-					{
-						put_image_to_image(bg, &ctx->tiles[0].img, 32 * x, 32 * y, ctx->tiles[1].outer_corners[1]);
-						put_image_to_image(bg, &ctx->tiles[1].img, 32 * x, 32 * y, ctx->tiles[1].inner_corners[1]);
-					}
-					else if (count & 1 << 0)
-					{
-						put_image_to_image(bg, &ctx->tiles[0].img, 32 * x, 32 * y, ctx->tiles[1].outer_corners[0]);
-						put_image_to_image(bg, &ctx->tiles[1].img, 32 * x, 32 * y, ctx->tiles[1].inner_corners[0]);
-					}
-				}
-				else
-					put_image_to_image(bg, &ctx->tiles[1].img, 32 * x, 32 * y, ctx->tiles[1].main_tile);
-			}
-			else if (map[y][x] == '0')
-				put_image_to_image(bg, &ctx->tiles[0].img, 32 * x, 32 * y, ctx->tiles[0].main_tile);
-		}
-	}
-	// rander_character_image(bg, ctx->player);
+	render_tile(ctx, bg);
+	//rander_character_image(bg, ctx->player);
 	mlx_clear_window(ctx->mlx_ptr, ctx->win_ptr);
 	mlx_put_image_to_window(ctx->mlx_ptr, ctx->win_ptr, bg->img_ptr, 0, 0);
 	return (0);

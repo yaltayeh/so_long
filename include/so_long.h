@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/01 14:13:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/02 10:33:01 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,18 @@
 # include <fcntl.h>
 # include <sys/time.h>
 
-#ifndef __darwin__
-# define DELAY 1100
+#ifdef __linux__
+# define DELAY		12500
+# define KEY_UP		XK_Up
+# define KEY_DOWN	XK_Down
+# define KEY_RIGHT	XK_Right
+# define KEY_LEFT	XK_Left
 #else
-# define DELAY 5500
+# define DELAY		1100
+# define KEY_UP		126
+# define KEY_DOWN	125
+# define KEY_RIGHT	124
+# define KEY_LEFT	123
 #endif
 
 // Mouse button codes
@@ -138,4 +146,7 @@ t_tile	xpm_file_to_tile(char *tile_path, t_mlx_data *ctx);
 
 void	put_image_to_image(t_image *dst, t_image *src, \
 						int dest_x, int dest_y, t_clip clip);
+
+void    render_tile(t_mlx_data *ctx, t_image *bg);
+
 #endif

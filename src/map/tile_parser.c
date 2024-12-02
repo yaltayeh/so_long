@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:27:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/01 14:16:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/02 11:31:31 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,22 @@ static void	load_tile_data(t_tile *tile)
 {
 	tile->big_spot = (struct s_clip){0, 0, 32, 32};
 	tile->small_spot = (struct s_clip){0, 32, 32, 32};
+	
 	tile->inner_corners[0] = (struct s_clip){32, 0, 32, 32};
 	tile->inner_corners[1] = (struct s_clip){64, 0, 32, 32};
 	tile->inner_corners[2] = (struct s_clip){32, 32, 32, 32};
 	tile->inner_corners[3] = (struct s_clip){64, 32, 32, 32};
+	
 	tile->outer_corners[0] = (struct s_clip){0, 64, 32, 32};
 	tile->outer_corners[1] = (struct s_clip){64, 64, 32, 32};
 	tile->outer_corners[2] = (struct s_clip){0, 128, 32, 32};
 	tile->outer_corners[3] = (struct s_clip){64, 128, 32, 32};
+	
 	tile->edges[0] = (struct s_clip){32, 64, 32, 32};
-	tile->edges[1] = (struct s_clip){0, 96, 32, 32};
-	tile->edges[2] = (struct s_clip){64, 96, 32, 32};
-	tile->edges[3] = (struct s_clip){32, 128, 32, 32};
+	tile->edges[1] = (struct s_clip){64, 96, 32, 32};
+	tile->edges[2] = (struct s_clip){32, 128, 32, 32};
+	tile->edges[3] = (struct s_clip){0, 96, 32, 32};
+	
 	tile->alternate[0] = (struct s_clip){0, 160, 32, 32};
 	tile->alternate[1] = (struct s_clip){32, 160, 32, 32};
 	tile->alternate[2] = (struct s_clip){64, 160, 32, 32};

@@ -21,11 +21,12 @@ else ifeq ($(UNAME_S), Darwin)
 	INCLUDE += -I/usr/X11/include -I$(MLX_DIR)
 endif
 
-SOURCES = main.c \
-			load_image.c \
-			2d_object/object.c \
-			map/tile_parser.c \
-			put_image_to_image.c \
+SOURCES = main.c 					\
+			load_image.c 			\
+			2d_object/object.c 		\
+			map/tile_parser.c 		\
+			put_image_to_image.c 	\
+			render_tile.c			\
 			
 # map/map_parser.c
 
