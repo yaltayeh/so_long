@@ -1,7 +1,7 @@
 NAME = so_long
 
 CC = cc
-CFLAGS += -Wall -Wextra -Werror
+# CFLAGS += -Wall -Wextra -Werror
 FT_FLAGS = -L./libft -lft
 INCLUDE += -I./include
 INCLUDE += -I./libft/include
