@@ -2,6 +2,6 @@
 *.a
 build
 *a.out*
-
+so_long
 test/*
 !test/*.c
