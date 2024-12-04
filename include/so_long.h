@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/02 10:33:01 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/04 12:10:13 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 # include <stdlib.h>
 # include <stdio.h>
-# include <string.h>
 # include <mlx.h>
 # include <libft.h>
 # include <ft_stack.h>
 # include <fcntl.h>
-# include <sys/time.h>
+# include "utility.h"
+
+# define BLOCK_SIZE 64
 
 #ifdef __linux__
 # define DELAY		12500
@@ -36,14 +37,9 @@
 # define KEY_LEFT	123
 #endif
 
-// Mouse button codes
-#define LEFT_CLICK 1
-#define RIGHT_CLICK 2
-
 #define ESC_KEYCODE 53
 
-
-enum e_error_code
+enum e_error_code 
 {
 	SUCCESS,
 	MAP_RECTANGULAR,
@@ -53,100 +49,43 @@ enum e_error_code
 	MALLOC,
 };
 
-typedef struct s_image
-{
-	void	*img_ptr;
-	int		*buffer;
-	int		bpp;
-	int		size_line;
-	int		endian;
-	int		width;
-	int		height;
-}	t_image;
-
-typedef struct s_clip
-{
-	int	x;
-	int	y;
-	int	width;
-	int	height;
-}	t_clip;
-
-
-typedef struct s_tile
-{
-	struct s_image	img;
-	struct s_clip	main_tile;
-	struct s_clip	small_spot;
-	struct s_clip	big_spot;
-	struct s_clip	inner_corners[4];
-	struct s_clip	outer_corners[4];
-	struct s_clip	edges[4];
-	struct s_clip	alternate[3];
-}	t_tile;
-
-
-enum directions
-{
-	BACK,
-	LEFT,
-	FRONT,
-	RIGHT
-};
-
-typedef struct s_sprites
-{
-	enum directions directions[4];
-} t_sprites;
-
-typedef struct s_2d_object
-{
-	void	*mlx_ptr;
-
-	struct s_image object;
-	struct s_image sprites;
-
-	int		row;
-	int		col;
-	int		r;
-	int		c;
-}	t_2d_object;
-
-typedef struct s_mlx_data
+typedef struct s_game
 {
 	void			*mlx_ptr;
 	void			*win_ptr;
+	
 	int				width;
 	int				height;
-	struct s_map
-	{
-		char	**map;
-		int		rows;
-		int		cols;
-	}	map;
+	
+	struct s_map	map;
+	struct s_map	scaled_map;
 
-	t_2d_object		*player;
-	clock_t			last_rander;
-	clock_t			time;
+	// t_object		*player;
+	t_tile			tiles[3];
+	
+	t_clock			last_rander;
+	t_clock			time;
 
-	t_tile	tiles[3];
-}	t_mlx_data;
+}	t_game;
 
 
-void *destroy_object(t_2d_object	**obj);
-t_2d_object	*init_character(void *mlx_ptr, char *sprites_path);
+void *destroy_object(t_object	**obj);
+t_sprite	*init_character(void *mlx_ptr, char *sprites_path);
 
-int map_parser(const char *map_path, t_mlx_data *ctx);
+int map_parser(const char *map_path, t_game *game);
 
 int	**convert_map_to_2d_array(t_stack *map);
 
-int	load_image(struct s_image *img);
+int	load_image(t_image *img);
 
-t_tile	xpm_file_to_tile(char *tile_path, t_mlx_data *ctx);
+t_tile	xpm_file_to_tile(char *tile_path, t_game *game);
 
 void	put_image_to_image(t_image *dst, t_image *src, \
 						int dest_x, int dest_y, t_clip clip);
 
-void    render_tile(t_mlx_data *ctx, t_image *bg);
+void	load_tile_data(t_tile *tile, int index);
+
+void    render_tile(t_game *game, t_image *bg);
+
 
 #endif

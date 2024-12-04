@@ -8,6 +8,10 @@
 		"eventi.h": "c",
 		"hookobji.h": "c",
 		"x.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"stdlib.h": "c",
+		"_stdlib.h": "c",
+		"stdio.h": "c",
+		"_stdio.h": "c"
 	}
 }

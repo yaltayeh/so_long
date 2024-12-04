@@ -6,78 +6,71 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:41:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/01 09:21:05 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/04 07:45:42 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "get_next_line.h"
 
-static int	check_rectangular_surrounded(t_mlx_data *ctx)
+static int	check_rectangular_surrounded(t_game *ctx)
 {
-	t_node	*cur;
-	char	*row;
-	int		i;
-	size_t	col;
+	char	**map;
+	int	r;
+	int	i;
 
-	cur = ctx->map->head;
-	if (cur)
+	map = ctx->map.map;
+	ctx->map.cols = -1;
+	r = 0;
+	while (map[r])
 	{
-		row = cur->data.ptr;
-		col = ft_strlen(row);
-		i = 0;
-		while (row[i] == '1')
-			i++;
-		if (row[i] != '\0')
-			return (MAP_SURROUNDED);
+		if (ctx->map.cols == -1)
+			ctx->map.cols = ft_strlen(map[r]);
+		if (ctx->map.cols != ft_strlen(map[r]))
+				return (MAP_RECTANGULAR);
+		if (r == 0 || !map[r + 1])
+		{
+			i = 0;
+			while (map[r][i] == '1')
+				i++;
+			if (map[r][i] != '\0')
+			{
+				ft_fprintf(2, "'%s'\n", map[r]);
+				return (MAP_SURROUNDED);
+			}
+		}
+		else
+			if (map[r][0] != '1' || map[r][ctx->map.cols - 1] != '1')
+				return (MAP_SURROUNDED);
+		r++;
 	}
-	i = 1;
-	while (cur)
-	{
-		row = cur->data.ptr;
-		if (col != ft_strlen(row))
-			return (MAP_RECTANGULAR);
-		if (row[0] != '1' || row[col - 1] != '1')
-			return (MAP_SURROUNDED);
-		cur = cur->next;
-		i++;
-	}
-	cur = ctx->map->tail;
-	if (cur)
-	{
-		row = cur->data.ptr;
-		i = 0;
-		while (row[i] == '1')
-			i++;
-		if (row[i] != '\0')
-			return (MAP_SURROUNDED);
-	}
+	ctx->map.rows = r;
 	return (0);
 }
 
-static int	valid_characters(t_mlx_data *ctx)
+static int	valid_characters(t_game *ctx)
 {
-	t_node	*cur;
-	char	*row;
-	size_t	i;
+	char	**map;
+	int 	r;
+	int 	i;
 
-	cur = ctx->map->head;
-	while (cur)
+	map = ctx->map.map;
+	r = 0;
+	while (r < ctx->map.rows)
 	{
-		row = cur->data.ptr;
 		i = 0;
-		while (row[i])
+		while (map[r][i])
 		{
-			if (!ft_strchr("01CEP", row[i]))
+			if (!ft_strchr("01CEP", map[r][i]))
 				return (CHARACTER);
 			i++;
 		}
-		cur = cur->next;
+		r++;
 	}
 	return (SUCCESS);
 }
 
-static int	map_checker(t_mlx_data *ctx)
+static int	map_checker(t_game *ctx)
 {
 	int	err;
 
@@ -93,7 +86,28 @@ static int	map_checker(t_mlx_data *ctx)
 	return (SUCCESS);
 }
 
-int	**convert_map_to_2d_array(t_stack *map)
+// int flood_fill(t_mlx_data *ctx, int x, int y)
+// {
+	
+// 	return (0);
+// }
+
+// int	path_check(t_mlx_data *ctx)
+// {
+// 	int	**map;
+
+// 	if (!ctx->map.map_2d)
+// 		return (-1);
+	
+// 	return (0);
+// }
+
+
+
+
+
+
+char	**convert_list_to_2d_map(t_stack *map)
 {
 	char	**map_2d;
 	t_node	*cur;
@@ -108,59 +122,12 @@ int	**convert_map_to_2d_array(t_stack *map)
 	i = 0;
 	while (cur)
 	{
-		map_2d[i] = ft_strdup(cur->data.ptr);
-		if (!map_2d[i])
-		{
-			while (i-- > 0)
-				free(map_2d[i]);
-			free(map_2d);
-			return (NULL);
-		}
+		map_2d[i] = cur->data.ptr;
 		cur = cur->next;
+		i++;
 	}
 	return (map_2d);
 }
-
-int flood_fill(t_mlx_data *ctx, int x, int y)
-{
-	
-	return (0);
-}
-
-int	add_node_to_tail(t_mlx_data *ctx, t_stack *q, int x, int y)
-{
-	t_node	*node;
-	t_pix	*pix;
-	char	character;
-
-	character = get_character(ctx, x, y);
-	if (character == 255)
-		return (SUCCESS);
-	pix = malloc(sizeof(t_pix));
-	if (!pix)
-		return (MALLOC);
-	pix->row = y;
-	pix->col = x;
-	pix->c = character;
-	node = ft_init_node((t_data)(void *)pix);
-	if (!node)
-		return (MALLOC);
-	ft_stack_tail_push(q, node);
-	return (SUCCESS);
-}
-
-int	path_check(t_mlx_data *ctx)
-{
-	int	**map;
-
-	if (!ctx->map.map_2d)
-		return (-1);
-	
-	return (0);
-}
-
-
-
 
 static void	remove_new_line(char *line)
 {
@@ -172,12 +139,12 @@ static void	remove_new_line(char *line)
 	line[i] = '\0';
 }
 
-static int	**read_map_file(int fd)
+static char	**read_map_file(int fd)
 {
 	t_stack	*map_stack;
 	t_node	*node;
 	char	*line;
-	int		**map;
+	char	**map;
 
 	map_stack = ft_init_stack(FT_POINTER, NULL, NULL, free);
 	if (!map_stack)
@@ -189,21 +156,22 @@ static int	**read_map_file(int fd)
 		node = ft_init_node((t_data)(void *)line);
 		if (!node)
 		{
-			ft_stack_clear(&map_stack);
 			free(line);
+			ft_stack_clear(&map_stack);
 			return (NULL);
 		}
 		ft_stack_tail_push(map_stack, node);
 		line = get_next_line(fd);
 	}
-	map = convert_map_to_2d_array(map_stack);
+	map = convert_list_to_2d_map(map_stack);
+	map_stack->del_fn.ptr = NULL;
 	ft_stack_clear(&map_stack);
 	return (map);
 }
 
-int map_parser(const char *map_path, t_mlx_data *ctx)
+int	map_parser(const char *map_path, t_game *ctx)
 {
-	int		fd;
+	int	fd;
 
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
@@ -215,6 +183,5 @@ int map_parser(const char *map_path, t_mlx_data *ctx)
 	close(fd);
 	if (!ctx->map.map)
 		return (-1);
-	
 	return (map_checker(ctx));
 }
