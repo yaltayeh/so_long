@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 10:59:36 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:21:26 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,28 @@ typedef struct s_components
 {
 	t_sprites	spr;
 	t_image		images[3];
-	t_sprites	*components;
+	t_object	**components;
 	int			nb_components;
 }	t_components;
 
 typedef t_sprites	t_fire;
-typedef t_sprites	t_tree;
+
+typedef struct components
+{
+	t_sprites	spr;
+	t_clip		clip;
+}	t_tree;
 
 typedef struct s_boat
 {
 	t_sprites	spr;
 	t_clip		clip;
-	// enum e_boat_direction
-	// {
-	// 	HORIZONTAL,
-	// 	DIAGONAL,
-	// 	VERTICAL,
-	// }	direction;
+	enum e_boat_direction
+	{
+		HORIZONTAL,
+		DIAGONAL,
+		VERTICAL,
+	}	direction;
 }	t_boat;
 
 typedef	struct s_grid

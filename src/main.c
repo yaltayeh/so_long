@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/06 21:14:44 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:56:12 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ int end_program(t_game *game)
 
 int	player_walk(int	keycode, t_player *player)
 {
-	int	movement;
+	enum e_move_type	movement;
 	
+	// ft_printf("key: %d\n", keycode);
 	movement = WALK;
 	if (keycode == KEY_UP)
 		player->direction = BACK;
@@ -39,6 +40,11 @@ int	player_walk(int	keycode, t_player *player)
 		player->direction = RIGHT;
 	else if (keycode == KEY_LEFT)
 		player->direction = LEFT;
+	else if (keycode == 49)
+	{
+		player->logs_count = (player->logs_count + 1) % 3;
+		return (0);
+	}
 	else
 		return (0);
 	if (movement != player->movement)
@@ -46,12 +52,12 @@ int	player_walk(int	keycode, t_player *player)
 		player->movement = movement;
 		player->spr.col = 0;
 	}
+
 	if (movement == SLASH_128)
 		player->spr.max_col = 6;
 	else
 		player->spr.max_col = 9;
 	player->is_walk = 1;
-	// update_player(player);
 	return (0);
 }
 
@@ -81,7 +87,7 @@ int rander(t_game	*game)
 		if (obj_render(&game->player, &game->frame) != 0)
 			return (-1);
 	game->last_rander = game->time;
-	// mlx_clear_window(game->mlx_ptr, game->win_ptr);
+	mlx_clear_window(game->mlx_ptr, game->win_ptr);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->frame.img_ptr, 0, 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:26:52 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 10:40:49 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:34:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,27 @@
 
 static int	load_component(t_components *components, int i, char type, t_point loc)
 {
-	t_sprites	*component;
+	t_object	**component_p;
 
-	component = components->components + i;
+	component_p = components->components + i;
 	if (type == 'E')
-		load_boat((void *)component, components);
+	{
+		*component_p = malloc(sizeof(t_boat));
+		load_boat((void *)*component_p, components);
+	}
 	else if (type == 'C')
-		load_tree((void *)component, components);
+	{
+		*component_p = malloc(sizeof(t_tree));
+		load_tree((void *)*component_p, components);
+	}
 	else if (type == 'F')
 	{
-		load_fire((void *)component, components);
-		((t_fire *)component)->col = i % 6;
+		*component_p = malloc(sizeof(t_fire));
+		load_fire((void *)*component_p, components);
 	}
-	component->obj.loc = (t_point){loc.x * 2 * 64 + 32, loc.y * 2 * 64 + 32};
+	else
+		*component_p = NULL;
+	(*component_p)->loc = (t_point){loc.x * 2 * 64 + 32, loc.y * 2 * 64 + 32};
 	return (0);
 }
 
@@ -46,7 +54,7 @@ static int	init_components(t_components *com, t_map_data *o_map)
 			if (ft_strchr(COMPONENTS_CHARACTERS, o_map->blocks[r][c]))
 				com->nb_components++;
 	}
-	com->components = malloc(sizeof(*com->components) * com->nb_components);
+	com->components = ft_calloc(com->nb_components + 1, sizeof(t_object *));
 	if (!com->components)
 		return (-1);
 
@@ -59,7 +67,7 @@ static int	init_components(t_components *com, t_map_data *o_map)
 			if (ft_strchr(COMPONENTS_CHARACTERS, o_map->blocks[r][c]))
 				if (load_component(com, i++, o_map->blocks[r][c], (t_point){c, r}) != 0)
 					return (-1);
-	}
+	}	
 	return (0);
 }
 
@@ -81,8 +89,8 @@ static int	render_components(t_components *components, t_image *frame)
 	i = 0;
 	while (i < components->nb_components)
 	{
-		render = components->components[i].obj.render;
-		if (render && render(components->components + i, frame) != 0)
+		render = components->components[i]->render;
+		if (render && render(components->components[i], frame) != 0)
 			return (-1);
 		i++;
 	}

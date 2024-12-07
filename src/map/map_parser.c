@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:41:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/06 21:09:33 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/07 15:29:31 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	check_rectangular_surrounded(t_map_data *map)
 	{
 		if (map->cols == -1)
 			map->cols = ft_strlen(map->blocks[r]);
-		if (map->cols != ft_strlen(map->blocks[r]))
+		if (map->cols != (int)ft_strlen(map->blocks[r]))
 				return (MAP_RECTANGULAR);
 		if (r == 0 || !map->blocks[r + 1])
 		{

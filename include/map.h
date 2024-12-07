@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:57:34 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 07:30:18 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:53:30 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_map
 	t_map_data		o_map;
 	t_map_data		s_map;
 	t_tiled			*tileds;
-	struct s_components	components;
+	t_components	components;
 }	t_map;
 
 int	map_parser(t_map_data *map, const char *map_path);

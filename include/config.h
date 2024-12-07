@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 11:21:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/07 17:31:19 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 #  define FIRE_PATH "textures/bonfire.xpm"
 # endif
 # ifndef FIRE_DELEY
-#  define FIRE_DELEY 2
+#  define FIRE_DELEY 1
 # endif
 
 # ifndef BOAT_PATH

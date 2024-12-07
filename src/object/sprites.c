@@ -6,12 +6,12 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 10:36:22 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/07 18:17:45 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sprites.h"
-
+#include <stdio.h>
 int render_sprites(t_sprites *spr, t_image *frame)
 {
 	int	(*update)(t_sprites *spr);
@@ -34,6 +34,7 @@ int render_sprites(t_sprites *spr, t_image *frame)
 	}
 	if (!spr->clip)
 		return (0);
+	// free(malloc(0));
 	put_image_to_image(frame, &spr->image, spr->obj.loc, *spr->clip);
 	return (0);
 }
