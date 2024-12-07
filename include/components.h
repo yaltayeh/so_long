@@ -39,6 +39,12 @@ typedef struct s_boat
 {
 	t_sprites	spr;
 	t_clip		clip;
+	// enum e_boat_direction
+	// {
+	// 	HORIZONTAL,
+	// 	DIAGONAL,
+	// 	VERTICAL,
+	// }	direction;
 }	t_boat;
 
 typedef	struct s_grid

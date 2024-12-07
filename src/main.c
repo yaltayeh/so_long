@@ -46,7 +46,10 @@ int	player_walk(int	keycode, t_player *player)
 		player->movement = movement;
 		player->spr.col = 0;
 	}
-	player->spr.max_col = 9;
+	if (movement == SLASH_128)
+		player->spr.max_col = 6;
+	else
+		player->spr.max_col = 9;
 	player->is_walk = 1;
 	// update_player(player);
 	return (0);

@@ -33,7 +33,7 @@ int		scale_map(t_map_data *dst, t_map_data *src)
 		while (c < dst->cols)
 		{
 			val = src->blocks[r / 2][c / 2];
-			if (val == '1')
+			if (val == '1' || val == 'E')
 				dst->blocks[r][c] = val;
 			else
 				dst->blocks[r][c] = '0';

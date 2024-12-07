@@ -62,7 +62,7 @@ int	load_player(t_player *player, void *mlx_ptr)
 	player->logs_count = 0;
 	player->movement = WALK;
 	player->direction = FRONT;
-	player->speed = 8;
+	player->speed = 20;
 	player->spr.update = update_player;
 	return (0);
 }

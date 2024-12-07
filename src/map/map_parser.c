@@ -29,7 +29,7 @@ static int	check_rectangular_surrounded(t_map_data *map)
 		if (r == 0 || !map->blocks[r + 1])
 		{
 			i = 0;
-			while (map->blocks[r][i] == '1')
+			while (map->blocks[r][i] == '1' || map->blocks[r][i] == 'E')
 				i++;
 			if (map->blocks[r][i] != '\0')
 			{

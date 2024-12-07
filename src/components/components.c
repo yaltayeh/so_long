@@ -23,7 +23,10 @@ static int	load_component(t_components *components, int i, char type, t_point lo
 	else if (type == 'C')
 		load_tree((void *)component, components);
 	else if (type == 'F')
+	{
 		load_fire((void *)component, components);
+		((t_fire *)component)->col = i % 6;
+	}
 	component->obj.loc = (t_point){loc.x * 2 * 64 + 32, loc.y * 2 * 64 + 32};
 	return (0);
 }

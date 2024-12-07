@@ -14,7 +14,9 @@
 
 int	update_boat(t_boat *boat)
 {
-
+	// boat->clip = (t_clip){boat->spr.col * 64, boat->direction * 64, 64, 64};
+	boat->clip = (t_clip){boat->spr.col * 64, 64 * 2, 64, 64};
+	return (1);
 }
 
 int	load_boat(t_boat *boat, t_components *components)
@@ -25,6 +27,7 @@ int	load_boat(t_boat *boat, t_components *components)
 	boat->spr.col = 0;
 	boat->spr.max_col = 4;
 	boat->spr.delay = BOAT_DELEY;
+	// boat->direction = DIAGONAL;
 	boat->spr.update = update_boat;
 	return (0);
 }
