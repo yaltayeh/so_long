@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 13:28:44 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 14:14:57 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ int	player_walk(int	keycode, t_player *player)
 	if (movement != player->movement)
 	{
 		player->movement = movement;
-		player->spr.col = 0;
+		player->spr.index = 0;
 	}
 
 	if (movement == SLASH_128)
-		player->spr.max_col = 6;
+		player->spr.max_index = 6;
 	else
-		player->spr.max_col = 9;
+		player->spr.max_index = 9;
 	player->is_walk = 1;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 12:02:08 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 14:27:22 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ int update_player(t_player *player)
 	player->clip.y += player->movement * 4 * 64;
 	if (player->movement == SLASH_128)
 	{
-		player->clip.x = player->spr.col * 128;
+		player->clip.x = player->spr.index * 128;
 		player->clip.y += player->direction * 128;
 		player->clip.width = 128;
 		player->clip.height = 128;
 	}
 	else 
 	{
-		player->clip.x = player->spr.col * 64;
+		player->clip.x = player->spr.index * 64;
 		player->clip.y += player->direction * 64;
 		player->clip.width = 64;
 		player->clip.height = 64;
@@ -56,10 +56,10 @@ int	load_player(t_player *player, t_components *components)
 	player->spr.obj.location = (t_point){0, 0};
 	player->spr.obj.center_point = (t_point){32, 32};
 	player->spr.delay = PLAYER_DELEY;
-	player->spr.col = 0;
-	player->spr.max_col = 9;
+	player->spr.index = 0;
+	player->spr.max_index = 9;
 	player->spr.nb_clip = 1;
-	player->spr.clip = &player->clip;
+	player->spr.clips = &player->clip;
 	player->clip = (t_clip){0, 0, 64, 64};
 	player->logs_count = 0;
 	player->movement = WALK;

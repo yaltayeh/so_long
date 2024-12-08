@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 09:15:10 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 14:27:22 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static void	render_sprites_utils(t_sprites *spr, t_image *frame)
 	}
 	location.x = spr->obj.location.x - spr->obj.center_point.x;
 	location.y = spr->obj.location.y - spr->obj.center_point.y;
-	while (spr->clip && i < spr->nb_clip)
+	while (spr->clips && i < spr->nb_clip)
 	{
-		put_image_to_image(frame, &spr->image, location, spr->clip[i]);
+		put_image_to_image(frame, &spr->image, location, spr->clips[i]);
 		i++;
 	}
 }
@@ -50,7 +50,7 @@ int render_sprites(t_sprites *spr, t_image *frame)
 			if (update)
 				to_next = update(spr);
 			if (to_next == 1)
-				spr->col = (spr->col + 1) % spr->max_col;
+				spr->index = (spr->index + 1) % spr->max_index;
 		}
 	}
 	render_sprites_utils(spr, frame);
@@ -62,7 +62,7 @@ int	load_sprites(t_sprites *spr, void *mlx_ptr, char *spr_path)
 	load_object(&spr->obj, mlx_ptr);
 	spr->obj.render = render_sprites;
 	spr->update = NULL;
-	spr->clip = NULL;
+	spr->clips = NULL;
 	spr->nb_clip = 0;
 	spr->delay = 0;
 	spr->last_update = 0;

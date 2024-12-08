@@ -1,39 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprites.h                                          :+:      :+:    :+:   */
+/*   schema.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/05 17:09:12 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 14:27:22 by yaltayeh         ###   ########.fr       */
+/*   Created: 2024/12/08 14:38:11 by yaltayeh          #+#    #+#             */
+/*   Updated: 2024/12/08 14:39:40 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPRITES_H
-# define SPRITES_H
+#ifndef SCHEMA_H
+# define SCHEMA_H
 
-# include "object.h"
-
-typedef struct s_sprites
+struct s_schema
 {
-	t_object	obj;
-	t_image		image;
+	
+}	t_schema;
 
-	int			index;
-	int			max_index;
-
-	t_clip		*clips;
-	int			nb_clip;
-
-	t_clock		last_update;
-	t_clock		delay;
-	t_clock		timer;
-
-	int			(*update)();
-}	t_sprites;
-
-int	load_sprites(t_sprites *spr, void *mlx_ptr, char *spr_path);
-int	render_sprites(t_sprites *spr, t_image *frame);
 
 #endif
