@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 15:21:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 12:03:26 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,14 @@ enum e_components_id
 	FIRE,
 	TREE,
 	BOAT,
+	PLAYER,
 };
 
-typedef struct s_components
+typedef struct s_fire
 {
 	t_sprites	spr;
-	t_image		images[3];
-	t_object	**components;
-	int			nb_components;
-}	t_components;
-
-typedef t_sprites	t_fire;
+	t_clip		clips[2];
+}	t_fire;
 
 typedef struct components
 {
@@ -52,6 +49,39 @@ typedef struct s_boat
 	}	direction;
 }	t_boat;
 
+typedef struct s_player
+{
+	t_sprites			spr;
+	t_point				loc;
+	t_clip				clip;
+	int					logs_count;
+	enum e_move_type
+	{
+		SPELLCAST,
+		THRUST,
+		WALK,
+		SLASH_128
+	}	movement;
+	enum e_directions
+	{
+		BACK,
+		LEFT,
+		FRONT,
+		RIGHT
+	}	direction;
+	int					is_walk;
+	int					speed;
+}	t_player;
+
+typedef struct s_components
+{
+	t_sprites	spr;
+	t_image		images[4];
+	t_object	**components;
+	int			nb_components;
+	t_player	*player;
+}	t_components;
+
 typedef	struct s_grid
 {
 	t_object	obj;
@@ -67,6 +97,8 @@ int	load_components(t_components *components, void *mlx_ptr, \
 int	load_tree(t_tree *tree, t_components *components);
 int	load_boat(t_boat *boat, t_components *components);
 int	load_fire(t_fire *fire, t_components *components);
+int	load_player(t_player *player, t_components *components);
 int	load_grid(t_grid *grid);
+
 
 #endif

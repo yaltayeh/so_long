@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 17:56:12 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 13:28:44 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 
 int end_program(t_game *game)
 {
-
-	// destroy_object(&game->player);
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	printf("Bye\n");
 	exit(0);
@@ -65,7 +63,7 @@ int key_release(int keycode, t_game *data)
 {
 	if (keycode == KEY_UP || keycode == KEY_DOWN \
 		|| keycode == KEY_RIGHT || keycode == KEY_LEFT)
-		data->player.is_walk = 0;
+		data->player->is_walk = 0;
 	return (0);
 }
 
@@ -81,10 +79,6 @@ int rander(t_game	*game)
 	obj_render = (void *)((t_object *)&game->map)->render;
 	if (obj_render)
 		if (obj_render(&game->map, &game->frame) != 0)
-			return (-1);
-	obj_render = (void *)((t_object *)&game->player)->render;
-	if (obj_render)
-		if (obj_render(&game->player, &game->frame) != 0)
 			return (-1);
 	game->last_rander = game->time;
 	mlx_clear_window(game->mlx_ptr, game->win_ptr);
@@ -107,10 +101,7 @@ int main(int argc, char **argv)
 
 	if (load_map(&game.map, game.mlx_ptr, argv[1]) != 0)
 		return (EXIT_FAILURE);
-
-	if (load_player(&game.player, game.mlx_ptr) != 0)
-		return (EXIT_FAILURE);
-
+	game.player = game.map.components.player;
     game.width = game.map.tiled_data.size * game.map.s_map.cols;
     game.height = game.map.tiled_data.size  * game.map.s_map.rows;
 	
@@ -124,7 +115,7 @@ int main(int argc, char **argv)
         return (EXIT_FAILURE);
 
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, key_release, &game);
-	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, player_walk, &game.player);
+	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, player_walk, game.player);
 	mlx_hook(game.win_ptr, DestroyNotify, 0, end_program, &game);
 	
 	// start loop

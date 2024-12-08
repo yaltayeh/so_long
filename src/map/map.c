@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 11:33:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 07:23:08 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int	init_tiled_blocks(t_tiled **tileds_r, t_map_data *map, t_tiled_data *t)
 			load_tiled(&(*tileds_r)[r * map->cols + c], \
 						&t->spr.image, \
 						get_tiled_clip(map, t, r, c));
-			(*tileds_r)[r * map->cols + c].obj.loc.x = c * t->size;
-			(*tileds_r)[r * map->cols + c].obj.loc.y = r * t->size;
+			(*tileds_r)[r * map->cols + c].obj.location.x = c * t->size;
+			(*tileds_r)[r * map->cols + c].obj.location.y = r * t->size;
 			c++;
 		}
 		r++;

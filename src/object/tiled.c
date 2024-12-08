@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:27:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 08:57:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 07:20:34 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	load_tiled(t_tiled *tiled, t_image *img, t_clip *clip)
 		return (-1);
 	tiled->image = *img;
 	tiled->clip = clip;
+	tiled->nb_clip = 1;
 	tiled->update = NULL;
 	return (0);
 }

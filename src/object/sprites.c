@@ -6,12 +6,33 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 18:17:45 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 09:15:10 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sprites.h"
 #include <stdio.h>
+
+static void	render_sprites_utils(t_sprites *spr, t_image *frame)
+{
+	int	i;
+	t_point	location;
+
+	i = 0;
+	if (spr->obj.parent_location)
+	{
+		location.x = spr->obj.parent_location->x;
+		location.y = spr->obj.parent_location->y;
+	}
+	location.x = spr->obj.location.x - spr->obj.center_point.x;
+	location.y = spr->obj.location.y - spr->obj.center_point.y;
+	while (spr->clip && i < spr->nb_clip)
+	{
+		put_image_to_image(frame, &spr->image, location, spr->clip[i]);
+		i++;
+	}
+}
+
 int render_sprites(t_sprites *spr, t_image *frame)
 {
 	int	(*update)(t_sprites *spr);
@@ -32,10 +53,7 @@ int render_sprites(t_sprites *spr, t_image *frame)
 				spr->col = (spr->col + 1) % spr->max_col;
 		}
 	}
-	if (!spr->clip)
-		return (0);
-	// free(malloc(0));
-	put_image_to_image(frame, &spr->image, spr->obj.loc, *spr->clip);
+	render_sprites_utils(spr, frame);
 	return (0);
 }
 
@@ -45,6 +63,7 @@ int	load_sprites(t_sprites *spr, void *mlx_ptr, char *spr_path)
 	spr->obj.render = render_sprites;
 	spr->update = NULL;
 	spr->clip = NULL;
+	spr->nb_clip = 0;
 	spr->delay = 0;
 	spr->last_update = 0;
 	spr->timer = 0;

@@ -6,11 +6,11 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 11:20:56 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 12:02:08 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "player.h"
+#include "components.h"
 
 int update_player(t_player *player)
 {
@@ -35,13 +35,13 @@ int update_player(t_player *player)
 		if (player->is_walk)
 		{
 			if (player->direction == FRONT)
-				player->spr.obj.loc.y += player->speed;
+				player->spr.obj.location.y += player->speed;
 			else if (player->direction == BACK)
-				player->spr.obj.loc.y -= player->speed;
+				player->spr.obj.location.y -= player->speed;
 			else if (player->direction == LEFT)
-				player->spr.obj.loc.x -= player->speed;
+				player->spr.obj.location.x -= player->speed;
 			else if (player->direction == RIGHT)
-				player->spr.obj.loc.x += player->speed;
+				player->spr.obj.location.x += player->speed;
 			return (1);
 		}
 		return (0);
@@ -49,14 +49,16 @@ int update_player(t_player *player)
 	return (1);
 }
 
-int	load_player(t_player *player, void *mlx_ptr)
+int	load_player(t_player *player, t_components *components)
 {
-	if (load_sprites((void *)player, mlx_ptr, PLAYER_PATH) == -1)
-		return (-1);
-	player->spr.obj.loc = (t_point){0, 0};
+	load_sprites((void *)player, NULL, NULL);
+	player->spr.image = components->images[PLAYER];
+	player->spr.obj.location = (t_point){0, 0};
+	player->spr.obj.center_point = (t_point){32, 32};
 	player->spr.delay = PLAYER_DELEY;
 	player->spr.col = 0;
 	player->spr.max_col = 9;
+	player->spr.nb_clip = 1;
 	player->spr.clip = &player->clip;
 	player->clip = (t_clip){0, 0, 64, 64};
 	player->logs_count = 0;

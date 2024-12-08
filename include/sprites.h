@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:09:12 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 08:29:58 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 07:05:37 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_sprites
 	int			col;
 	int			max_col;
 	t_clip		*clip;
+	int			nb_clip;
 	int			(*update)();
 	t_clock		last_update;
 	t_clock		delay;

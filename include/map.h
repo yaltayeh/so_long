@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:57:34 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 17:53:30 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 13:17:40 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 # include "tiled.h"
 # include "components.h"
 
-# define COMPONENTS_CHARACTERS "ECF" 
+# define COMPONENTS_CHARACTERS "PECF" 
 # define MAP_CHARACTERS "01PECF"
-
 
 typedef struct s_map_data
 {
