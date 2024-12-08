@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 14:27:22 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 17:44:33 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int render_sprites(t_sprites *spr, t_image *frame)
 
 int	load_sprites(t_sprites *spr, void *mlx_ptr, char *spr_path)
 {
-	load_object(&spr->obj, mlx_ptr);
+	load_object(&spr->obj);
+	ft_strlcpy((char *)spr, "sprites", NAME_SIZE);
 	spr->obj.render = render_sprites;
 	spr->update = NULL;
 	spr->clips = NULL;

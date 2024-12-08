@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   schema.h                                           :+:      :+:    :+:   */
+/*   schema.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/08 14:38:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 14:39:40 by yaltayeh         ###   ########.fr       */
+/*   Created: 2024/12/08 15:51:32 by yaltayeh          #+#    #+#             */
+/*   Updated: 2024/12/08 15:52:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCHEMA_H
-# define SCHEMA_H
+#include "schema.h"
 
-struct s_schema
-{
-	
-}	t_schema;
+t_schema    *init_schema()
+{  
+    t_schema    *schema;
 
-
-#endif
+    schema = malloc(sizeof(t_schema));
+}

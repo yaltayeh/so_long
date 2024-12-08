@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 13:14:45 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 17:18:50 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <ft_stack.h>
 # include <fcntl.h>
 # include "map.h"
+# include "schema.h"
 
 enum e_error_code
 {
@@ -33,15 +34,17 @@ enum e_error_code
 
 typedef struct s_game
 {
-	void			*mlx_ptr;
-	void			*win_ptr;
-	int				width;
-	int				height;
-	t_map			map;
-	t_player		*player;
-	t_image			frame;
-	t_clock			last_rander;
-	t_clock			time;
+	t_schema	schema;
+	void		*mlx_ptr;
+	void		*win_ptr;
+
+	int			width;
+	int			height;
+
+	t_image		frame;
+	
+	t_clock		last_rander;
+	t_clock		time;
 }	t_game;
 
 #endif

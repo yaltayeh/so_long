@@ -29,7 +29,7 @@ int	player_walk(int	keycode, t_player *player)
 	enum e_move_type	movement;
 	
 	// ft_printf("key: %d\n", keycode);
-	movement = WALK;
+	movement = SLASH_128;
 	if (keycode == KEY_UP)
 		player->direction = BACK;
 	else if (keycode == KEY_DOWN)
@@ -96,8 +96,8 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	game.mlx_ptr = mlx_init();
-    if (game.mlx_ptr == NULL)
-        return (EXIT_FAILURE);
+    // if (game.mlx_ptr == NULL)
+    //     return (EXIT_FAILURE);
 
 	if (load_map(&game.map, game.mlx_ptr, argv[1]) != 0)
 		return (EXIT_FAILURE);
@@ -111,8 +111,8 @@ int main(int argc, char **argv)
 	load_image(&game.frame);
 
 	game.win_ptr = mlx_new_window(game.mlx_ptr, game.width, game.height, "Lumberjack");
-    if (game.win_ptr == NULL)
-        return (EXIT_FAILURE);
+    // if (game.win_ptr == NULL)
+    //     return (EXIT_FAILURE);
 
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, key_release, &game);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, player_walk, game.player);

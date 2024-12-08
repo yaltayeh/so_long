@@ -1,38 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   grid.c                                             :+:      :+:    :+:   */
+/*   schema.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 10:47:03 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 11:01:14 by yaltayeh         ###   ########.fr       */
+/*   Created: 2024/12/08 14:38:11 by yaltayeh          #+#    #+#             */
+/*   Updated: 2024/12/08 17:03:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "components.h"
+#ifndef SCHEMA_H
+# define SCHEMA_H
 
-int render_grid(t_grid *grid, t_image *frame)
+# include "utils.h"
+# include "object.h"
+
+typedef struct  s_schema
 {
-	int	y;
-	int	x;
+	t_object	obj;
+	struct s_resources
+    {
+        t_image **images;
+        int		nb_images;
+    }   resources;
+    t_object    **components;
+    int         nb_components;
+	int			(*render)();
+    int			(*load_schema)();
+    int			(*destroy_schema)();
+}	t_schema;
 
-	y = grid->offset.y;
-	while (y < frame->height)
-	{
-		x = grid->offset.y;
-		while (x < frame->height)
-		{
-			x += grid->block_w;
-		}
-		y += grid->block_h;
-	}
-	
-}
 
-int	load_grid(t_grid *grid)
-{
-	if (load_object(grid, NULL) != 0)
-		return (-1);
-	return (0);
-}
+
+#endif
