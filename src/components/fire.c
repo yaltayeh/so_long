@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:01:22 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 14:27:22 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/09 14:43:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ static int	update_fire(t_fire *fire)
 	return (1);
 }
 
-int	load_fire(t_fire *fire, t_components *components)
+int	load_fire(t_fire *fire, t_schema *schema)
 {
-	load_sprites((void *)fire, NULL, NULL);
+	load_sprites((void *)fire);
+	ft_strlcpy((char *)fire, "fire", NAME_SIZE);
 	fire->spr.obj.center_point = (t_point){66, 46};
-	fire->spr.image = components->images[FIRE];
+	fire->spr.image = get_image_by_name(schema, "fire");
 	fire->spr.index = 0;
 	fire->spr.max_index = 6;
 	fire->spr.clips = fire->clips;

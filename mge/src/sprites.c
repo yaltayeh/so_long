@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 11:46:31 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:27:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int render_sprites(t_sprites *spr, t_image *frame)
 	return (0);
 }
 
-int	load_sprites(t_sprites *spr, void *mlx_ptr)
+int	load_sprites(t_sprites *spr)
 {
 	load_object(&spr->obj);
 	ft_strlcpy((char *)spr, "sprites", NAME_SIZE);

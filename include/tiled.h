@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 16:49:40 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/06 21:13:25 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/09 14:10:06 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define TILED_H
 
 # include "sprites.h"
+# include "mge.h"
+# include "config.h"
 
 typedef struct s_tiled_data
 {
@@ -31,8 +33,8 @@ typedef struct s_tiled_data
 
 typedef t_sprites	t_tiled;
 
-int	load_tiled_data(t_tiled_data *t, void *mlx_ptr, char *tiled_path, int size);
+int	load_tiled_data(t_tiled_data *t, int size);
 
-int	load_tiled(t_tiled *tiled, t_image *img, t_clip *clip);
+int	load_tiled(t_tiled *tiled, t_schema *schema, t_clip *clip);
 
 #endif

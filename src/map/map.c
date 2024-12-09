@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 07:23:08 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/09 14:26:17 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,6 @@ static t_clip	*get_tiled_clip(t_map_data *map, t_tiled_data *t, int r, int c)
 		return (&t->main_tile);
 	points = (t_point [8]){{-1, -1}, {0, -1}, {1, -1}, {1, 0}, \
 						{1, 1}, {0, 1}, {-1, 1}, {-1, 0}};
-	/*
-	012
-	7 3
-	654
-	*/
 	num = 0;
 	i = 0;
 	while (i < 8)
@@ -77,6 +72,7 @@ int	init_tiled_blocks(t_tiled **tileds_r, t_map_data *map, t_tiled_data *t)
 	int	c;
 
 	*tileds_r = malloc(sizeof(t_tiled) * map->rows * map->cols);
+	
 	if (!*tileds_r)
 		return (-1);
 	r = 0;
@@ -119,15 +115,17 @@ static int	render_map(t_map *map, t_image *frame)
 			return (-1);
 		i++;
 	}
-	render_p = map->components.spr.obj.render;
-	if (render_p && render_p(&map->components, frame) != 0)
-		return (-1);
 	return (0);
 }
 
-int	load_map(t_map *map, void *mlx_ptr, char *map_path)
+int	load_map(t_map *map, t_schema *schema, const char *map_path)
 {
 	int	err;
+	
+	if (load_tiled_data((void *)map, TILED_SIZE) != 0)
+		return (-1);
+	ft_strlcpy((char *)map, "map", NAME_SIZE);
+
 	err = map_parser(&map->o_map, map_path);
 	if (err)
 		return (err);
@@ -135,12 +133,9 @@ int	load_map(t_map *map, void *mlx_ptr, char *map_path)
 	err = scale_map(&map->s_map, &map->o_map);
 	if (err)
 		return (err);
-	if (load_tiled_data((void *)map, mlx_ptr, TILEDS_PATH, TILED_SIZE) != 0)
-		return (-1);
 	if (init_tiled_blocks(&map->tileds, &map->s_map, &map->tiled_data) != 0)
 		return (-1);
-	if (load_components(&map->components, mlx_ptr, &map->o_map) != 0)
-		return (-1);
+	map->nb_tileds = map->s_map.rows * map->s_map.cols;
 	map->tiled_data.spr.obj.render = render_map;
 	return (0);
 }

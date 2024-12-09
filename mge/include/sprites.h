@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:09:12 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 11:44:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:27:16 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_sprites
 	int			(*update)();
 }	t_sprites;
 
-int	load_sprites(t_sprites *spr, void *mlx_ptr, char *spr_path);
+int	load_sprites(t_sprites *spr);
 int	render_sprites(t_sprites *spr, t_image *frame);
 
 #endif
