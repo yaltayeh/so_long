@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   schema.c                                           :+:      :+:    :+:   */
+/*   mge.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/08 15:51:32 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 15:52:00 by yaltayeh         ###   ########.fr       */
+/*   Created: 2024/12/08 18:54:45 by yaltayeh          #+#    #+#             */
+/*   Updated: 2024/12/08 18:56:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "schema.h"
+#ifndef NGE_H
+# define NGE_H
 
-t_schema    *init_schema()
-{  
-    t_schema    *schema;
+# include "object.h"
+# include "schema.h"
+# include "sprites.h"
+# include "utils.h"
 
-    schema = malloc(sizeof(t_schema));
-}
+#endif

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 17:31:19 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/09 07:42:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 
 # ifdef __linux__
 #  define DELAY		12500
-#  define KEY_UP		XK_Up
+#  define KEY_UP	XK_Up
 #  define KEY_DOWN	XK_Down
 #  define KEY_RIGHT	XK_Right
 #  define KEY_LEFT	XK_Left

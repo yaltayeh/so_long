@@ -1,0 +1,11 @@
+{
+	"files.associations": {
+		"*.py": "python",
+		"mlx_int.h": "c",
+		"so_long.h": "c",
+		"schema.h": "c",
+		"object.h": "c",
+		"mge.h": "c",
+		"sprites.h": "c"
+	}
+}

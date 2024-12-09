@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:26:08 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 14:27:22 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:44:08 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	update_boat(t_boat *boat)
 	return (1);
 }
 
-int	load_boat(t_boat *boat, t_components *components)
+int	load_boat(t_boat *boat, t_schema *schema)
 {
 	load_sprites((void *)boat, NULL, NULL);
 	boat->spr.obj.center_point = (t_point){32, 32};
-	boat->spr.image = components->images[BOAT];
+	boat->spr.image = schema_get_image_by_name(schema, "boat")
 	boat->spr.clips = &boat->clip;
 	boat->spr.index = 0;
 	boat->spr.max_index = 4;

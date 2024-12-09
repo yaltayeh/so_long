@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 12:03:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:42:56 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,9 @@
 # define COMPONENTS_H
 
 # include "sprites.h"
+# include "schema.h"
 
 struct s_map_data;
-
-enum e_components_id
-{
-	FIRE,
-	TREE,
-	BOAT,
-	PLAYER,
-};
 
 typedef struct s_fire
 {
@@ -73,32 +66,9 @@ typedef struct s_player
 	int					speed;
 }	t_player;
 
-typedef struct s_components
-{
-	t_sprites	spr;
-	t_image		images[4];
-	t_object	**components;
-	int			nb_components;
-	t_player	*player;
-}	t_components;
-
-typedef	struct s_grid
-{
-	t_object	obj;
-	t_point		offset;
-	int			block_w;
-	int			block_h;
-	int			color;
-}	t_grid;
-
-int	load_components(t_components *components, void *mlx_ptr, \
-							struct s_map_data *o_map);
-
-int	load_tree(t_tree *tree, t_components *components);
-int	load_boat(t_boat *boat, t_components *components);
-int	load_fire(t_fire *fire, t_components *components);
-int	load_player(t_player *player, t_components *components);
-int	load_grid(t_grid *grid);
-
+int	load_tree(t_tree *tree, t_schema *schema);
+int	load_boat(t_boat *boat, t_schema *schema);
+int	load_fire(t_fire *fire, t_schema *schema);
+int	load_player(t_player *player, t_schema *schema);
 
 #endif

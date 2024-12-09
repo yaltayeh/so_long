@@ -6,11 +6,11 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 23:22:42 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 00:07:08 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/08 19:46:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "utils.h"
 
 static int	blend_color(int c1, int c2)
 {

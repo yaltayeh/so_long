@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:26:52 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 13:12:39 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:42:13 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	load_component(t_components *components, int i, char type, t_point lo
 	return (0);
 }
 
-static int	init_components(t_components *com, t_map_data *o_map)
+static int	load_game_schema(t_schema *com, t_map_data *o_map)
 {
 	int		r;
 	int		c;
@@ -86,32 +86,6 @@ static int	init_components(t_components *com, t_map_data *o_map)
 	return (0);
 }
 
-static int open_xpm_file(t_image *image, void *mlx_ptr, char *filename)
-{
-	image->img_ptr = mlx_xpm_file_to_image(mlx_ptr, filename, &image->width, &image->height);
-	if (!image->img_ptr)
-		return (-1);
-	if (load_image(image) != 0)
-		return (-1);
-	return (0);
-}
-
-static int	render_components(t_components *components, t_image *frame)
-{
-	int	i;
-	int	(*render)(void *, t_image *);
-
-	i = 0;
-	while (i < components->nb_components)
-	{
-		render = components->components[i]->render;
-		if (render && render(components->components[i], frame) != 0)
-			return (-1);
-		i++;
-	}
-	return (0);
-}
-
 int	load_components(t_components *components, void *mlx_ptr, t_map_data *o_map)
 {
 	if (open_xpm_file(&components->images[FIRE], mlx_ptr, FIRE_PATH) != 0)
@@ -122,7 +96,7 @@ int	load_components(t_components *components, void *mlx_ptr, t_map_data *o_map)
 		return (-1);
 	if (open_xpm_file(&components->images[PLAYER], mlx_ptr, PLAYER_PATH) != 0)
 		return (-1);
-	if (init_components(components, o_map) != 0)
+	if (load_game_schema(components, o_map) != 0)
 		return (-1);
 	components->spr.obj.render = render_components;
 	return (0);

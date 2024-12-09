@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 17:44:33 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/09 11:46:31 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	render_sprites_utils(t_sprites *spr, t_image *frame)
 	location.y = spr->obj.location.y - spr->obj.center_point.y;
 	while (spr->clips && i < spr->nb_clip)
 	{
-		put_image_to_image(frame, &spr->image, location, spr->clips[i]);
+		put_image_to_image(frame, spr->image, location, spr->clips[i]);
 		i++;
 	}
 }
@@ -57,7 +57,7 @@ int render_sprites(t_sprites *spr, t_image *frame)
 	return (0);
 }
 
-int	load_sprites(t_sprites *spr, void *mlx_ptr, char *spr_path)
+int	load_sprites(t_sprites *spr, void *mlx_ptr)
 {
 	load_object(&spr->obj);
 	ft_strlcpy((char *)spr, "sprites", NAME_SIZE);
@@ -68,14 +68,5 @@ int	load_sprites(t_sprites *spr, void *mlx_ptr, char *spr_path)
 	spr->delay = 0;
 	spr->last_update = 0;
 	spr->timer = 0;
-	if (spr_path)
-	{
-		spr->image.img_ptr = mlx_xpm_file_to_image(mlx_ptr, spr_path, 
-									&spr->image.width, &spr->image.height);
-		if (!spr->image.img_ptr)
-			return (-1);
-		if (load_image(&spr->image) == -1)
-			return (-1);
-	}
 	return (0);	
 }

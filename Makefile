@@ -3,8 +3,7 @@ NAME = so_long
 CC = cc
 CFLAGS += -Wall -Wextra -Werror
 FT_FLAGS = -L./libft -lft
-INCLUDE += -I./include
-INCLUDE += -I./libft/include
+INCLUDE += -I./include -I./libft/include -I./mgn/include 
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
