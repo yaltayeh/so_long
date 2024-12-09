@@ -1,5 +1,6 @@
 *.o
 *.a
+.vscode
 build
 *a.out*
 so_long
