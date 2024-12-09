@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:24:14 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 14:27:22 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/09 20:17:29 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ int update_tree(t_tree *tree)
 	return (0);
 }
 
-int	load_tree(t_tree *tree, t_components *components)
+int	load_tree(t_tree *tree, t_schema *schema)
 {
-	load_sprites((void *)tree, NULL, NULL);
+	load_sprites((void *)tree);
+	ft_strlcpy((char *)tree, "tree", NAME_SIZE);
 	tree->spr.obj.center_point = (t_point){132, 28};
-	tree->spr.image = components->images[TREE];
+	tree->spr.image = get_image_by_name(schema, "tree");
 	tree->clip = (t_clip){0, 0, 56, 94};
 	tree->spr.clips = &tree->clip;
 	tree->spr.nb_clip = 1;
