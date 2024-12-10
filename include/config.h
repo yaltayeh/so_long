@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 07:42:52 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:14:42 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,14 @@
 #  define KEY_DOWN	XK_Down
 #  define KEY_RIGHT	XK_Right
 #  define KEY_LEFT	XK_Left
+#  define KEY_SPACE XK_space
 # else
 #  define DELAY		500
 #  define KEY_UP		126
 #  define KEY_DOWN	125
 #  define KEY_RIGHT	124
 #  define KEY_LEFT	123
+#  define KEY_SPACE 49
 # endif
 
 # define ESC_KEYCODE 53

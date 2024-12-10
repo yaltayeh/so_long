@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 07:31:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:20:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "map.h"
 
 typedef struct s_map_data t_map_data;
+typedef struct s_game_schema t_game_schema;
 
 typedef struct s_fire
 {
@@ -69,6 +70,7 @@ typedef struct s_player
 	enum e_directions	direction;
 	int					is_walk;
 	int					speed;
+	struct s_game_schema		*gs;
 }	t_player;
 
 int	load_tree(t_tree *tree, void *schema);

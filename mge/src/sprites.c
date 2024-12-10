@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 10:01:34 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:35:43 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,6 @@ int render_sprites(t_sprites *spr, t_image *frame)
 			if (to_next == 1)
 				spr->index = (spr->index + 1) % spr->max_index;
 		}
-	}
-	if (ft_strncmp((char *)spr, "tiled", NAME_SIZE) == 0)
-	{
-		// ft_printf("clips: %d\n", spr->nb_clip);
-		//ft_printf("(%d, %d, %d, %d)\n", spr->clips[0].x, spr->clips[0].y, spr->clips[0].width, spr->clips[0].height);
 	}
 	render_sprites_utils(spr, frame);
 	return (0);

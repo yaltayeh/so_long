@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:26:52 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 07:31:48 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:09:18 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	load_component(t_schema *schema, int i, char type, t_point loc)
 		return (-1);
 	if (load_func(*component_p, schema) != 0)
 		return (-1);
-	(*component_p)->location = (t_point){(loc.x + 1) * 2 * TILED_SIZE, (loc.y + 1) * 2 * TILED_SIZE};
+	(*component_p)->location = (t_point){(loc.x * 2 + 1) * TILED_SIZE, (loc.y * 2 + 1) * TILED_SIZE};
 	return (0);
 }
 

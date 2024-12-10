@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 10:05:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:29:44 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	player_walk(int	keycode, t_player *player)
 	enum e_move_type	movement;
 	
 	// ft_printf("key: %d\n", keycode);
-	movement = SLASH_128;
+	movement = WALK;
 	if (keycode == KEY_UP)
 		player->direction = BACK;
 	else if (keycode == KEY_DOWN)
@@ -38,7 +38,7 @@ int	player_walk(int	keycode, t_player *player)
 		player->direction = RIGHT;
 	else if (keycode == KEY_LEFT)
 		player->direction = LEFT;
-	else if (keycode == 49)
+	else if (keycode == KEY_SPACE)
 	{
 		player->logs_count = (player->logs_count + 1) % 3;
 		return (0);
@@ -109,8 +109,6 @@ int main(int argc, char **argv)
     game.width = game.gs->map.tiled_data.size * game.gs->map.s_map.cols;
     game.height = game.gs->map.tiled_data.size  * game.gs->map.s_map.rows;
 	
-	ft_printf("(%d, %d)\n", game.width, game.height);
-
 	game.win_ptr = mlx_new_window(game.mlx_ptr, game.width, game.height, "Lumberjack");
     // if (game.win_ptr == NULL)
     //     return (EXIT_FAILURE);

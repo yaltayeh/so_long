@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 10:05:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 11:03:58 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 			return (-1);
 		i++;
 	}
+	if (init_tiled_blocks(&gs->map.tileds, &gs->map.s_map, &gs->map.tiled_data, gs) != 0)
+		return (-1);
 	if (load_components((void *)gs, &gs->map.o_map) != 0)
 		return (-1);
 	return (0);
@@ -70,7 +72,7 @@ int	check_game_schema(t_game_schema *gs, char *map_path)
 {
 	int	stat;
 
-	stat = load_map(&gs->map, gs, map_path);
+	stat = load_map(&gs->map, map_path);
 	ft_printf("%s: %d\n", __func__, stat);
 	return (stat);
 }

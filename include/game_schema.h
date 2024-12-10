@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 07:21:58 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:20:04 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 # include "config.h"
 # include "mge.h"
-# include "map.h" 
-# include "components.h"
+# include "map.h"
+
+typedef struct s_map t_map;
 
 typedef struct s_game_schema
 {
