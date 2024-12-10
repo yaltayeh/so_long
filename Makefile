@@ -2,7 +2,7 @@ NAME = so_long
 
 CC = cc
 CFLAGS += -Wall -Wextra -Werror
-FT_FLAGS = -L./libft -lft -L./mge -lmge
+FT_FLAGS = -L./mge -lmge -L./libft -lft
 INCLUDE += -I./include -I./libft/include -I./mge/include
 
 UNAME_S := $(shell uname -s)
@@ -27,12 +27,12 @@ SOURCES =	main.c						\
 			components/components.c		\
 			components/boat.c			\
 			components/tree.c			\
+			components/tiled.c			\
+			components/player.c			\
 			map/read_file.c				\
+			map/map_parser.c			\
 			map/scale_map.c				\
 			map/map.c					\
-			map/map_parser.c			\
-			object/tiled.c				\
-			object/player.c				\
 
 SOURCES := $(addprefix src/, $(SOURCES))
 OBJECTS = $(SOURCES:src/%.c=build/%.o)
