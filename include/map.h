@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:57:34 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 14:23:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 07:34:15 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_map
 }	t_map;
 
 int	map_parser(t_map_data *map, const char *map_path);
-int	load_map(t_map *map, const char *map_path);
+int	load_map(t_map *map, void *schema, const char *map_path);
 int	scale_map(t_map_data *dst, t_map_data *src);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:27:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 14:12:07 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:08:19 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ int	load_tiled(t_tiled *tiled, t_schema *schema, t_clip *clip)
 	load_sprites(tiled);
 	ft_strlcpy((char *)tiled, "tiled", NAME_SIZE);
 
-	tiled->image = get_image_by_name(schema, "tiled");
+	tiled->image = schema_get_image_by_name(schema, "tiled");
+	if (!tiled->image)
+		return (-1);
 	tiled->clips = clip;
 	tiled->nb_clip = 1;
 	return (0);

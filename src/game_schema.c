@@ -6,59 +6,85 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 10:52:57 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:05:29 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "game_schema.h"
 
-static int open_xpm_file(t_image *image, void *mlx_ptr, char *filename)
+
+static int open_xpm_file(t_image *image, void *mlx_ptr, \
+						char *filename, const char *img_name)
 {
-	image->img_ptr = mlx_xpm_file_to_image(mlx_ptr, filename, &image->width, &image->height);
+	ft_strlcpy((char *)image, img_name, NAME_SIZE);
+	image->img_ptr = mlx_xpm_file_to_image(mlx_ptr, filename, \
+									&image->width, &image->height);
 	if (!image->img_ptr)
 		return (-1);
-	if (load_image(image) != 0)
+	if (load_image_data(image) != 0)
 		return (-1);
 	return (0);
 }
 
-
-static int	load_game_schema(t_game_schema *gschema)
+int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 {
 	char	*images_path[5];
+	char	*images_name[5];
 	int		nb_images;
 	int		i;
 
 	images_path[0] = TILEDS_PATH;
+	images_name[0] = "tiled";
 	images_path[1] = PLAYER_PATH;
+	images_name[1] = "player";
 	images_path[2] = FIRE_PATH;
+	images_name[2] = "fire";
 	images_path[3] = BOAT_PATH;
+	images_name[3] = "boat";
 	images_path[4] = TREE_PATH;
+	images_name[4] = "tree";
+
 	nb_images = sizeof(images_path) / sizeof(*images_path);
-	gschema->schema.resources.nb_images = nb_images;
-	gschema->schema.resources.images = ft_calloc(nb_images, sizeof(t_image));
+	gs->schema.resources.nb_images = nb_images;
+	gs->schema.resources.images = ft_calloc(nb_images, sizeof(t_image));
 	i = 0;
 	while (i < nb_images)
 	{
-		if (open_xpm_file(&gschema->schema.resources.images[i], \
-							gschema->schema.mlx_ptr, images_path[i]) != 0)
+		if (open_xpm_file(&gs->schema.resources.images[i], \
+						mlx_ptr, images_path[i], images_name[i]) != 0)
 			return (-1);
 		i++;
 	}
-	
+	if (load_components((void *)gs, &gs->map.o_map) != 0)
+		return (-1);
 	return (0);
 }
 
-static int	destroy_game_schema(t_game_schema **gschema_r)
+int	destroy_game_schema(t_game_schema **gs_r)
 {
+	(void)gs_r;
 	return (0);
 }
 
-static int	check_game_schema(t_game_schema *gschema)
+int	check_game_schema(t_game_schema *gs, char *map_path)
 {
-	return (0);
+	int	stat;
+
+	stat = load_map(&gs->map, gs, map_path);
+	ft_printf("%s: %d\n", __func__, stat);
+	return (stat);
 }
 
+
+int	render_game_schema(t_game_schema *gs, t_image *frame)
+{
+	int	(*render)(void *, t_image *);
+
+	render = ((t_object *)&gs->map)->render;
+	if (render && render(&gs->map, frame) != 0)
+		return (-1);
+	return (0);
+}
 
 t_game_schema	*init_game_schema()
 {
@@ -67,14 +93,9 @@ t_game_schema	*init_game_schema()
 	gschema = ft_calloc(1, sizeof(t_game_schema));
 	if (!gschema)
 		return (NULL);
-	if (load_schema(gschema) != 0)
-	{
-		free(gschema);
-		return (NULL);
-	}
 	gschema->schema.check_schema = check_game_schema;
+	gschema->schema.render_schema = render_game_schema;
 	gschema->schema.load_schema = load_game_schema;
 	gschema->schema.destroy_schema = destroy_game_schema;
-	gschema->schema.render_schema = render_game_schema;
 	return (gschema);
 }

@@ -2,8 +2,8 @@ NAME = so_long
 
 CC = cc
 CFLAGS += -Wall -Wextra -Werror
-FT_FLAGS = -L./libft -lft
-INCLUDE += -I./include -I./libft/include -I./mgn/include 
+FT_FLAGS = -L./libft -lft -L./mge -lmge
+INCLUDE += -I./include -I./libft/include -I./mge/include
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
@@ -20,26 +20,24 @@ else ifeq ($(UNAME_S), Darwin)
 	INCLUDE += -I/usr/X11/include -I$(MLX_DIR)
 endif
 
-SOURCES =	main.c					\
-			put_image_to_image.c	\
-			utils.c					\
-			components/fire.c		\
-			components/boat.c		\
-			components/tree.c		\
-			components/components.c	\
-			map/read_file.c			\
-			map/scale_map.c			\
-			map/map.c				\
-			map/map_parser.c		\
-			object/object.c			\
-			object/tiled.c			\
-			object/sprites.c		\
-			object/player.c			\
+SOURCES =	main.c						\
+			utils.c						\
+			game_schema.c				\
+			components/fire.c			\
+			components/components.c		\
+			components/boat.c			\
+			components/tree.c			\
+			map/read_file.c				\
+			map/scale_map.c				\
+			map/map.c					\
+			map/map_parser.c			\
+			object/tiled.c				\
+			object/player.c				\
 
 SOURCES := $(addprefix src/, $(SOURCES))
 OBJECTS = $(SOURCES:src/%.c=build/%.o)
 
-all: submodules $(NAME)
+all: mge libft submodules $(NAME)
 
 
 submodules:
@@ -52,7 +50,10 @@ mlx:
 libft:
 	@$(MAKE) -C libft
 
-$(NAME): $(OBJECTS) | libft mlx
+mge:
+	$(MAKE) -C mge
+
+$(NAME): $(OBJECTS) mge/libmge.a libft/libft.a
 	$(CC) $(CFLAGS) $(OBJECTS) $(FT_FLAGS) $(MLX_FLAGS) $(INCLUDE) -o $@
 
 build/%.o: src/%.c
@@ -70,4 +71,4 @@ fclean: clean
 
 re: fclean all 
 
-.PHONY: all libft mlx clean fclean submodules re
+.PHONY: all clean fclean submodules re mge libft mlx

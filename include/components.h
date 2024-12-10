@@ -6,18 +6,18 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 20:03:38 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 07:31:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMPONENTS_H
 # define COMPONENTS_H
 
-# include "sprites.h"
-# include "schema.h"
 # include "config.h"
+# include "mge.h"
+# include "map.h"
 
-struct s_map_data;
+typedef struct s_map_data t_map_data;
 
 typedef struct s_fire
 {
@@ -43,33 +43,38 @@ typedef struct s_boat
 	}	direction;
 }	t_boat;
 
+enum e_directions
+{
+	BACK,
+	LEFT,
+	FRONT,
+	RIGHT
+};
+
+enum e_move_type
+{
+	SPELLCAST,
+	THRUST,
+	WALK,
+	SLASH_128
+};
+
 typedef struct s_player
 {
 	t_sprites			spr;
 	t_point				loc;
 	t_clip				clip;
 	int					logs_count;
-	enum e_move_type
-	{
-		SPELLCAST,
-		THRUST,
-		WALK,
-		SLASH_128
-	}	movement;
-	enum e_directions
-	{
-		BACK,
-		LEFT,
-		FRONT,
-		RIGHT
-	}	direction;
+	enum e_move_type	movement;
+	enum e_directions	direction;
 	int					is_walk;
 	int					speed;
 }	t_player;
 
-int	load_tree(t_tree *tree, t_schema *schema);
-int	load_boat(t_boat *boat, t_schema *schema);
-int	load_fire(t_fire *fire, t_schema *schema);
-int	load_player(t_player *player, t_schema *schema);
+int	load_tree(t_tree *tree, void *schema);
+int	load_boat(t_boat *boat, void *schema);
+int	load_fire(t_fire *fire, void *schema);
+int	load_player(t_player *player, void *schema);
+int     load_components(t_schema *schema, t_map_data *o_map);
 
 #endif

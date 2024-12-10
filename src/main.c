@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 23:47:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:05:29 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,31 +59,34 @@ int	player_walk(int	keycode, t_player *player)
 	return (0);
 }
 
-int key_release(int keycode, t_game *data)
+int key_release(int keycode, t_game *game)
 {
 	if (keycode == KEY_UP || keycode == KEY_DOWN \
 		|| keycode == KEY_RIGHT || keycode == KEY_LEFT)
-		data->player->is_walk = 0;
+		game->player->is_walk = 0;
 	return (0);
 }
 
 
 
 int rander(t_game	*game)
-{
-	int	(*obj_render)(void *, t_image *);
-	
+{	
+	t_image	*frame;
+
 	game->time++;
 	if (game->time - game->last_rander < DELAY)
 		return (0);
-	obj_render = (void *)((t_object *)&game->map)->render;
-	if (obj_render)
-		if (obj_render(&game->map, &game->frame) != 0)
-			return (-1);
 	game->last_rander = game->time;
-	mlx_clear_window(game->mlx_ptr, game->win_ptr);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->frame.img_ptr, 0, 0);
+	frame = &game->frame;
+	ft_bzero(game->frame.buffer, frame->height * frame->width * frame->bpp / 8);
+	render_schema(game->gs, frame);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, frame->img_ptr, 0, 0);
 	return (0);
+}
+
+void print_tileds_blocks(t_map *map)
+{
+	ft_printf("map: %s\n", (char *)map);
 }
 
 int main(int argc, char **argv)
@@ -95,25 +98,35 @@ int main(int argc, char **argv)
 		ft_fprintf(2, "Usege: %s map.ber\n", argv[0]);
 		return (1);
 	}
-	game.mlx_ptr = mlx_init();
-    // if (game.mlx_ptr == NULL)
-    //     return (EXIT_FAILURE);
+	game.gs = init_game_schema();
 
-	if (load_map(&game.map, game.mlx_ptr, argv[1]) != 0)
-		return (EXIT_FAILURE);
-	game.player = game.map.components.player;
-    game.width = game.map.tiled_data.size * game.map.s_map.cols;
-    game.height = game.map.tiled_data.size  * game.map.s_map.rows;
+	if (check_schema(game.gs, argv[1]) != 0)
+		return (-1);
+
+	game.mlx_ptr = mlx_init();
+	// if (game.mlx_ptr == NULL)
+    //     return (EXIT_FAILURE);
+    game.width = game.gs->map.tiled_data.size * game.gs->map.s_map.cols;
+    game.height = game.gs->map.tiled_data.size  * game.gs->map.s_map.rows;
 	
-	game.frame.img_ptr = mlx_new_image(game.mlx_ptr, game.width, game.height);
-	game.frame.width = game.width;
-	game.frame.height = game.height;
-	load_image(&game.frame);
+	ft_printf("(%d, %d)\n", game.width, game.height);
 
 	game.win_ptr = mlx_new_window(game.mlx_ptr, game.width, game.height, "Lumberjack");
     // if (game.win_ptr == NULL)
     //     return (EXIT_FAILURE);
+	game.frame.img_ptr = mlx_new_image(game.mlx_ptr, game.width, game.height);
+	game.frame.width = game.width;
+	game.frame.height = game.height;
+	load_image_data(&game.frame);
 
+	if (load_schema(game.gs, game.mlx_ptr) != 0)
+		return (-1);
+
+	print_tileds_blocks(&game.gs->map);
+
+	game.player = (void *)schema_get_component_by_name(game.gs, "player");
+
+	ft_printf("player: %s\n", (char *)game.player);
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, key_release, &game);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, player_walk, game.player);
 	mlx_hook(game.win_ptr, DestroyNotify, 0, end_program, &game);

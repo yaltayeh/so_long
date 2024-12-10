@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 07:00:09 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 11:56:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:05:29 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdlib.h>
 # include <libft.h>
+# include <ft_stack.h>
+# include <mlx.h>
 
 # define NAME_SIZE 16
 
@@ -47,11 +49,7 @@ typedef struct s_clip
 }	t_clip;
 
 t_point	point_to_center(t_point center, t_point size);
-
-int	load_image(t_image *img);
-
-void	*mlx_xpm_file_to_image(void *mlx_ptr, char *filename,
-			       int *width, int *height);
+int		load_image_data(t_image *img);
 
 void	put_image_to_image(t_image *dst, t_image *src, \
 						t_point dst_loc, t_clip clip);

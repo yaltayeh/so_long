@@ -1,4 +1,4 @@
-NAME = libmgn.a
+NAME = libmge.a
 
 CC = cc
 LIBFT_DIR = ../libft
@@ -26,3 +26,7 @@ clean:
 
 fclean: clean
 	rm -rf $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

@@ -6,73 +6,67 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:26:52 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 11:42:13 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 07:31:48 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "components.h"
 #include "map.h"
+#include "game_schema.h"
 
-static int	load_component(t_components *components, int i, char type, t_point loc)
+static int	load_component(t_schema *schema, int i, char type, t_point loc)
 {
 	t_object	**component_p;
+	int			(*load_func)(void *, t_schema *);
 
-	component_p = components->components + i;
+	component_p = schema->components + i;
+	*component_p = NULL;
 	if (type == 'E')
 	{
 		*component_p = malloc(sizeof(t_boat));
-		if (!*component_p)
-			return (-1);
-		load_boat((void *)*component_p, components);
+		load_func = (void *)load_boat;
 	}
 	else if (type == 'C')
 	{
 		*component_p = malloc(sizeof(t_tree));
-		if (!*component_p)
-			return (-1);
-		load_tree((void *)*component_p, components);
+		load_func = (void *)load_tree;
 	}
 	else if (type == 'F')
 	{
 		*component_p = malloc(sizeof(t_fire));
-		if (!*component_p)
-			return (-1);
-		load_fire((void *)*component_p, components);
+		load_func = (void *)load_fire;
 	}
 	else if (type == 'P')
 	{
 		*component_p = malloc(sizeof(t_player));
-		load_player((void *)*component_p, components);
-		components->player = (t_player *)*component_p;
+		load_func = (void *)load_player;
 	}
-	else
-	{
-		*component_p = NULL;
+	if (!*component_p)
 		return (-1);
-	}
+	if (load_func(*component_p, schema) != 0)
+		return (-1);
 	(*component_p)->location = (t_point){(loc.x + 1) * 2 * TILED_SIZE, (loc.y + 1) * 2 * TILED_SIZE};
 	return (0);
 }
 
-static int	load_game_schema(t_schema *com, t_map_data *o_map)
+int	load_components(t_schema *schema, t_map_data *o_map)
 {
-	int		r;
-	int		c;
-	int		i;
+	int			r;
+	int			c;
+	int			i;
 
+	schema->nb_components = 0;
 	r = -1;
-	com->nb_components = 0;
 	while (++r < o_map->rows)
 	{
 		c = -1;
 		while (++c < o_map->cols)
 			if (ft_strchr(COMPONENTS_CHARACTERS, o_map->blocks[r][c]))
-				com->nb_components++;
+				schema->nb_components++;
 	}
-	com->components = ft_calloc(com->nb_components + 1, sizeof(t_object *));
-	if (!com->components)
+	schema->components = ft_calloc(schema->nb_components, sizeof(t_object *));
+	if (!schema->components)
 		return (-1);
-
 	i = 0;
 	r = -1;
 	while (++r < o_map->rows)
@@ -80,24 +74,10 @@ static int	load_game_schema(t_schema *com, t_map_data *o_map)
 		c = -1;
 		while (++c < o_map->cols)
 			if (ft_strchr(COMPONENTS_CHARACTERS, o_map->blocks[r][c]))
-				if (load_component(com, i++, o_map->blocks[r][c], (t_point){c, r}) != 0)
+				if (load_component(schema, i++, o_map->blocks[r][c], (t_point){c, r}) != 0)
 					return (-1);
 	}
+
 	return (0);
 }
 
-int	load_components(t_components *components, void *mlx_ptr, t_map_data *o_map)
-{
-	if (open_xpm_file(&components->images[FIRE], mlx_ptr, FIRE_PATH) != 0)
-		return (-1);
-	if (open_xpm_file(&components->images[TREE], mlx_ptr, TREE_PATH) != 0)
-		return (-1);
-	if (open_xpm_file(&components->images[BOAT], mlx_ptr, BOAT_PATH) != 0)
-		return (-1);
-	if (open_xpm_file(&components->images[PLAYER], mlx_ptr, PLAYER_PATH) != 0)
-		return (-1);
-	if (load_game_schema(components, o_map) != 0)
-		return (-1);
-	components->spr.obj.render = render_components;
-	return (0);
-}

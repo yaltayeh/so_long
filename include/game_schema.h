@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   game_schema.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 10:03:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 10:05:29 by yaltayeh         ###   ########.fr       */
+/*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
+/*   Updated: 2024/12/10 07:21:58 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#ifndef GAME_SCHEMA_H
+# define GAME_SCHEMA_H
 
-t_point	point_to_center(t_point center, t_point size)
-{
-	return ((t_point){center.x - size.x / 2, \
-						center.y - size.y / 2});
-}
+# include "config.h"
+# include "mge.h"
+# include "map.h" 
+# include "components.h"
 
-int	load_image_data(struct s_image *img)
+typedef struct s_game_schema
 {
-	img->buffer = (int *)mlx_get_data_addr(img->img_ptr, &img->bpp, \
-									&img->size_line, &img->endian);
-	if (!img->buffer)
-		return (-1);
-	return (0);
-}
+	t_schema	schema;
+	t_map		map;
+}	t_game_schema;
+
+int	load_game_schema(t_game_schema *gs, void *mlx_ptr);
+int	destroy_game_schema(t_game_schema **gs_r);
+t_game_schema	*init_game_schema();
+
+#endif

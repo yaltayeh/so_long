@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 14:26:17 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:12:58 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,33 +66,31 @@ static t_clip	*get_tiled_clip(t_map_data *map, t_tiled_data *t, int r, int c)
 	return (0);
 }
 
-int	init_tiled_blocks(t_tiled **tileds_r, t_map_data *map, t_tiled_data *t)
+int	init_tiled_blocks(t_tiled **tileds_r, t_map_data *s_map, \
+						t_tiled_data *t, void *schema)
 {
-	int	r;
-	int	c;
+	int		r;
+	int		c;
+	t_tiled	*tiled;
 
-	*tileds_r = malloc(sizeof(t_tiled) * map->rows * map->cols);
+	*tileds_r = malloc(sizeof(t_tiled) * s_map->rows * s_map->cols);
 	
 	if (!*tileds_r)
 		return (-1);
 	r = 0;
-	while (r < map->rows)
+	while (r < s_map->rows)
 	{
 		c = 0;
-		while (c < map->cols)
+		while (c < s_map->cols)
 		{
-			ft_printf("%c ", map->blocks[r][c]);
-			load_tiled(&(*tileds_r)[r * map->cols + c], \
-						&t->spr.image, \
-						get_tiled_clip(map, t, r, c));
-			(*tileds_r)[r * map->cols + c].obj.location.x = c * t->size;
-			(*tileds_r)[r * map->cols + c].obj.location.y = r * t->size;
+			tiled = *tileds_r + (r * s_map->cols + c);
+			load_tiled(tiled, schema, get_tiled_clip(s_map, t, r, c));
+			tiled->obj.location.x = c * t->size;
+			tiled->obj.location.y = r * t->size;
 			c++;
 		}
 		r++;
-		ft_printf("\n");
 	}
-	ft_printf("\n");
 	return (0);
 }
 
@@ -100,7 +98,7 @@ static int	render_map(t_map *map, t_image *frame)
 {
 	int	i;
 	int	blocks_count;
-	int (*render_p)(void *, t_image *);
+	int (*render)(void *, t_image *);
 
 	if (!map || !frame || !frame->buffer)
 		return (-1);
@@ -110,15 +108,15 @@ static int	render_map(t_map *map, t_image *frame)
 	i = 0;
 	while (i < blocks_count)
 	{
-		render_p = (void *)map->tileds[i].obj.render;
-		if (render_p && render_p(&map->tileds[i], frame) != 0)
+		render = (void *)map->tileds[i].obj.render;
+		if (render && render(&map->tileds[i], frame) != 0)
 			return (-1);
 		i++;
 	}
 	return (0);
 }
 
-int	load_map(t_map *map, t_schema *schema, const char *map_path)
+int	load_map(t_map *map, void *schema, const char *map_path)
 {
 	int	err;
 	
@@ -129,13 +127,12 @@ int	load_map(t_map *map, t_schema *schema, const char *map_path)
 	err = map_parser(&map->o_map, map_path);
 	if (err)
 		return (err);
-
 	err = scale_map(&map->s_map, &map->o_map);
 	if (err)
 		return (err);
-	if (init_tiled_blocks(&map->tileds, &map->s_map, &map->tiled_data) != 0)
-		return (-1);
 	map->nb_tileds = map->s_map.rows * map->s_map.cols;
+	if (init_tiled_blocks(&map->tileds, &map->s_map, &map->tiled_data, schema) != 0)
+		return (-1);
 	map->tiled_data.spr.obj.render = render_map;
 	return (0);
 }

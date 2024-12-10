@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 13:30:09 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 07:31:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ int update_player(t_player *player)
 	return (1);
 }
 
-int	load_player(t_player *player, t_schema *schema)
+int	load_player(t_player *player, void *schema)
 {
 	load_sprites((void *)player);
 	ft_strlcpy((char *)player, "player", NAME_SIZE);
-	player->spr.image = get_image_by_name(schema, "player");
+	player->spr.image = schema_get_image_by_name(schema, "player");
 	player->spr.obj.location = (t_point){0, 0};
 	player->spr.obj.center_point = (t_point){32, 32};
 	player->spr.delay = PLAYER_DELEY;

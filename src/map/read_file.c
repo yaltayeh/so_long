@@ -6,11 +6,13 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 13:27:31 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/11/30 14:06:22 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/10 06:51:13 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <so_long.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <libft.h>
 
 #define BUFFER_SIZE 4096
 
