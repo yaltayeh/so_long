@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/11 23:16:36 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:53:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_point	valid_move(t_map_data *s_map, t_point current_point, t_point new_point)
 	return (new_point);
 }
 
-int update_player(t_player *player)
+void update_player(t_player *player)
 {
 	t_point	new_point;
 	
@@ -49,6 +49,7 @@ int update_player(t_player *player)
 		player->clip.width = 64;
 		player->clip.height = 64;
 	}
+	player->spr.run_animate = 1;
 	if (player->movement == WALK)
 	{
 		new_point = player->spr.obj.relative_location;
@@ -63,11 +64,10 @@ int update_player(t_player *player)
 			else if (player->direction == RIGHT)
 				new_point.x += player->speed;
 			player->spr.obj.relative_location = valid_move(&player->gs->map.s_map, player->spr.obj.relative_location, new_point);
-			return (1);
 		}
-		return (0);
+		else
+			player->spr.run_animate = 0;
 	}
-	return (1);
 }
 
 int	load_player(t_player *player, t_game_schema *gs)

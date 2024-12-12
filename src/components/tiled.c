@@ -6,13 +6,13 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:27:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/11 23:15:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:46:07 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tiled.h"
 
-int	animate_tiled_data(t_tiled_data *t)
+void	animate_tiled_data(t_tiled_data *t)
 {
 	int offset;
 
@@ -35,7 +35,6 @@ int	animate_tiled_data(t_tiled_data *t)
 	t->tileds[13] = (t_clip){offset + 0, t->size * 5, t->size, t->size};
 	t->tileds[14] = (t_clip){offset + t->size, t->size * 5, t->size, t->size};
 	t->tileds[15] = (t_clip){offset + t->size * 2, t->size * 5, t->size, t->size};
-	return (1);
 }
 
 int	load_tiled_data(t_tiled_data *t, int size)
@@ -43,7 +42,6 @@ int	load_tiled_data(t_tiled_data *t, int size)
 	if (load_sprites(&t->spr) == -1)
 		return (-1);
 	ft_strlcpy((char *)t, "tiled_data", NAME_SIZE);
-	
 	t->size = size;
 	t->spr.index = 0;
 	t->spr.max_index = 4;

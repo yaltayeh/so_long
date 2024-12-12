@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 14:05:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:56:35 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void	update_object(void *_obj)
 		obj->absolute_location = *obj->parent_location;
 	obj->absolute_location.x += obj->relative_location.x - obj->center_point.x;
 	obj->absolute_location.y += obj->relative_location.y - obj->center_point.y;
+	// ft_printf("update: %s (%d, %d)\n", (char *)obj, obj->absolute_location.x, obj->absolute_location.y);
 }
 

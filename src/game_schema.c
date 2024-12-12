@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 12:42:37 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:50:19 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 	if (load_components((void *)gs, &gs->map.o_map) != 0)
 		return (-1);
 	((t_object *)&gs->map)->parent_location = (t_point *)&gs->camera.frame;
-	// ft_printf("map parent: %p\n", ((t_object *)&gs->map)->parent_location);
-	// ft_printf("camera point: %p\n", (t_point *)&gs->camera.frame);
 	return (0);
 }
 
@@ -83,8 +81,8 @@ int	check_game_schema(t_game_schema *gs, char *map_path)
 
 int	render_game_schema(t_game_schema *gs, t_image *frame)
 {
-	int	(*render)(void *, t_image *);
-	int	(*update)(void *);
+	int		(*render)(void *, t_image *);
+	void	(*update)(void *);
 
 	update = ((t_object *)&gs->map)->update;
 	if (update)

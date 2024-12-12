@@ -6,16 +6,15 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:24:14 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/11 23:15:06 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:40:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "components.h"
 
-int animate_tree(t_tree *tree)
+void animate_tree(t_tree *tree)
 {
 	tree->clip = (t_clip){56 * 0, 0, 56, 94};
-	return (0);
 }
 
 int	load_tree(t_tree *tree, t_game_schema *gs)

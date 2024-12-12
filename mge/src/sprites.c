@@ -6,33 +6,18 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 15:16:40 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:57:03 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sprites.h"
 #include <stdio.h>
 
-int	render_sprites(void *_spr, t_image *frame)
-{
-	t_sprites	*spr;
-	int			i;
-	t_point		location;
-
-	spr = (t_sprites *)_spr;
-	i = 0;
-	while (spr->clips && i < spr->nb_clip)
-	{
-		put_image_to_image(frame, spr->image, location, spr->clips[i]);
-		i++;
-	}
-	return (0);
-}
 
 void	animate_sprites(void *_spr)
 {
 	t_sprites	*spr;
-	int			(*animate)(t_sprites *);
+	void		(*animate)(t_sprites *);
 
 	spr = (t_sprites *)_spr;
 	if (spr->delay > 0)
@@ -45,9 +30,27 @@ void	animate_sprites(void *_spr)
 			animate = spr->animate;
 			if (animate)
 				animate(spr);
-			spr->index = (spr->index + 1) % spr->max_index;
+			if (spr->max_index > 0)
+				spr->index = (spr->index + 1) % spr->max_index;
 		}
 	}
+}
+
+int	render_sprites(void *_spr, t_image *frame)
+{
+	t_sprites	*spr;
+	int			i;
+
+	spr = (t_sprites *)_spr;
+	update_object(spr);
+	animate_sprites(spr);
+	i = 0;
+	while (spr->clips && i < spr->nb_clip)
+	{
+		put_image_to_image(frame, spr->image, spr->obj.absolute_location, spr->clips[i]);
+		i++;
+	}
+	return (0);
 }
 
 int	load_sprites(void *_spr)

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 11:08:54 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 18:10:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ static int	render_map(t_map *map, t_image *frame)
 
 	if (!map || !frame || !frame->buffer)
 		return (-1);
+	update_object(map);
 	animate_sprites(map);
 	blocks_count = map->s_map.rows * map->s_map.cols;
 	i = 0;
