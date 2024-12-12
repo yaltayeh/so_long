@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:51:32 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 10:57:20 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:11:42 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	render_schema(void *_schema, t_image *frame)
 {
 	int			i;
 	int			(*render)(void *, t_image *);
-	int			(*update)(void *);
+	void		(*update)(void *);
 	t_schema	*schema;
 
 	schema = (t_schema *)_schema;
@@ -26,8 +26,8 @@ int	render_schema(void *_schema, t_image *frame)
 	while (i < schema->nb_components)
 	{
 		update = schema->components[i]->update;
-		if (update && update(schema->components[i]) != 0)
-			return (-1);
+		if (update)
+			update(schema->components[i]);
 		i++;
 	}
 	render = schema->render_schema;

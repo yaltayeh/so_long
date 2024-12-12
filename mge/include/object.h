@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:05:54 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 13:11:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:11:09 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_object
 }	t_object;
 
 int		load_object(void *_obj);
-void	render_object(void *obj, t_image *img);
+int		render_object(void *obj, t_image *img);
 void	update_object(void *_obj);
 
 #endif
