@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 14:12:35 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:16:40 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	animate_sprites(void *_spr)
 {
 	t_sprites	*spr;
 	int			(*animate)(t_sprites *);
-	int			to_next;
 
 	spr = (t_sprites *)_spr;
 	if (spr->delay > 0)
@@ -44,11 +43,9 @@ void	animate_sprites(void *_spr)
 		{
 			spr->last_animate = spr->timer;
 			animate = spr->animate;
-			to_next = 1;
 			if (animate)
-				to_next = animate(spr);
-			if (to_next == 1)
-				spr->index = (spr->index + 1) % spr->max_index;
+				animate(spr);
+			spr->index = (spr->index + 1) % spr->max_index;
 		}
 	}
 }
@@ -65,6 +62,7 @@ int	load_sprites(void *_spr)
 	spr->clips = NULL;
 	spr->nb_clip = 0;
 	spr->delay = 0;
+	spr->run_animate = 1;
 	spr->last_animate = 0;
 	spr->timer = 0;
 	return (0);
