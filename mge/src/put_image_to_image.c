@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 23:22:42 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/08 19:46:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 10:53:35 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,15 @@ void	put_image_to_image(t_image *dst, t_image *src, \
 {
 	int	x;
 	int	y;
-	int	*dst_c;
-	int	src_c;
+	int	*dc;
+	int	sc;
 
 	if (!dst || !src || !dst->buffer || !src->buffer \
 			|| clip.height < 0 || clip.width < 0)
 		return ;
 	y = -1;
-	while (++y < clip.height \
-				&& y + clip.y < src->height \
-				&& y + dst_loc.y < dst->height)
+	while (++y < clip.height && y + clip.y < src->height \
+								&& y + dst_loc.y < dst->height)
 	{
 		if (y + clip.y < 0 || y + dst_loc.y < 0)
 			continue ;
@@ -52,9 +51,9 @@ void	put_image_to_image(t_image *dst, t_image *src, \
 		{
 			if (x + clip.x < 0 || x + dst_loc.x < 0)
 				continue ;
-			dst_c = &dst->buffer[(y + dst_loc.y) * dst->width + (x + dst_loc.x)];
-			src_c = src->buffer[(y + clip.y) * src->width + (x + clip.x)];
-			*dst_c = blend_color(*dst_c, src_c);
+			dc = &dst->buffer[(y + dst_loc.y) * dst->width + (x + dst_loc.x)];
+			sc = src->buffer[(y + clip.y) * src->width + (x + clip.x)];
+			*dc = blend_color(*dc, sc);
 		}
 	}
 }

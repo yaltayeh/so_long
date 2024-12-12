@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_schema.h                                      :+:      :+:    :+:   */
+/*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/11 10:56:58 by yaltayeh         ###   ########.fr       */
+/*   Created: 2024/12/11 13:49:11 by yaltayeh          #+#    #+#             */
+/*   Updated: 2024/12/11 13:59:38 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAME_SCHEMA_H
-# define GAME_SCHEMA_H
+#include "camera.h"
 
-# include <mge.h>
-# include "config.h"
-# include "map.h"
-# include "camera.h"
-
-typedef struct s_map t_map;
-
-typedef struct s_game_schema
+void	update_camera(t_camera	*camera)
 {
-	t_schema	schema;
-	t_map		map;
-	t_camera	camera;
-}	t_game_schema;
-
-int	load_game_schema(t_game_schema *gs, void *mlx_ptr);
-int	destroy_game_schema(t_game_schema **gs_r);
-t_game_schema	*init_game_schema();
-
-#endif
+	t_object	*player;
+	
+	player = schema_get_component_by_name(camera->schema, "player");
+	if (player)
+	{
+		camera->frame.x = -player->relative_location.x + 500;
+		camera->frame.y = -player->relative_location.y + 325;
+	}
+}

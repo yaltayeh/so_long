@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_schema.h                                      :+:      :+:    :+:   */
+/*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/11 10:56:58 by yaltayeh         ###   ########.fr       */
+/*   Created: 2024/12/11 10:10:09 by yaltayeh          #+#    #+#             */
+/*   Updated: 2024/12/11 13:53:03 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAME_SCHEMA_H
-# define GAME_SCHEMA_H
+#ifndef CAMERA_H
+# define CAMERA_H
 
-# include <mge.h>
-# include "config.h"
-# include "map.h"
-# include "camera.h"
+# include "mge.h"
 
-typedef struct s_map t_map;
-
-typedef struct s_game_schema
+typedef	struct s_camera
 {
-	t_schema	schema;
-	t_map		map;
-	t_camera	camera;
-}	t_game_schema;
+	t_clip	 frame;
+	void	 *schema;
+}	t_camera;
 
-int	load_game_schema(t_game_schema *gs, void *mlx_ptr);
-int	destroy_game_schema(t_game_schema **gs_r);
-t_game_schema	*init_game_schema();
+void	update_camera(t_camera	*camera);
 
 #endif

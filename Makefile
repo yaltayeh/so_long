@@ -22,6 +22,7 @@ endif
 
 SOURCES =	main.c						\
 			utils.c						\
+			camera.c					\
 			game_schema.c				\
 			components/fire.c			\
 			components/components.c		\
@@ -62,11 +63,13 @@ build/%.o: src/%.c
 
 clean:
 	rm -rf $(OBJECTS)
+	$(MAKE) -C mge clean
 #	$(MAKE) -C libft clean
 #	$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
 	rm -rf $(NAME)
+	$(MAKE) -C mge fclean
 #	$(MAKE) -C libft fclean
 
 re: fclean all 

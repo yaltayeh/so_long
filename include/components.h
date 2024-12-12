@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 19:20:52 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/11 20:10:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ typedef struct s_player
 	struct s_game_schema		*gs;
 }	t_player;
 
-int	load_tree(t_tree *tree, void *schema);
-int	load_boat(t_boat *boat, void *schema);
-int	load_fire(t_fire *fire, void *schema);
-int	load_player(t_player *player, void *schema);
-int     load_components(t_schema *schema, t_map_data *o_map);
-
+int	load_tree(t_tree *tree, t_game_schema *gs);
+int	load_boat(t_boat *boat, t_game_schema *gs);
+int	load_fire(t_fire *fire, t_game_schema *gs);
+int	load_player(t_player *player, t_game_schema *gs);
+int     load_components(t_game_schema *gs, t_map_data *o_map);
+void	sort_objects(t_object **objects, int nb_object);
 #endif

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 11:03:58 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:42:37 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,9 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 		return (-1);
 	if (load_components((void *)gs, &gs->map.o_map) != 0)
 		return (-1);
+	((t_object *)&gs->map)->parent_location = (t_point *)&gs->camera.frame;
+	// ft_printf("map parent: %p\n", ((t_object *)&gs->map)->parent_location);
+	// ft_printf("camera point: %p\n", (t_point *)&gs->camera.frame);
 	return (0);
 }
 
@@ -81,7 +84,12 @@ int	check_game_schema(t_game_schema *gs, char *map_path)
 int	render_game_schema(t_game_schema *gs, t_image *frame)
 {
 	int	(*render)(void *, t_image *);
+	int	(*update)(void *);
 
+	update = ((t_object *)&gs->map)->update;
+	if (update)
+		update(&gs->map);
+	update_camera(&gs->camera);
 	render = ((t_object *)&gs->map)->render;
 	if (render && render(&gs->map, frame) != 0)
 		return (-1);
@@ -95,6 +103,7 @@ t_game_schema	*init_game_schema()
 	gschema = ft_calloc(1, sizeof(t_game_schema));
 	if (!gschema)
 		return (NULL);
+	gschema->camera.schema = gschema;
 	gschema->schema.check_schema = check_game_schema;
 	gschema->schema.render_schema = render_game_schema;
 	gschema->schema.load_schema = load_game_schema;

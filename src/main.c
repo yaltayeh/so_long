@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 19:29:44 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:11:36 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,38 +24,49 @@ int end_program(t_game *game)
 	exit(0);
 }
 
-int	player_walk(int	keycode, t_player *player)
+int	player_walk(int	keycode, t_game *game)
 {
 	enum e_move_type	movement;
 	
 	// ft_printf("key: %d\n", keycode);
 	movement = WALK;
 	if (keycode == KEY_UP)
-		player->direction = BACK;
+		game->player->direction = BACK;
 	else if (keycode == KEY_DOWN)
-		player->direction = FRONT;
+		game->player->direction = FRONT;
 	else if (keycode == KEY_RIGHT)
-		player->direction = RIGHT;
+		game->player->direction = RIGHT;
 	else if (keycode == KEY_LEFT)
-		player->direction = LEFT;
+		game->player->direction = LEFT;
 	else if (keycode == KEY_SPACE)
 	{
-		player->logs_count = (player->logs_count + 1) % 3;
+		game->player->logs_count = (game->player->logs_count + 1) % 3;
 		return (0);
 	}
 	else
 		return (0);
-	if (movement != player->movement)
+	if (movement != game->player->movement)
 	{
-		player->movement = movement;
-		player->spr.index = 0;
+		game->player->movement = movement;
+		game->player->spr.index = 0;
 	}
 
 	if (movement == SLASH_128)
-		player->spr.max_index = 6;
+		game->player->spr.max_index = 6;
 	else
-		player->spr.max_index = 9;
-	player->is_walk = 1;
+		game->player->spr.max_index = 9;
+	game->player->is_walk = 1;
+
+
+	int camera_speed = 20;
+	if (keycode == KEY_UP)
+		game->gs->camera.frame.y += camera_speed;
+	else if (keycode == KEY_DOWN)
+		game->gs->camera.frame.y -= camera_speed;
+	else if (keycode == KEY_RIGHT)
+		game->gs->camera.frame.x -= camera_speed;
+	else if (keycode == KEY_LEFT)
+		game->gs->camera.frame.x += camera_speed;
 	return (0);
 }
 
@@ -78,15 +89,10 @@ int rander(t_game	*game)
 		return (0);
 	game->last_rander = game->time;
 	frame = &game->frame;
-	ft_bzero(game->frame.buffer, frame->height * frame->width * frame->bpp / 8);
+	ft_bzero(frame->buffer, frame->height * frame->size_line);
 	render_schema(game->gs, frame);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, frame->img_ptr, 0, 0);
 	return (0);
-}
-
-void print_tileds_blocks(t_map *map)
-{
-	ft_printf("map: %s\n", (char *)map);
 }
 
 int main(int argc, char **argv)
@@ -106,9 +112,11 @@ int main(int argc, char **argv)
 	game.mlx_ptr = mlx_init();
 	// if (game.mlx_ptr == NULL)
     //     return (EXIT_FAILURE);
-    game.width = game.gs->map.tiled_data.size * game.gs->map.s_map.cols;
-    game.height = game.gs->map.tiled_data.size  * game.gs->map.s_map.rows;
-	
+    // game.width = game.gs->map.tiled_data.size * game.gs->map.s_map.cols;
+    // game.height = game.gs->map.tiled_data.size  * game.gs->map.s_map.rows;
+	game.width = WIN_WIDTH;
+	game.height = WIN_HEIGHT;
+
 	game.win_ptr = mlx_new_window(game.mlx_ptr, game.width, game.height, "Lumberjack");
     // if (game.win_ptr == NULL)
     //     return (EXIT_FAILURE);
@@ -120,15 +128,12 @@ int main(int argc, char **argv)
 	if (load_schema(game.gs, game.mlx_ptr) != 0)
 		return (-1);
 
-	print_tileds_blocks(&game.gs->map);
-
 	game.player = (void *)schema_get_component_by_name(game.gs, "player");
 
 	ft_printf("player: %s\n", (char *)game.player);
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, key_release, &game);
-	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, player_walk, game.player);
+	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, player_walk, &game);
 	mlx_hook(game.win_ptr, DestroyNotify, 0, end_program, &game);
-	
 	// start loop
 	game.last_rander = 0;
 	game.time = 0;

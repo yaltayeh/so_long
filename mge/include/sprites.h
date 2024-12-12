@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:09:12 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/09 13:27:16 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 10:44:09 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ typedef struct s_sprites
 	t_clip		*clips;
 	int			nb_clip;
 
-	t_clock		last_update;
+	t_clock		last_animate;
 	t_clock		delay;
 	t_clock		timer;
 
-	int			(*update)();
+	int			(*animate)();
 }	t_sprites;
 
-int	load_sprites(t_sprites *spr);
-int	render_sprites(t_sprites *spr, t_image *frame);
+int		load_sprites(void *_spr);
+int		render_sprites(void *_spr, t_image *frame);
+void	animate_sprites(void *_spr);
 
 #endif

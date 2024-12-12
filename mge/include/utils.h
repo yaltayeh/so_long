@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 07:00:09 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 14:28:21 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 10:49:49 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 # define NAME_SIZE 16
 
-typedef unsigned long	t_clock;
+typedef unsigned long		t_clock;
 
 typedef struct s_image
 {

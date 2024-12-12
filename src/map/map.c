@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 15:07:52 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 11:08:54 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ static t_clip	*get_tiled_clip2(t_tiled_data *t, unsigned char num)
 	i /= 2;
 	if (num == 1)
 		i = 4 + (i + 3) % 4;	// outer corners
-	else if (num == 7 || num == 3)
+	else if (num == 3 || num == 7)
 		i = 8 + (i + 1) % 4;	// edges	
-	else if (num == 31 || num == 15 || num == 27)
+	else if (num == 15 || num == 27 || num == 31)
 		i = 0 + (i + 0) % 4;	// inner corners
 	else if (num == 99)
 		i = 0 + (i + 1) % 4;	// inner corners
 	else
 	{
 		ft_fprintf(2, "unknow tiled number (%d)\n", num);
-		return (&t->main);
+		return (&t->tileds[12]);
 	}
-	return (&t->bounds[i]);
+	return (&t->tileds[i]);
 }
 
 static t_clip	*get_tiled_clip(t_map_data *map, t_tiled_data *t, int r, int c)
@@ -48,7 +48,7 @@ static t_clip	*get_tiled_clip(t_map_data *map, t_tiled_data *t, int r, int c)
 	int				_r;
 		
 	if (map->blocks[r][c] == '0')
-		return (&t->main);
+		return (&t->tileds[12]);
 	points = (t_point [8]){{-1, -1}, {0, -1}, {1, -1}, {1, 0}, \
 						{1, 1}, {0, 1}, {-1, 1}, {-1, 0}};
 	num = 0;
@@ -65,7 +65,7 @@ static t_clip	*get_tiled_clip(t_map_data *map, t_tiled_data *t, int r, int c)
 			num |= 1;
 	}
 	if (!num)
-		return  (&t->alternate[1]);
+		return  (&t->tileds[13]);
 	else
 		return (get_tiled_clip2(t, num));
 	return (0);
@@ -89,11 +89,11 @@ int	init_tiled_blocks(t_tiled **tileds_r, t_map_data *s_map, \
 		while (c < s_map->cols)
 		{
 			tiled = *tileds_r + (r * s_map->cols + c);
-			load_tiled(tiled, schema, get_tiled_clip(s_map, t, r, c));
-			tiled->spr.obj.location.x = c * t->size;// + (c + 1) % 2;
-			tiled->spr.obj.location.y = r * t->size;// + (r + 1) % 2;
-			tiled->spr.obj.location.x = c * t->size + (c + 1) % 2;
-			tiled->spr.obj.location.y = r * t->size + (r + 1) % 2;
+			load_tiled(tiled, schema, get_tiled_clip(s_map, t, r, c), (void *)t);
+			tiled->spr.obj.relative_location.x = c * t->size;
+			tiled->spr.obj.relative_location.y = r * t->size;
+			tiled->spr.obj.relative_location.x = c * t->size + (c + 1) % 2;
+			tiled->spr.obj.relative_location.y = r * t->size + (r + 1) % 2;
 			c++;
 		}
 		r++;
@@ -105,18 +105,15 @@ static int	render_map(t_map *map, t_image *frame)
 {
 	int	i;
 	int	blocks_count;
-	int (*render)(void *, t_image *);
 
 	if (!map || !frame || !frame->buffer)
 		return (-1);
-	if (render_sprites((void *)map, frame) != 0)
-		return (-1);
+	animate_sprites(map);
 	blocks_count = map->s_map.rows * map->s_map.cols;
 	i = 0;
 	while (i < blocks_count)
 	{
-		render = (void *)map->tileds[i].spr.obj.render;
-		if (render && render(&map->tileds[i], frame) != 0)
+		if (render_sprites(&map->tileds[i], frame) != 0)
 			return (-1);
 		i++;
 	}
