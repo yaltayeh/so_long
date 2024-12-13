@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:38:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 19:22:28 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:14:35 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 typedef struct s_schema
 {
+	void	*mlx_ptr;
 	struct s_resources
 	{
 		t_image	*images;
@@ -35,6 +36,7 @@ typedef struct s_schema
 int			load_schema(void *_schema, void *data);
 int			render_schema(void *_schema, t_image *frame);
 int			check_schema(void *_schema, void *data);
+void		destroy_schema(void **_schema);
 t_object	*schema_get_component_by_name(void *_schema, const char *name);
 t_image		*schema_get_image_by_name(void *_schema, const char *name);
 

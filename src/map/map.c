@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 14:35:30 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 20:17:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,33 @@ static int	render_map(t_map *map, t_image *frame)
 	return (0);
 }
 
+void	destroy_map(t_map **map_p)
+{
+	t_map	*map;
+	int		i;
+
+	map = *map_p;
+	if (map->o_map.blocks)
+	{
+		i = -1;
+		while (++i < map->o_map.rows && map->o_map.blocks[i])
+			free(map->o_map.blocks[i]);
+		free(map->o_map.blocks);
+		map->o_map.blocks = NULL;
+	}
+	if (map->s_map.blocks)
+	{
+		i = -1;
+		while (++i < map->s_map.rows && map->s_map.blocks[i])
+			free(map->s_map.blocks[i]);
+		free(map->s_map.blocks);
+		map->s_map.blocks = NULL;
+	}
+	if (map->tileds)
+		free(map->tileds);
+	map->tileds = NULL;
+}
+
 int	load_map(t_map *map, const char *map_path)
 {
 	int	err;
@@ -128,7 +155,6 @@ int	load_map(t_map *map, const char *map_path)
 	if (load_tiled_data((void *)map, TILED_SIZE) != 0)
 		return (-1);
 	ft_strlcpy((char *)map, "map", NAME_SIZE);
-
 	err = map_parser(&map->o_map, map_path);
 	if (err)
 		return (err);
@@ -136,6 +162,7 @@ int	load_map(t_map *map, const char *map_path)
 	if (err)
 		return (err);
 	map->nb_tileds = map->s_map.rows * map->s_map.cols;
-	map->tiled_data.spr.obj.render = render_map;
+	((t_object *)map)->render = render_map;
+	((t_object *)map)->destroy = destroy_map;
 	return (0);
 }

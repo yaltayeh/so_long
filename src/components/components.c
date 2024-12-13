@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:26:52 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 12:02:17 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:04:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,22 @@
 static int	load_component(t_game_schema *gs, int i, char type, t_point loc)
 {
 	t_object	**component_p;
-	int			(*load_func)(void *, void *);
+	t_object	*(*init_func)(void *);
 
 	component_p = gs->schema.components + i;
 	*component_p = NULL;
 	if (type == 'E')
-	{
-		*component_p = malloc(sizeof(t_boat));
-		load_func = (void *)load_boat;
-	}
+		init_func = (void *)init_boat;
 	else if (type == 'C')
-	{
-		*component_p = malloc(sizeof(t_tree));
-		load_func = (void *)load_tree;
-	}
+		init_func = (void *)init_tree;
 	else if (type == 'F')
-	{
-		*component_p = malloc(sizeof(t_fire));
-		load_func = (void *)load_fire;
-	}
+		init_func = (void *)init_fire;
 	else if (type == 'P')
-	{
-		*component_p = malloc(sizeof(t_player));
-		load_func = (void *)load_player;
-	}
-	if (!*component_p)
+		init_func = (void *)init_player;
+	else
 		return (-1);
-	if (load_func(*component_p, gs) != 0)
+	*component_p = init_func(gs);
+	if (!*component_p)
 		return (-1);
 	(*component_p)->relative_location = (t_point){(loc.x * 2 + 1) * TILED_SIZE, (loc.y * 2 + 1) * TILED_SIZE};
 	(*component_p)->parent_location = (void *)&gs->camera.frame;

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:10:09 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/11 13:53:03 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:49:54 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include "mge.h"
 
-typedef	struct s_camera
+typedef struct s_camera
 {
-	t_clip	 frame;
-	void	 *schema;
+	t_clip	frame;
+	void	*schema;
 }	t_camera;
 
 void	update_camera(t_camera	*camera);

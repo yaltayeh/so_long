@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/11 10:56:58 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:52:31 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "map.h"
 # include "camera.h"
 
-typedef struct s_map t_map;
+typedef struct s_map	t_map;
 
 typedef struct s_game_schema
 {
@@ -27,8 +27,8 @@ typedef struct s_game_schema
 	t_camera	camera;
 }	t_game_schema;
 
-int	load_game_schema(t_game_schema *gs, void *mlx_ptr);
-int	destroy_game_schema(t_game_schema **gs_r);
-t_game_schema	*init_game_schema();
+int				load_game_schema(t_game_schema *gs, void *mlx_ptr);
+int				destroy_game_schema(t_game_schema **gs_r);
+t_game_schema	*init_game_schema(void);
 
 #endif

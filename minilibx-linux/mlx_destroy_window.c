@@ -22,13 +22,13 @@ int	mlx_destroy_window(t_xvar *xvar,t_win_list *win)
   prev = &first;
   w = prev->next;
   while (w)
-    {
-      if (w==win)
-	prev->next = w->next;
-      else
-	prev = w;
-      w = w->next;
-    }
+  {
+    if (w==win)
+      prev->next = w->next;
+    else
+      prev = w;
+    w = w->next;
+  }
   xvar->win_list = first.next;
   XDestroyWindow(xvar->display,win->window);
   XFreeGC(xvar->display,win->gc);

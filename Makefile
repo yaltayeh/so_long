@@ -14,7 +14,7 @@ ifeq ($(UNAME_S), Linux)
 else ifeq ($(UNAME_S), Darwin)
 	MLX_DIR = ./minilibx_macos
 	MLX_FLAGS += -L$(MLX_DIR) -L/usr/X11/lib	\
-				-L /opt/homebrew/lib			\
+				-L/opt/homebrew/lib			\
 				-lmlx -lXext -lX11		 \
 				-framework OpenGL -framework AppKit 
 	INCLUDE += -I/usr/X11/include -I$(MLX_DIR)
@@ -24,12 +24,13 @@ SOURCES =	main.c						\
 			utils.c						\
 			camera.c					\
 			game_schema.c				\
+			player_walk.c				\
 			components/fire.c			\
 			components/components.c		\
 			components/boat.c			\
 			components/tree.c			\
-			components/tiled.c			\
 			components/player.c			\
+			map/tiled.c					\
 			map/read_file.c				\
 			map/map_parser.c			\
 			map/scale_map.c				\
@@ -38,7 +39,7 @@ SOURCES =	main.c						\
 SOURCES := $(addprefix src/, $(SOURCES))
 OBJECTS = $(SOURCES:src/%.c=build/%.o)
 
-all: mge libft submodules $(NAME)
+all: mlx mge libft submodules $(NAME)
 
 
 submodules:
@@ -55,7 +56,7 @@ mge:
 	$(MAKE) -C mge
 
 $(NAME): $(OBJECTS) mge/libmge.a libft/libft.a
-	$(CC) $(CFLAGS) $(OBJECTS) $(FT_FLAGS) $(MLX_FLAGS) $(INCLUDE) -o $@
+	$(CC) $(CFLAGS) $(OBJECTS) $(FT_FLAGS) $(MLX_FLAGS) -o $@
 
 build/%.o: src/%.c
 	@mkdir -p $(dir $@)

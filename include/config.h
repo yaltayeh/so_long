@@ -6,10 +6,9 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 18:44:31 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:52:31 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef CONFIG_H
 # define CONFIG_H
@@ -63,6 +62,7 @@
 # ifdef __linux__
 #  define DELAY		12500
 #  define KEY_SPACE XK_space
+#  define KEY_ESC	XK_Escape
 #  ifdef WASD
 #   define KEY_UP		XK_w
 #   define KEY_DOWN		XK_s
@@ -76,20 +76,18 @@
 #  endif
 # else
 #  define DELAY		400
-#  define KEY_SPACE 49
+#  define KEY_SPACE 0x31
+#  define KEY_ESC	0x35
 #  ifdef WASD
-#   define KEY_UP		13
-#   define KEY_DOWN		1
-#   define KEY_RIGHT	2
-#   define KEY_LEFT		0
+#   define KEY_UP		0x0d
+#   define KEY_DOWN		0x01
+#   define KEY_RIGHT	0x02
+#   define KEY_LEFT		0x00
 #  else
-#   define KEY_UP		126
-#   define KEY_DOWN		125
-#   define KEY_RIGHT	124
-#   define KEY_LEFT		123
+#   define KEY_UP		0x7e
+#   define KEY_DOWN		0x7d
+#   define KEY_RIGHT	0x7c
+#   define KEY_LEFT		0x7b
 #  endif
 # endif
-
-# define ESC_KEYCODE 53
-
 #endif

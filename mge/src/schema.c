@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:51:32 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 11:58:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:56:27 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,34 @@ int	check_schema(void *_schema, void *data)
 	if (check_schema_ptr)
 		return (check_schema_ptr(schema, data));
 	return (0);
+}
+
+void		destroy_schema(void **_schema)
+{
+	t_schema	*schema;
+	void		(*destroy)(void **);
+	int			i;
+
+	schema = (t_schema *)*_schema;
+	destroy = (void *)schema->destroy_schema;
+	if (schema->components)
+	{
+		i = -1;
+		while (++i < schema->nb_components)
+			destroy_object((void **)&schema->components[i]);
+		free(schema->components);
+	}
+	if (schema->resources.images)
+	{
+		i = -1;
+		while (++i < schema->resources.nb_images)
+			mlx_destroy_image(schema->mlx_ptr, schema->resources.images[i].img_ptr);
+		free(schema->resources.images);
+	}
+	ft_bzero(schema + sizeof(schema->mlx_ptr), \
+			sizeof(*schema) - sizeof(schema->mlx_ptr));
+	if (destroy)
+		destroy(_schema);
 }
 
 t_object	*schema_get_component_by_name(void *_schema, const char *name)

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 12:19:03 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:17:43 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,13 @@ void update_player(t_player *player)
 	}
 }
 
-int	load_player(t_player *player, t_game_schema *gs)
+t_player	*init_player(t_game_schema *gs)
 {
+	t_player	*player;
+	
+	player = malloc(sizeof(t_player));
+	if (!player)
+		return (NULL);
 	load_sprites((void *)player);
 	ft_strlcpy((char *)player, "player", NAME_SIZE);
 	player->spr.image = schema_get_image_by_name(gs, "player");
@@ -110,5 +115,6 @@ int	load_player(t_player *player, t_game_schema *gs)
 	player->movement = WALK;
 	player->direction = FRONT;
 	player->speed = PLAYER_SPEED;
-	return (0);
+	player->spr.obj.destroy = defult_destroy_object;
+	return (player);
 }

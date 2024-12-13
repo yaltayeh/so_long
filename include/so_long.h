@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 07:17:37 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:01:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,16 @@ enum e_error_code
 typedef struct s_game
 {
 	t_game_schema	*gs;
-
-	void		*mlx_ptr;
-	void		*win_ptr;
-	int			width;
-	int			height;
-	
-	t_player	*player;
-	t_image		frame;
-
-	t_clock		last_rander;
-	t_clock		time;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	int				width;
+	int				height;
+	t_player		*player;
+	t_image			frame;
+	t_clock			last_rander;
+	t_clock			time;
 }	t_game;
+
+int	player_walk(int	keycode, t_game *game);
 
 #endif

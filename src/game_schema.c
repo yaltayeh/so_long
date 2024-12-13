@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 19:17:03 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 20:19:37 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 	images_path[4] = TREE_PATH;
 	images_name[4] = "tree";
 
+	gs->schema.mlx_ptr = mlx_ptr;
 	nb_images = sizeof(images_path) / sizeof(*images_path);
 	gs->schema.resources.nb_images = nb_images;
 	gs->schema.resources.images = ft_calloc(nb_images, sizeof(t_image));
@@ -65,37 +66,33 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 
 int	destroy_game_schema(t_game_schema **gs_r)
 {
-	(void)gs_r;
+	t_map			*map;
+
+	map = &(*gs_r)->map;
+	destroy_object((void **)&map);
+	free(*gs_r);
+	*gs_r = NULL;
 	return (0);
 }
 
 int	check_game_schema(t_game_schema *gs, char *map_path)
 {
-	int	stat;
-
-	stat = load_map(&gs->map, map_path);
-	ft_printf("%s: %d\n", __func__, stat);
-	return (stat);
+	return (load_map(&gs->map, map_path));
 }
-
 
 int	render_game_schema(t_game_schema *gs, t_image *frame)
 {
 	int		(*render)(void *, t_image *);
-	// void	(*update)(void *);
 
 	update_object(schema_get_component_by_name(gs, "player"));
 	update_camera(&gs->camera);
-	// update = ((t_object *)&gs->map)->update;
-	// if (update)
-	// 	update(&gs->map);
 	render = ((t_object *)&gs->map)->render;
 	if (render && render(&gs->map, frame) != 0)
 		return (-1);
 	return (0);
 }
 
-t_game_schema	*init_game_schema()
+t_game_schema	*init_game_schema(void)
 {
 	t_game_schema	*gschema;
 

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 19:27:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:00:46 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	load_object(void *_obj)
 	obj->parent_location = NULL;
 	obj->update = NULL;
 	obj->render = NULL;
+	obj->destroy = NULL;
 	return (0);
 }
 
@@ -54,6 +55,25 @@ void	update_object(void *_obj)
 		obj->absolute_location = *obj->parent_location;
 	obj->absolute_location.x += obj->relative_location.x - obj->center_point.x;
 	obj->absolute_location.y += obj->relative_location.y - obj->center_point.y;
-	// ft_printf("update: %s (%d, %d)\n", (char *)obj, obj->absolute_location.x, obj->absolute_location.y);
 }
 
+void	defult_destroy_object(void **_obj)
+{
+	free(*_obj);
+	*_obj = NULL;
+}
+
+void	destroy_object(void **_obj)
+{
+	t_object	*obj;
+	void		(*destroy)(void **);
+
+	obj = (t_object *)*_obj;
+	// ft_printf("destroy %s (%d, %d)\n", \
+	// 			(char *)obj, \
+	// 			obj->relative_location.x,
+	// 			obj->relative_location.y);
+	destroy = obj->destroy;
+	if (destroy)
+		destroy(_obj);
+}
