@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 17:56:35 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:27:24 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ int	load_object(void *_obj)
 	return (0);
 }
 
-int	render_object(void *_obj, t_image *frame)
+int	render_object(void *_obj, t_image *frame, int layer)
 {
 	t_object	*obj;
-	int			(*render)(void *, t_image *);
+	int			(*render)(void *, t_image *, int);
 
 	obj = (t_object *)_obj;
 
 	render = obj->render;
 	if (render)
-		return (render(obj, frame));
+		return (render(obj, frame, layer));
 	return (0);
 }
 

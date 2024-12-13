@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 17:57:03 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:54:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	animate_sprites(void *_spr)
 	void		(*animate)(t_sprites *);
 
 	spr = (t_sprites *)_spr;
-	if (spr->delay > 0)
+	if (spr->delay > 0 && spr->run_animate)
 	{
 		spr->timer++;
 		if (spr->last_animate == 0 \
@@ -36,18 +36,22 @@ void	animate_sprites(void *_spr)
 	}
 }
 
-int	render_sprites(void *_spr, t_image *frame)
+int	render_sprites(void *_spr, t_image *frame, int layer)
 {
 	t_sprites	*spr;
 	int			i;
 
 	spr = (t_sprites *)_spr;
-	update_object(spr);
-	animate_sprites(spr);
+	if (layer == 0)
+	{
+		update_object(spr);
+		animate_sprites(spr);
+	}
 	i = 0;
 	while (spr->clips && i < spr->nb_clip)
 	{
-		put_image_to_image(frame, spr->image, spr->obj.absolute_location, spr->clips[i]);
+		if (spr->clips[i].layer == layer)
+			put_image_to_image(frame, spr->image, spr->obj.absolute_location, spr->clips[i]);
 		i++;
 	}
 	return (0);

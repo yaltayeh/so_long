@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:01:22 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 15:41:46 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:59:28 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	animate_fire(t_fire *fire)
 {
-	fire->clips[0] = (t_clip){fire->spr.index * 132, 92, 132, 92};
-	fire->clips[1] = (t_clip){fire->spr.index * 132, 0, 132, 92};
+	fire->clips[0] = (t_clip){fire->spr.index * 132, 92, 132, 92, 0};
+	fire->clips[1] = (t_clip){fire->spr.index * 132, 0, 132, 92, 1};
 }
 
 int	load_fire(t_fire *fire, t_game_schema *gs)

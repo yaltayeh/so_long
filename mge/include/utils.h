@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 07:00:09 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 10:49:49 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:54:22 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_clip
 	int	y;
 	int	width;
 	int	height;
+	int	layer;
 }	t_clip;
 
 t_point	point_to_center(t_point center, t_point size);

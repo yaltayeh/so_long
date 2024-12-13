@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 18:10:52 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:35:30 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static int	render_map(t_map *map, t_image *frame)
 	i = 0;
 	while (i < blocks_count)
 	{
-		if (render_sprites(&map->tileds[i], frame) != 0)
+		if (render_sprites(&map->tileds[i], frame, 0) != 0)
 			return (-1);
 		i++;
 	}

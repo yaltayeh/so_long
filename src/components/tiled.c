@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:27:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 15:46:07 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:00:20 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,24 @@ void	animate_tiled_data(t_tiled_data *t)
 	int offset;
 
 	offset = t->size * 3 * t->spr.index;
-	t->big_spot = (t_clip){offset + 0, 0, t->size, t->size};
-	t->small_spot = (t_clip){offset + 0, t->size, t->size, t->size};
-	t->tileds[0] = (t_clip){offset + t->size, t->size, t->size, t->size};
-	t->tileds[1] = (t_clip){offset + t->size, 0, t->size, t->size};
-	t->tileds[2] = (t_clip){offset + t->size * 2, 0, t->size, t->size};
-	t->tileds[3] = (t_clip){offset + t->size * 2, t->size, t->size, t->size};
-	t->tileds[4] = (t_clip){offset + 0, t->size * 4, t->size, t->size};
-	t->tileds[5] = (t_clip){offset + 0, t->size * 2, t->size, t->size};
-	t->tileds[6] = (t_clip){offset + t->size * 2, t->size * 2, t->size, t->size};
-	t->tileds[7] = (t_clip){offset + t->size * 2, t->size * 4, t->size, t->size};
-	t->tileds[8] = (t_clip){offset + t->size, t->size * 2, t->size, t->size};
-	t->tileds[9] = (t_clip){offset + t->size * 2, t->size * 3, t->size, t->size};
-	t->tileds[10] = (t_clip){offset + t->size, t->size * 4, t->size, t->size};
-	t->tileds[11] = (t_clip){offset + 0, t->size * 3, t->size, t->size};
-	t->tileds[12] = (t_clip){offset + t->size, t->size * 3, t->size, t->size};
-	t->tileds[13] = (t_clip){offset + 0, t->size * 5, t->size, t->size};
-	t->tileds[14] = (t_clip){offset + t->size, t->size * 5, t->size, t->size};
-	t->tileds[15] = (t_clip){offset + t->size * 2, t->size * 5, t->size, t->size};
+	t->big_spot = (t_clip){offset + 0, 0, t->size, t->size, 0};
+	t->small_spot = (t_clip){offset + 0, t->size, t->size, t->size, 0};
+	t->tileds[0] = (t_clip){offset + t->size, t->size, t->size, t->size, 0};
+	t->tileds[1] = (t_clip){offset + t->size, 0, t->size, t->size, 0};
+	t->tileds[2] = (t_clip){offset + t->size * 2, 0, t->size, t->size, 0};
+	t->tileds[3] = (t_clip){offset + t->size * 2, t->size, t->size, t->size, 0};
+	t->tileds[4] = (t_clip){offset + 0, t->size * 4, t->size, t->size, 0};
+	t->tileds[5] = (t_clip){offset + 0, t->size * 2, t->size, t->size, 0};
+	t->tileds[6] = (t_clip){offset + t->size * 2, t->size * 2, t->size, t->size, 0};
+	t->tileds[7] = (t_clip){offset + t->size * 2, t->size * 4, t->size, t->size, 0};
+	t->tileds[8] = (t_clip){offset + t->size, t->size * 2, t->size, t->size, 0};
+	t->tileds[9] = (t_clip){offset + t->size * 2, t->size * 3, t->size, t->size, 0};
+	t->tileds[10] = (t_clip){offset + t->size, t->size * 4, t->size, t->size, 0};
+	t->tileds[11] = (t_clip){offset + 0, t->size * 3, t->size, t->size, 0};
+	t->tileds[12] = (t_clip){offset + t->size, t->size * 3, t->size, t->size, 0};
+	t->tileds[13] = (t_clip){offset + 0, t->size * 5, t->size, t->size, 0};
+	t->tileds[14] = (t_clip){offset + t->size, t->size * 5, t->size, t->size, 0};
+	t->tileds[15] = (t_clip){offset + t->size * 2, t->size * 5, t->size, t->size, 0};
 }
 
 int	load_tiled_data(t_tiled_data *t, int size)

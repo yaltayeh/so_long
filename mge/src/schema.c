@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:51:32 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 15:11:42 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:58:29 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,24 @@ int	render_schema(void *_schema, t_image *frame)
 {
 	int			i;
 	int			(*render)(void *, t_image *);
-	void		(*update)(void *);
 	t_schema	*schema;
+	int			layer;
 
 	schema = (t_schema *)_schema;
-	i = 0;
-	while (i < schema->nb_components)
-	{
-		update = schema->components[i]->update;
-		if (update)
-			update(schema->components[i]);
-		i++;
-	}
 	render = schema->render_schema;
 	if (render && render(schema, frame) != 0)
 		return (-1);
+	i = -1;
+	while (++i < schema->nb_components)
+		update_object(schema->components[i]);
 	sort_objects((void *)schema->components, schema->nb_components);
-	i = 0;
-	while (i < schema->nb_components)
+	layer = 0;
+	while (layer < 3)
 	{
-		render = schema->components[i]->render;
-		if (render && render(schema->components[i], frame) != 0)
-			return (-1);
-		i++;
+		i = -1;
+		while (++i < schema->nb_components)
+			render_object(schema->components[i], frame, layer);
+		layer++;
 	}
 	return (0);
 }

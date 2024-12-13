@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 17:50:19 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:17:03 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,13 @@ int	check_game_schema(t_game_schema *gs, char *map_path)
 int	render_game_schema(t_game_schema *gs, t_image *frame)
 {
 	int		(*render)(void *, t_image *);
-	void	(*update)(void *);
+	// void	(*update)(void *);
 
-	update = ((t_object *)&gs->map)->update;
-	if (update)
-		update(&gs->map);
+	update_object(schema_get_component_by_name(gs, "player"));
 	update_camera(&gs->camera);
+	// update = ((t_object *)&gs->map)->update;
+	// if (update)
+	// 	update(&gs->map);
 	render = ((t_object *)&gs->map)->render;
 	if (render && render(&gs->map, frame) != 0)
 		return (-1);

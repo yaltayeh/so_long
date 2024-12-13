@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:26:08 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 15:41:55 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:59:39 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	animate_boat(t_boat *boat)
 {
-	boat->clip = (t_clip){boat->spr.index * 64, boat->direction * 64, 64, 64};
+	boat->clip = (t_clip){boat->spr.index * 64, boat->direction * 64, 64, 64, 1};
 }
 
 int	load_boat(t_boat *boat, t_game_schema *gs)
