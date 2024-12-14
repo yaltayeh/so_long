@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 20:18:21 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:04:26 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 #include <stdio.h>
 #include "so_long.h"
 #include <sys/time.h>
-#include "X11/keysym.h"
 #include <X11/X.h>
 
 int end_program(t_game *game)
 {
-	if (game->gs)
-		destroy_schema((void **)&game->gs);
+	// if (game->gs)
+	// 	destroy_schema((void **)&game->gs);
 	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	printf("Bye\n");
 	exit(0);

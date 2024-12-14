@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 16:17:43 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/14 15:42:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_point	valid_move(t_map_data *o_map, t_map_data *s_map, \
 	new_r = new_point.y / TILED_SIZE;
 	if (new_c < 0 || new_c > s_map->cols || new_r < 0 || new_r > s_map->rows)
 		return (current_point);
-	if (s_map->blocks[new_r][new_c] == '1')
+	if (s_map->blocks[new_r][new_c] == '1' || s_map->blocks[new_r][new_c] == 'E')
 		return (current_point);
 
 	new_c = new_point.x / (TILED_SIZE * 2);
@@ -102,7 +102,7 @@ t_player	*init_player(t_game_schema *gs)
 	ft_strlcpy((char *)player, "player", NAME_SIZE);
 	player->spr.image = schema_get_image_by_name(gs, "player");
 	player->spr.obj.relative_location = (t_point){0, 0};
-	player->spr.obj.center_point = (t_point){32, 32};
+	player->spr.obj.center_point = (t_point){32, 48};
 	player->spr.obj.update = update_player;
 	player->gs = gs;
 	player->spr.delay = PLAYER_DELEY;

@@ -8,7 +8,7 @@ INCLUDE += -I./include -I./libft/include -I./mge/include
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S), Linux)
 	MLX_DIR = ./minilibx-linux
-	MLX_FLAGS += -L$(MLX_DIR) -lmlx -lXext -lX11
+	MLX_FLAGS += -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 	INCLUDE += -I$(MLX_DIR)
 
 else ifeq ($(UNAME_S), Darwin)
@@ -40,7 +40,6 @@ SOURCES := $(addprefix src/, $(SOURCES))
 OBJECTS = $(SOURCES:src/%.c=build/%.o)
 
 all: mlx mge libft submodules $(NAME)
-
 
 submodules:
 	git submodule init

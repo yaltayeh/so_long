@@ -6,12 +6,14 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 19:52:31 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:04:46 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONFIG_H
 # define CONFIG_H
+
+#include "X11/keysym.h"
 
 # define WIN_WIDTH 1000
 # define WIN_HEIGHT 650
@@ -60,7 +62,7 @@
 # define WASD
 
 # ifdef __linux__
-#  define DELAY		12500
+#  define DELAY		11500
 #  define KEY_SPACE XK_space
 #  define KEY_ESC	XK_Escape
 #  ifdef WASD

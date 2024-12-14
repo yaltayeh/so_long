@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 19:00:46 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/14 15:21:10 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	destroy_object(void **_obj)
 	void		(*destroy)(void **);
 
 	obj = (t_object *)*_obj;
-	// ft_printf("destroy %s (%d, %d)\n", \
-	// 			(char *)obj, \
+	// ft_printf("destroy %s (%d, %d)\n", 
+	// 			(char *)obj, 
 	// 			obj->relative_location.x,
 	// 			obj->relative_location.y);
 	destroy = obj->destroy;
