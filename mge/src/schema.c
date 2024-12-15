@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:51:32 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 19:56:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/14 19:49:18 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,24 @@ t_object	*schema_get_component_by_name(void *_schema, const char *name)
 	{
 		if (ft_strncmp((char *)schema->components[i], \
 							name, NAME_SIZE) == 0)
+			return (schema->components[i]);
+		i++;
+	}
+	return (NULL);
+}
+
+t_object	*schema_get_component_by_loacation(void *_schema, t_point loacation)
+{
+	t_schema	*schema;
+	int			i;
+
+	i = 0;
+
+	schema = (t_schema *)_schema;
+	while (i < schema->nb_components)
+	{
+		if (ft_memcmp(&schema->components[i]->relative_location, \
+						&loacation, sizeof(loacation)) == 0)
 			return (schema->components[i]);
 		i++;
 	}

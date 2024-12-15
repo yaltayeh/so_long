@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 15:01:56 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/14 20:34:54 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_fire
 typedef struct components
 {
 	t_sprites	spr;
+	int			status;
 	t_clip		clip;
 }	t_tree;
 
@@ -71,6 +72,7 @@ typedef struct s_player
 	enum e_move_type	movement;
 	enum e_directions	direction;
 	int					is_walk;
+	int					is_slash;
 	int					speed;
 	t_game_schema		*gs;
 }	t_player;

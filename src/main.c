@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/14 16:04:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/14 20:52:36 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ int key_release(int keycode, t_game *game)
 		|| keycode == KEY_RIGHT \
 		|| keycode == KEY_LEFT)
 		game->player->is_walk = 0;
+	if (keycode == KEY_SPACE)
+	{
+		game->player->is_slash = 0;
+		game->player->movement = WALK;
+		game->player->spr.max_index = 9;
+		game->player->spr.index = 0;
+	}
 	if (keycode == KEY_ESC)
 		end_program(game);
 	return (0);
@@ -44,6 +51,13 @@ int	key_press(int keycode, t_game *game)
 		|| keycode == KEY_RIGHT \
 		|| keycode == KEY_LEFT)
 		return (player_walk(keycode, game));
+	if (keycode == KEY_SPACE)
+	{
+		game->player->movement = SLASH_128;
+		game->player->is_slash = 1;
+		game->player->spr.index = 0;
+		game->player->spr.max_index = 6;
+	}
 	return (0);
 }
 
