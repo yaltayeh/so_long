@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/14 15:21:10 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/15 12:14:22 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	load_object(void *_obj)
 	obj->update = NULL;
 	obj->render = NULL;
 	obj->destroy = NULL;
+	obj->collision = NULL;
 	return (0);
 }
 
@@ -76,4 +77,11 @@ void	destroy_object(void **_obj)
 	destroy = obj->destroy;
 	if (destroy)
 		destroy(_obj);
+}
+
+void	collision_object(void *_obj, void *tangible)
+{
+	t_object	*obj;
+
+	obj = (t_object *)_obj;
 }
