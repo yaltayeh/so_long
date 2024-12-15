@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 14:52:31 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/15 13:08:07 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "camera.h"
 
 typedef struct s_map	t_map;
+typedef struct s_camera	t_camera;
 
 typedef struct s_game_schema
 {
