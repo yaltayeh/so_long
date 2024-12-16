@@ -61,6 +61,9 @@ build/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
+test:
+	$(CC) $(CFLAGS) test/draw_test.c $(INCLUDE) $(FT_FLAGS) $(MLX_FLAGS) -o test.o
+
 clean:
 	rm -rf $(OBJECTS)
 	$(MAKE) -C mge clean
@@ -74,4 +77,4 @@ fclean: clean
 
 re: fclean all 
 
-.PHONY: all clean fclean submodules re mge libft mlx
+.PHONY: all clean fclean submodules re mge libft mlx test
