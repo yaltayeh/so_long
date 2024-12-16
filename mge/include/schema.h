@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:38:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/14 19:38:38 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/16 09:20:25 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@ void		destroy_schema(void **_schema);
 t_object	*schema_get_component_by_name(void *_schema, const char *name);
 t_object	*schema_get_component_by_loacation(void *_schema, t_point loacation);
 t_image		*schema_get_image_by_name(void *_schema, const char *name);
-
 
 #endif

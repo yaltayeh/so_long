@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:24:14 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/15 17:46:10 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/16 09:20:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,6 @@
 void animate_tree(t_tree *tree)
 {
 	tree->clip = (t_clip){56 * tree->status, 0, 56, 94, 1};
-}
-
-int	collision_tree(t_tree *tree, t_object *tangible)
-{
-	if (ft_strncmp((char *)tangible, "player", NAME_SIZE) == 0)
-	{
-		if (tree->status > 0)
-			tree->status--;
-		return (REFUSE_MOVE);
-	}
-	return (NONE);
 }
 
 t_tree	*init_tree(t_game_schema *gs)
