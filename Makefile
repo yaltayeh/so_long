@@ -69,7 +69,7 @@ test:
 
 clean:
 	rm -rf $(OBJECTS)
-	@$(MAKE) -C libft clean
+#	@$(MAKE) -C libft clean
 #	@$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean

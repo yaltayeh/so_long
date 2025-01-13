@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/11 07:36:39 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:44:45 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@
 # define WASD
 
 # ifdef __linux__
-#  define DELAY		11500
+#  define DELAY		5000
 #  define KEY_SPACE XK_space
 #  define KEY_ESC	XK_Escape
 #  ifdef WASD

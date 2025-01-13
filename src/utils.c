@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:03:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/10 10:05:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:41:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,15 @@ int	load_image_data(struct s_image *img)
 	if (!img->buffer)
 		return (-1);
 	return (0);
+}
+
+
+int ft_islower(int c)
+{
+	return (c >= 'a' && c <= 'z');
+}
+
+int ft_isupper(int c)
+{
+	return (c >= 'A' && c <= 'Z');
 }
