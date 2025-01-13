@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/14 20:52:36 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/12 08:09:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int key_release(int keycode, t_game *game)
 		game->player->is_walk = 0;
 	if (keycode == KEY_SPACE)
 	{
-		game->player->is_slash = 0;
 		game->player->movement = WALK;
 		game->player->spr.max_index = 9;
 		game->player->spr.index = 0;
@@ -46,17 +45,24 @@ int key_release(int keycode, t_game *game)
 
 int	key_press(int keycode, t_game *game)
 {
+	t_player	*p;
+
+	p = game->player;
 	if (keycode == KEY_UP \
 		|| keycode == KEY_DOWN \
 		|| keycode == KEY_RIGHT \
 		|| keycode == KEY_LEFT)
+		{
 		return (player_walk(keycode, game));
+		}
 	if (keycode == KEY_SPACE)
 	{
-		game->player->movement = SLASH_128;
-		game->player->is_slash = 1;
-		game->player->spr.index = 0;
-		game->player->spr.max_index = 6;
+		if (p->movement != SLASH_128)
+		{
+			p->movement = SLASH_128;
+			p->spr.index = 0;
+			p->spr.max_index = 6;
+		}
 	}
 	return (0);
 }
@@ -91,7 +97,6 @@ int main(int argc, char **argv)
 	// 	return (EXIT_FAILURE);
 	if (check_schema(game.gs, argv[1]) != 0)
 		return (-1);
-
 	game.width = WIN_WIDTH;
 	game.height = WIN_HEIGHT;
 	game.mlx_ptr = mlx_init();
@@ -108,7 +113,6 @@ int main(int argc, char **argv)
 
 	if (load_schema(game.gs, game.mlx_ptr) != 0)
 		return (-1);
-
 	game.player = (void *)schema_get_component_by_name(game.gs, "player");
 
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, key_release, &game);

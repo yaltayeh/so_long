@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:26:52 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 15:04:11 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 07:43:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,45 +17,54 @@
 static int	load_component(t_game_schema *gs, int i, char type, t_point loc)
 {
 	t_object	**component_p;
-	t_object	*(*init_func)(void *);
 
 	component_p = gs->schema.components + i;
 	*component_p = NULL;
 	if (type == 'E')
-		init_func = (void *)init_boat;
+		*component_p = (t_object *)init_boat(gs);
 	else if (type == 'C')
-		init_func = (void *)init_tree;
+		*component_p = (t_object *)init_tree(gs, i);
 	else if (type == 'F')
-		init_func = (void *)init_fire;
+		*component_p = (t_object *)init_fire(gs);
 	else if (type == 'P')
-		init_func = (void *)init_player;
+		*component_p = (t_object *)init_player(gs);
 	else
 		return (-1);
-	*component_p = init_func(gs);
 	if (!*component_p)
 		return (-1);
-	(*component_p)->relative_location = (t_point){(loc.x * 2 + 1) * TILED_SIZE, (loc.y * 2 + 1) * TILED_SIZE};
+	(*component_p)->relative_location = (t_point){(loc.x * 2 + 1) * TSIZE, \
+												(loc.y * 2 + 1) * TSIZE};
 	(*component_p)->parent_location = (void *)&gs->camera.frame;
 	return (0);
 }
 
-int	load_components(t_game_schema *gs, t_map_data *o_map)
+static int	nb_components(t_grid *o_map)
 {
-	int			r;
-	int			c;
-	int			i;
+	int	nb;
+	int	r;
+	int	c;
 
-	gs->schema.nb_components = 0;
+	nb = 0;
 	r = -1;
 	while (++r < o_map->rows)
 	{
 		c = -1;
 		while (++c < o_map->cols)
-			if (ft_strchr(COMPONENTS_CHARACTERS, o_map->blocks[r][c]))
-				gs->schema.nb_components++;
+			if (ft_strchr("PECF", o_map->blocks[r][c]))
+				nb++;
 	}
-	gs->schema.components = ft_calloc(gs->schema.nb_components, sizeof(t_object *));
-	if (!gs->schema.components)
+	return (nb);
+}
+
+int	load_components(t_game_schema *gs, t_schema *schema, t_grid *o_map)
+{
+	int	r;
+	int	c;
+	int	i;
+
+	schema->nb_components = nb_components(o_map);
+	schema->components = ft_calloc(schema->nb_components, sizeof(t_object *));
+	if (!schema->components)
 		return (-1);
 	i = 0;
 	r = -1;
@@ -63,14 +72,13 @@ int	load_components(t_game_schema *gs, t_map_data *o_map)
 	{
 		c = -1;
 		while (++c < o_map->cols)
-			if (ft_strchr(COMPONENTS_CHARACTERS, o_map->blocks[r][c]))
-				if (load_component(gs, i++, o_map->blocks[r][c], (t_point){c, r}) != 0)
+			if (ft_strchr("PECF", o_map->blocks[r][c]))
+				if (load_component(gs, i++, o_map->blocks[r][c], \
+									(t_point){c, r}) != 0)
 					return (-1);
 	}
-
 	return (0);
 }
-
 
 static int	object_cmp(t_object *obj1, t_object *obj2)
 {
@@ -115,5 +123,4 @@ void	sort_objects(t_object **objects, int nb_object)
 			swap_objects(objects + i, objects + j - 1);
 		i++;
 	}
-	
 }

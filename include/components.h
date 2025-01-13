@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/14 20:34:54 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 07:38:24 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 # define COMPONENTS_H
 
 # include "config.h"
-# include "mge.h"
-# include "map.h"
+# include "sprites.h"
+# include "object.h"
+# include "schema.h"
 
-typedef struct s_map_data		t_map_data;
+typedef struct s_grid		t_grid;
 typedef struct s_game_schema	t_game_schema;
 
 typedef struct s_fire
@@ -26,11 +27,12 @@ typedef struct s_fire
 	t_clip		clips[2];
 }	t_fire;
 
-typedef struct components
+typedef struct t_tree
 {
 	t_sprites	spr;
 	int			status;
 	t_clip		clip;
+	int			health;
 }	t_tree;
 
 enum e_boat_directions
@@ -72,15 +74,17 @@ typedef struct s_player
 	enum e_move_type	movement;
 	enum e_directions	direction;
 	int					is_walk;
-	int					is_slash;
 	int					speed;
 	t_game_schema		*gs;
+	t_object			*touch_component;
 }	t_player;
 
-t_tree		*init_tree(t_game_schema *gs);
+t_tree		*init_tree(t_game_schema *gs, int i);
 t_boat		*init_boat(t_game_schema *gs);
 t_fire		*init_fire(t_game_schema *gs);
 t_player	*init_player(t_game_schema *gs);
-int			load_components(t_game_schema *gs, t_map_data *o_map);
+int			load_components(t_game_schema *gs, t_schema *schema, t_grid *o_map);
 void		sort_objects(t_object **objects, int nb_object);
+int 			damage_tree(t_tree *tree, int damage);
+
 #endif

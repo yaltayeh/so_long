@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:51:32 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/16 09:20:33 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 07:51:43 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_schema(void *_schema, void *data)
 	return (0);
 }
 
-void		destroy_schema(void **_schema)
+void	destroy_schema(void **_schema)
 {
 	t_schema	*schema;
 	void		(*destroy)(void **);
@@ -91,7 +91,8 @@ void		destroy_schema(void **_schema)
 	{
 		i = -1;
 		while (++i < schema->resources.nb_images)
-			mlx_destroy_image(schema->mlx_ptr, schema->resources.images[i].img_ptr);
+			mlx_destroy_image(schema->mlx_ptr, \
+					schema->resources.images[i].img_ptr);
 		free(schema->resources.images);
 	}
 	ft_bzero(schema + sizeof(schema->mlx_ptr), \
@@ -117,18 +118,17 @@ t_object	*schema_get_component_by_name(void *_schema, const char *name)
 	return (NULL);
 }
 
-t_object	*schema_get_component_by_loacation(void *_schema, t_point loacation)
+t_object	*schema_get_component_by_loacation(void *_schema, t_point location)
 {
 	t_schema	*schema;
 	int			i;
 
 	i = 0;
-
 	schema = (t_schema *)_schema;
 	while (i < schema->nb_components)
 	{
 		if (ft_memcmp(&schema->components[i]->relative_location, \
-						&loacation, sizeof(loacation)) == 0)
+						&location, sizeof(location)) == 0)
 			return (schema->components[i]);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/14 16:04:46 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 07:36:39 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 # define WIN_HEIGHT 650
 
 # ifndef TILEDS_PATH
-#  define TILEDS_PATH "textures/tiled.xpm"
+#  define TILES_PATH "textures/tile.xpm"
 # endif
 # ifndef TILED_DELEY
-#  define TILED_DELEY 2
+#  define TILED_DELEY 4
 # endif
-# ifndef TILED_SIZE
-#  define TILED_SIZE 64
+# ifndef TSIZE
+#  define TSIZE 64
 # endif
 
 # ifndef PLAYER_PATH

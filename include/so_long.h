@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 19:01:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 07:33:35 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,9 @@
 # include <ft_stack.h>
 # include <fcntl.h>
 # include "config.h"
-# include "mge.h"
 # include "map.h"
 # include "game_schema.h"
-
-enum e_error_code
-{
-	SUCCESS,
-	MAP_RECTANGULAR,
-	MAP_SURROUNDED,
-	FILE_OPEN,
-	CHARACTER,
-	MALLOC,
-};
+# include "get_next_line.h"
 
 typedef struct s_game
 {
@@ -47,6 +37,6 @@ typedef struct s_game
 	t_clock			time;
 }	t_game;
 
-int	player_walk(int	keycode, t_game *game);
+int		player_walk(int	keycode, t_game *game);
 
 #endif

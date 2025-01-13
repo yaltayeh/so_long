@@ -6,166 +6,163 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:41:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/07 15:29:31 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:12:09 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include "get_next_line.h"
 
-static int	check_rectangular_surrounded(t_map_data *map)
+static int	check_rectangular_surrounded(t_grid *o_grid)
 {
 	int	r;
 	int	i;
 
-	map->cols = -1;
+	o_grid->cols = -1;
 	r = 0;
-	while (map->blocks[r])
+	while (o_grid->blocks[r])
 	{
-		if (map->cols == -1)
-			map->cols = ft_strlen(map->blocks[r]);
-		if (map->cols != (int)ft_strlen(map->blocks[r]))
-				return (MAP_RECTANGULAR);
-		if (r == 0 || !map->blocks[r + 1])
+		if (o_grid->cols == -1)
+			o_grid->cols = ft_strlen(o_grid->blocks[r]);
+		if (o_grid->cols != (int)ft_strlen(o_grid->blocks[r]))
+			return (-1);
+		if (r == 0 || !o_grid->blocks[r + 1])
 		{
 			i = 0;
-			while (map->blocks[r][i] == '1' || map->blocks[r][i] == 'E')
+			while (o_grid->blocks[r][i] == '1' || o_grid->blocks[r][i] == 'E')
 				i++;
-			if (map->blocks[r][i] != '\0')
+			if (o_grid->blocks[r][i] != '\0')
 			{
-				ft_fprintf(2, "'%s'\n", map->blocks[r]);
-				return (MAP_SURROUNDED);
+				print_error_line(o_grid->blocks, r, i, "map not closed");
+				return (-1);
 			}
 		}
-		else
-			if (map->blocks[r][0] != '1' || map->blocks[r][map->cols - 1] != '1')
-				return (MAP_SURROUNDED);
+		else if (o_grid->blocks[r][0] != '1' \
+				|| o_grid->blocks[r][o_grid->cols - 1] != '1')
+		{
+			i = o_grid->cols - 1;
+			if (o_grid->blocks[r][0] != '1')
+				i = 0;
+			print_error_line(o_grid->blocks, r, i, "map not closed");
+			return (-1);
+		}
 		r++;
 	}
-	map->rows = r;
+	o_grid->rows = r;
 	return (0);
 }
 
-static int	valid_characters(t_map_data *map)
+static void	test_flood_fill(t_grid *p_grid, int *nb, int r, int c)
 {
-	int 	r;
-	int 	i;
+	if (r < 0 || r >= p_grid->rows || c < 0 \
+		|| c >= p_grid->cols || p_grid->blocks[r][c] == '1')
+		return ;
+	if (p_grid->blocks[r][c] == 'P')
+		--nb[0];
+	if (p_grid->blocks[r][c] == 'E')
+		--nb[1];
+	if (p_grid->blocks[r][c] == 'C')
+		--nb[2];
+	if (p_grid->blocks[r][c] == 'C' || p_grid->blocks[r][c] == 'P' \
+		|| p_grid->blocks[r][c] == 'F')
+		p_grid->blocks[r][c] += 32;
+	else if (p_grid->blocks[r][c] == '0')
+		p_grid->blocks[r][c] = ' ';
+	else if (p_grid->blocks[r][c] == 'E')
+	{
+		p_grid->blocks[r][c] = 'e';
+		return ;
+	}
+	else
+		return ;
+	test_flood_fill(p_grid, nb, r - 1, c);
+	test_flood_fill(p_grid, nb, r + 1, c);
+	test_flood_fill(p_grid, nb, r, c + 1);
+	test_flood_fill(p_grid, nb, r, c - 1);
+}
+
+static int	valid_characters(t_grid *grid, int *nb)
+{
+	int	r;
+	int	c;
 
 	r = 0;
-	while (r < map->rows)
+	while (r < grid->rows)
 	{
-		i = 0;
-		while (map->blocks[r][i])
+		c = 0;
+		while (c < grid->cols)
 		{
-			if (!ft_strchr(MAP_CHARACTERS, map->blocks[r][i]))
-				return (CHARACTER);
-			i++;
+			if (!ft_strchr("01PECF", grid->blocks[r][c]))
+			{
+				print_error_line(grid->blocks, r, c, "character not valid");
+				return (-1);
+			}
+			if (grid->blocks[r][c] == 'P')
+				++nb[0];
+			if (grid->blocks[r][c] == 'E')
+				++nb[1];
+			if (grid->blocks[r][c] == 'C')
+				++nb[2];
+			c++;
 		}
 		r++;
 	}
-	return (SUCCESS);
+	return (0);
 }
 
-static int	map_checker(t_map_data *map)
+static int	check_path(t_grid *p_grid, t_grid *o_grid)
 {
-	int	err;
+	int	r;
+	int	c;
+	int	nb[3];
 
-	err = check_rectangular_surrounded(map);
-	if (err != SUCCESS)
-		return (err);
-	err = valid_characters(map);
-	if (err != SUCCESS)
-		return (err);
-	// err = check_closed_surrounded(ctx);
-	// if (err != SUCCESS)
-	// 	return (err);
-	return (SUCCESS);
-}
-
-// int flood_fill(t_mlx_data *ctx, int x, int y)
-// {
-	
-// 	return (0);
-// }
-
-// int	path_check(t_mlx_data *ctx)
-// {
-// 	int	**map;
-
-// 	if (!ctx->map.map_2d)
-// 		return (-1);
-	
-// 	return (0);
-// }
-
-
-
-
-
-
-static char	**convert_list_to_2d_map(t_stack *map)
-{
-	char	**map_2d;
-	t_node	*cur;
-	int		i;
-
-	cur = map->head;
-	if (!cur)
-		return (NULL);
-	map_2d = ft_calloc(ft_stack_size(map) + 1, sizeof(char *));
-	if (!map_2d)
-		return (NULL);
-	i = 0;
-	while (cur)
+	ft_bzero(nb, sizeof(nb));
+	if (valid_characters(p_grid, nb) != 0)
+		return (-1);
+	if (nb[0] != 1 || nb[1] != 1 || nb[2] == 0)
+		return (print_error_number1(p_grid, nb));
+	r = -1;
+	while (++r < p_grid->rows)
 	{
-		map_2d[i] = cur->data.ptr;
-		cur = cur->next;
-		i++;
+		c = -1;
+		while (++c < p_grid->cols)
+		{
+			if (p_grid->blocks[r][c] == 'P')
+			{
+				test_flood_fill(p_grid, nb, r, c);
+				if (nb[1] != 0 || nb[2] != 0)
+					return (print_error_number2(p_grid, o_grid, nb));
+				return (0);
+			}
+		}
 	}
-	return (map_2d);
+	return (-1);
 }
 
 static void	remove_new_line(char *line)
 {
-	size_t	i;
-
-	i = 0;
-	while (line[i] != '\0' && line[i] != '\n')
-		i++;
-	line[i] = '\0';
+	while (*line && *line != '\n')
+		line++;
+	*line = '\0';
 }
 
-static char	**read_map_file(int fd)
+static char	**read_map_file(int fd, int i)
 {
-	t_stack	*map_stack;
-	t_node	*node;
 	char	*line;
 	char	**map;
 
-	map_stack = ft_init_stack(FT_POINTER, NULL, NULL, free);
-	if (!map_stack)
-		return (NULL);
 	line = get_next_line(fd);
-	while (line)
-	{
-		remove_new_line(line);
-		node = ft_init_node((t_data)(void *)line);
-		if (!node)
-		{
-			free(line);
-			ft_stack_clear(&map_stack);
-			return (NULL);
-		}
-		ft_stack_tail_push(map_stack, node);
-		line = get_next_line(fd);
-	}
-	map = convert_list_to_2d_map(map_stack);
-	map_stack->del_fn.ptr = NULL;
-	ft_stack_clear(&map_stack);
+	if (!line)
+		return (ft_calloc(i + 1, sizeof(char *)));
+	remove_new_line(line);
+	map = read_map_file(fd, i + 1);
+	if (map)
+		map[i] = line;
+	else
+		free(line);
 	return (map);
 }
 
-int	map_parser(t_map_data *map, const char *map_path)
+int	map_parser(t_map *map, const char *map_path)
 {
 	int		fd;
 
@@ -175,9 +172,17 @@ int	map_parser(t_map_data *map, const char *map_path)
 		perror(map_path);
 		return (-1);
 	}
-	map->blocks = read_map_file(fd);
+	map->o_grid.blocks = read_map_file(fd, 0);
 	close(fd);
-	if (!map->blocks)
+	if (!map->o_grid.blocks)
 		return (-1);
-	return (map_checker(map));
+	if (check_rectangular_surrounded(&map->o_grid) != 0)
+		return (-1);
+	if (copy_grid(&map->p_grid, &map->o_grid) != 0)
+		return (-1);
+	if (check_path(&map->p_grid, &map->o_grid) != 0)
+		return (-1);
+	if (scale_grid(&map->s_grid, &map->o_grid) != 0)
+		return (-1);
+	return (0);
 }

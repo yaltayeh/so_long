@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:26:08 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/14 15:41:07 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 07:44:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	animate_boat(t_boat *boat)
 {
-	boat->clip = (t_clip){boat->spr.index * 64, boat->direction * 64, 64, 64, 0};
+	boat->clip = (t_clip){boat->spr.index * 64, \
+							boat->direction * 64, \
+								64, 64, 0};
 }
 
 t_boat	*init_boat(t_game_schema *gs)
 {
 	t_boat	*boat;
-	
+
 	boat = malloc(sizeof(t_boat));
 	if (!boat)
 		return (NULL);
@@ -33,7 +35,7 @@ t_boat	*init_boat(t_game_schema *gs)
 	boat->spr.max_index = 4;
 	boat->spr.nb_clip = 1;
 	boat->spr.delay = BOAT_DELEY;
-	boat->direction = DIAGONAL;
+	boat->direction = VERTICAL;
 	boat->spr.animate = animate_boat;
 	boat->spr.obj.destroy = defult_destroy_object;
 	return (boat);

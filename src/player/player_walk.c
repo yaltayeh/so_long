@@ -6,14 +6,14 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:35:26 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 18:41:12 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/31 00:18:27 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	player_walk(int	keycode, t_game *game)
-{	
+int	player_walk(int keycode, t_game *game)
+{
 	if (keycode == KEY_UP)
 		game->player->direction = BACK;
 	else if (keycode == KEY_DOWN)

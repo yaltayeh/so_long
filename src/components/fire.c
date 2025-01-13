@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:01:22 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 16:17:33 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2024/12/31 00:04:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_fire	*init_fire(t_game_schema *gs)
 	fire = malloc(sizeof(t_fire));
 	if (!fire)
 		return (NULL);
-	load_sprites((void *)fire);
+	load_sprites(fire);
 	ft_strlcpy((char *)fire, "fire", NAME_SIZE);
 	fire->spr.obj.center_point = (t_point){66, 46};
 	fire->spr.image = schema_get_image_by_name(gs, "fire");

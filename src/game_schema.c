@@ -6,14 +6,13 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 20:19:37 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 12:20:34 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game_schema.h"
 
-
-static int open_xpm_file(t_image *image, void *mlx_ptr, \
+static int	open_xpm_file(t_image *image, void *mlx_ptr, \
 						char *filename, const char *img_name)
 {
 	ft_strlcpy((char *)image, img_name, NAME_SIZE);
@@ -28,37 +27,30 @@ static int open_xpm_file(t_image *image, void *mlx_ptr, \
 
 int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 {
-	char	*images_path[5];
-	char	*images_name[5];
-	int		nb_images;
-	int		i;
+	t_image_info	images[5];
+	int				nb_images;
+	int				i;
 
-	images_path[0] = TILEDS_PATH;
-	images_name[0] = "tiled";
-	images_path[1] = PLAYER_PATH;
-	images_name[1] = "player";
-	images_path[2] = FIRE_PATH;
-	images_name[2] = "fire";
-	images_path[3] = BOAT_PATH;
-	images_name[3] = "boat";
-	images_path[4] = TREE_PATH;
-	images_name[4] = "tree";
-
+	images[0] = (t_image_info){TILES_PATH, "tile"};
+	images[1] = (t_image_info){PLAYER_PATH, "player"};
+	images[2] = (t_image_info){FIRE_PATH, "fire"};
+	images[3] = (t_image_info){BOAT_PATH, "boat"};
+	images[4] = (t_image_info){TREE_PATH, "tree"};
 	gs->schema.mlx_ptr = mlx_ptr;
-	nb_images = sizeof(images_path) / sizeof(*images_path);
+	nb_images = sizeof(images) / sizeof(*images);
 	gs->schema.resources.nb_images = nb_images;
 	gs->schema.resources.images = ft_calloc(nb_images, sizeof(t_image));
 	i = 0;
 	while (i < nb_images)
 	{
 		if (open_xpm_file(&gs->schema.resources.images[i], \
-						mlx_ptr, images_path[i], images_name[i]) != 0)
+						mlx_ptr, images[i].path, images[i].name) != 0)
 			return (-1);
 		i++;
 	}
-	if (init_tiled_blocks(&gs->map.tileds, &gs->map.s_map, &gs->map.tiled_data, gs) != 0)
+	if (init_tiles(&gs->map.tiles, &gs->map.s_grid, &gs->map.floor, gs) != 0)
 		return (-1);
-	if (load_components((void *)gs, &gs->map.o_map) != 0)
+	if (load_components((void *)gs, &gs->schema, &gs->map.o_grid) != 0)
 		return (-1);
 	((t_object *)&gs->map)->parent_location = (t_point *)&gs->camera.frame;
 	return (0);

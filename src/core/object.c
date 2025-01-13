@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/15 15:23:31 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 07:50:12 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	load_object(void *_obj)
 	obj->update = NULL;
 	obj->render = NULL;
 	obj->destroy = NULL;
-	obj->collision = NULL;
 	return (0);
 }
 
@@ -35,7 +34,6 @@ int	render_object(void *_obj, t_image *frame, int layer)
 	int			(*render)(void *, t_image *, int);
 
 	obj = (t_object *)_obj;
-
 	render = obj->render;
 	if (render)
 		return (render(obj, frame, layer));
@@ -70,23 +68,11 @@ void	destroy_object(void **_obj)
 	void		(*destroy)(void **);
 
 	obj = (t_object *)*_obj;
-	// ft_printf("destroy %s (%d, %d)\n", 
-	// 			(char *)obj, 
-	// 			obj->relative_location.x,
-	// 			obj->relative_location.y);
+	ft_fprintf(2, "destroy %s (%d, %d)\n", \
+				(char *)obj, \
+				obj->relative_location.x, \
+				obj->relative_location.y);
 	destroy = obj->destroy;
 	if (destroy)
 		destroy(_obj);
-}
-
-int	collision_object(void *_obj, void *tangible)
-{
-	t_object	*obj;
-	int			(*collision)(void *, void *);	
-
-	obj = (t_object *)_obj;
-	collision = obj->collision;
-	if (collision)
-		return (collision(_obj, tangible));
-	return (NONE);
 }

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:05:54 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/15 17:45:15 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 07:49:35 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ typedef struct s_object
 	int			(*render)();
 	/*void destroy_object(t_object **obj)*/
 	void		(*destroy)();
-	/*void collision_object(t_object *obj, t_object *tangible)*/
-	int			(*collision)();
 }	t_object;
 
 int		load_object(void *_obj);

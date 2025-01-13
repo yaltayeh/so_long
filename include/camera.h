@@ -6,14 +6,16 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:10:09 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/15 13:08:05 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 07:32:45 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CAMERA_H
 # define CAMERA_H
 
-# include "mge.h"
+# include "sprites.h"
+# include "object.h"
+# include "schema.h"
 
 typedef struct s_camera
 {

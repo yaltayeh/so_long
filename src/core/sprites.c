@@ -6,32 +6,36 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/13 11:54:02 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/11 07:50:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sprites.h"
 #include <stdio.h>
 
-
 void	animate_sprites(void *_spr)
 {
 	t_sprites	*spr;
 	void		(*animate)(t_sprites *);
+	void		(*end_move)(t_sprites *);
 
 	spr = (t_sprites *)_spr;
 	if (spr->delay > 0 && spr->run_animate)
 	{
+		animate = spr->animate;
+		end_move = spr->end_move;
 		spr->timer++;
 		if (spr->last_animate == 0 \
 			|| spr->timer - spr->last_animate > spr->delay)
 		{
 			spr->last_animate = spr->timer;
-			animate = spr->animate;
 			if (animate)
 				animate(spr);
 			if (spr->max_index > 0)
 				spr->index = (spr->index + 1) % spr->max_index;
+			if (spr->index == 0)
+				if (end_move)
+					end_move(spr);
 		}
 	}
 }
@@ -51,7 +55,8 @@ int	render_sprites(void *_spr, t_image *frame, int layer)
 	while (spr->clips && i < spr->nb_clip)
 	{
 		if (spr->clips[i].layer == layer)
-			put_image_to_image(frame, spr->image, spr->obj.absolute_location, spr->clips[i]);
+			put_image_to_image(frame, spr->image, \
+						spr->obj.absolute_location, spr->clips[i]);
 		i++;
 	}
 	return (0);
@@ -64,13 +69,14 @@ int	load_sprites(void *_spr)
 	spr = (t_sprites *)_spr;
 	load_object(spr);
 	ft_strlcpy((char *)spr, "sprites", NAME_SIZE);
-	spr->obj.render = render_sprites;
-	spr->animate = NULL;
 	spr->clips = NULL;
 	spr->nb_clip = 0;
 	spr->delay = 0;
 	spr->run_animate = 1;
 	spr->last_animate = 0;
 	spr->timer = 0;
+	spr->obj.render = render_sprites;
+	spr->animate = NULL;
+	spr->end_move = NULL;
 	return (0);
 }
