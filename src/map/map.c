@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/11 12:09:30 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:47:34 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,31 @@ static int	render_map(t_map *map, t_image *frame)
 	return (0);
 }
 
+void	destroy_grid(t_grid *grid)
+{
+	int		i;
+
+	i = 0;
+	if (grid->blocks)
+	{
+		while (i < grid->rows && grid->blocks[i])
+		{
+			free(grid->blocks[i]);
+			i++;
+		}
+		free(grid->blocks);
+		grid->blocks = NULL;
+	}
+}
+
 void	destroy_map(t_map **map_p)
 {
 	t_map	*map;
-	int		i;
 
 	map = *map_p;
-	if (map->o_grid.blocks)
-	{
-		i = -1;
-		while (++i < map->o_grid.rows && map->o_grid.blocks[i])
-			free(map->o_grid.blocks[i]);
-		free(map->o_grid.blocks);
-		map->o_grid.blocks = NULL;
-	}
-	if (map->s_grid.blocks)
-	{
-		i = -1;
-		while (++i < map->s_grid.rows && map->s_grid.blocks[i])
-			free(map->s_grid.blocks[i]);
-		free(map->s_grid.blocks);
-		map->s_grid.blocks = NULL;
-	}
+	destroy_grid(&map->o_grid);
+	destroy_grid(&map->s_grid);
+	destroy_grid(&map->p_grid);
 	if (map->tiles)
 		free(map->tiles);
 	map->tiles = NULL;

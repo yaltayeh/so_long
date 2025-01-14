@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/12 08:09:52 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:59:13 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,15 @@
 
 int end_program(t_game *game)
 {
-	// if (game->gs)
-	// 	destroy_schema((void **)&game->gs);
-	mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+	if (game->mlx_ptr && game->win_ptr)
+		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
+	if (game->mlx_ptr && game->frame.img_ptr)
+		mlx_destroy_image(game->mlx_ptr, game->frame.img_ptr);
+	if (game->gs)
+		destroy_schema((void **)&game->gs);
+	if (game->mlx_ptr)
+		mlx_destroy_display(game->mlx_ptr);
+	free(game->mlx_ptr);
 	printf("Bye\n");
 	exit(0);
 }
@@ -92,20 +98,24 @@ int main(int argc, char **argv)
 		ft_fprintf(2, "Usege: %s map.ber\n", argv[0]);
 		return (1);
 	}
+	ft_bzero(&game, sizeof(game));
 	game.gs = init_game_schema();
 	// if (!game.gs)
 	// 	return (EXIT_FAILURE);
 	if (check_schema(game.gs, argv[1]) != 0)
+	{
+		end_program(&game);
 		return (-1);
+	}
 	game.width = WIN_WIDTH;
 	game.height = WIN_HEIGHT;
 	game.mlx_ptr = mlx_init();
-	// if (game.mlx_ptr == NULL)
-    //     return (EXIT_FAILURE);
+	if (game.mlx_ptr == NULL)
+        return (EXIT_FAILURE);
 
 	game.win_ptr = mlx_new_window(game.mlx_ptr, game.width, game.height, "Lumberjack");
-    // if (game.win_ptr == NULL)
-    //     return (EXIT_FAILURE);
+    if (game.win_ptr == NULL)
+        return (EXIT_FAILURE);
 	game.frame.img_ptr = mlx_new_image(game.mlx_ptr, game.width, game.height);
 	game.frame.width = game.width;
 	game.frame.height = game.height;

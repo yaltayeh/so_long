@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/11 07:50:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:22:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	load_sprites(void *_spr)
 	spr->run_animate = 1;
 	spr->last_animate = 0;
 	spr->timer = 0;
+	spr->index = 0;
+	spr->max_index = 0;
 	spr->obj.render = render_sprites;
 	spr->animate = NULL;
 	spr->end_move = NULL;
