@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/11 12:20:34 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:44:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	open_xpm_file(t_image *image, void *mlx_ptr, \
 	return (0);
 }
 
-int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
+static int	load_images(t_game_schema *gs, void *mlx_pt)
 {
 	t_image_info	images[5];
 	int				nb_images;
@@ -36,18 +36,23 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 	images[2] = (t_image_info){FIRE_PATH, "fire"};
 	images[3] = (t_image_info){BOAT_PATH, "boat"};
 	images[4] = (t_image_info){TREE_PATH, "tree"};
-	gs->schema.mlx_ptr = mlx_ptr;
+	// images[5] = (t_image_info){TREE_PATH, "font"};
 	nb_images = sizeof(images) / sizeof(*images);
 	gs->schema.resources.nb_images = nb_images;
 	gs->schema.resources.images = ft_calloc(nb_images, sizeof(t_image));
-	i = 0;
-	while (i < nb_images)
-	{
+	i = -1;
+	while (++i < nb_images)
 		if (open_xpm_file(&gs->schema.resources.images[i], \
 						mlx_ptr, images[i].path, images[i].name) != 0)
 			return (-1);
-		i++;
-	}
+	return (0);
+}
+
+int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
+{
+	gs->schema.mlx_ptr = mlx_ptr;
+	if (load_images(gs, mlx_ptr) != 0)
+		return (-1);
 	if (init_tiles(&gs->map.tiles, &gs->map.s_grid, &gs->map.floor, gs) != 0)
 		return (-1);
 	if (load_components((void *)gs, &gs->schema, &gs->map.o_grid) != 0)

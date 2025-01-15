@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/11 07:31:50 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:27:03 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@
 typedef struct s_map	t_map;
 typedef struct s_camera	t_camera;
 
-typedef struct s_game_schema
+
+typedef struct s_banner
 {
-	t_schema	schema;
-	t_map		map;
-	t_camera	camera;
-}	t_game_schema;
+	t_object	obj;
+	int	nb_collect;
+	int	logs_collected;
+}	t_banner;
 
 typedef struct s_image_info
 {
@@ -36,6 +37,14 @@ typedef struct s_image_info
 	char 	*name;
 }	t_image_info;
 
+
+typedef struct s_game_schema
+{
+	t_schema	schema;
+	t_map		map;
+	t_camera	camera;
+	t_banner	banner;
+}	t_game_schema;
 
 int				load_game_schema(t_game_schema *gs, void *mlx_ptr);
 int				destroy_game_schema(t_game_schema **gs_r);

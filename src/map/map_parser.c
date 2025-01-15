@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:41:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/11 12:12:09 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/15 11:54:37 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,15 @@ static int	check_path(t_grid *p_grid, t_grid *o_grid)
 	int	r;
 	int	c;
 	int	nb[3];
+	int	nb_collect;
 
 	ft_bzero(nb, sizeof(nb));
 	if (valid_characters(p_grid, nb) != 0)
 		return (-1);
-	if (nb[0] != 1 || nb[1] != 1 || nb[2] == 0)
+	if (nb[0] != 1 || nb[1] != 1 || nb[2] < 1)
 		return (print_error_number1(p_grid, nb));
 	r = -1;
+	nb_collect = nb[2];
 	while (++r < p_grid->rows)
 	{
 		c = -1;
@@ -131,7 +133,7 @@ static int	check_path(t_grid *p_grid, t_grid *o_grid)
 				test_flood_fill(p_grid, nb, r, c);
 				if (nb[1] != 0 || nb[2] != 0)
 					return (print_error_number2(p_grid, o_grid, nb));
-				return (0);
+				return (nb_collect);
 			}
 		}
 	}
@@ -164,7 +166,8 @@ static char	**read_map_file(int fd, int i)
 
 int	map_parser(t_map *map, const char *map_path)
 {
-	int		fd;
+	int	fd;
+	int	nb_collect;
 
 	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
@@ -180,9 +183,10 @@ int	map_parser(t_map *map, const char *map_path)
 		return (-1);
 	if (copy_grid(&map->p_grid, &map->o_grid) != 0)
 		return (-1);
-	if (check_path(&map->p_grid, &map->o_grid) != 0)
+	nb_collect = check_path(&map->p_grid, &map->o_grid);
+	if (nb_collect < 1)
 		return (-1);
 	if (scale_grid(&map->s_grid, &map->o_grid) != 0)
 		return (-1);
-	return (0);
+	return (nb_collect);
 }

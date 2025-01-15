@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:26:52 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/11 07:43:02 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/15 12:49:16 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ static int	load_component(t_game_schema *gs, int i, char type, t_point loc)
 		*component_p = (t_object *)init_fire(gs);
 	else if (type == 'P')
 		*component_p = (t_object *)init_player(gs);
-	else
-		return (-1);
 	if (!*component_p)
 		return (-1);
 	(*component_p)->relative_location = (t_point){(loc.x * 2 + 1) * TSIZE, \

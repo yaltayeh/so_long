@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/13 17:59:13 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/15 11:45:59 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int rander(t_game	*game)
 	return (0);
 }
 
-
 int main(int argc, char **argv)
 {
     t_game	game;
@@ -100,8 +99,8 @@ int main(int argc, char **argv)
 	}
 	ft_bzero(&game, sizeof(game));
 	game.gs = init_game_schema();
-	// if (!game.gs)
-	// 	return (EXIT_FAILURE);
+	if (game.gs == NULL)
+		return (EXIT_FAILURE);
 	if (check_schema(game.gs, argv[1]) != 0)
 	{
 		end_program(&game);
@@ -115,7 +114,7 @@ int main(int argc, char **argv)
 
 	game.win_ptr = mlx_new_window(game.mlx_ptr, game.width, game.height, "Lumberjack");
     if (game.win_ptr == NULL)
-        return (EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	game.frame.img_ptr = mlx_new_image(game.mlx_ptr, game.width, game.height);
 	game.frame.width = game.width;
 	game.frame.height = game.height;
