@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/15 11:45:59 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:47:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,42 @@ int key_release(int keycode, t_game *game)
 	return (0);
 }
 
+int	is_surround_boat(t_game *game)
+{
+	t_grid	*o_grid;
+	int	r;
+	int	c;
+
+	o_grid = &game->gs->map.o_grid;
+	r = ((t_object *)game->player)->relative_location.y / (TSIZE * 2);
+	c = ((t_object *)game->player)->relative_location.x / (TSIZE * 2);
+	if (o_grid->blocks[r][c - 1] == 'E' \
+		|| o_grid->blocks[r][c + 1] == 'E' \
+		|| o_grid->blocks[r - 1][c] == 'E' \
+		|| o_grid->blocks[r + 1][c] == 'E')
+		return (1);
+	return (0);
+}
+
+void	ride_boat(t_game *game)
+{
+	t_player	*player;
+	t_boat		*boat;
+
+	
+	if (!is_surround_boat(game))
+		return ;
+	player = game->player;
+	boat = (t_boat *)schema_get_component_by_name(game->gs, "boat");
+	if (!boat)
+		return ;
+	((t_object *)player)->relative_location = ((t_object *)boat)->relative_location;
+}
+
 int	key_press(int keycode, t_game *game)
 {
 	t_player	*p;
+	static int i;
 
 	p = game->player;
 	if (keycode == KEY_UP \
@@ -63,12 +96,19 @@ int	key_press(int keycode, t_game *game)
 		}
 	if (keycode == KEY_SPACE)
 	{
+		// if (game->gs->banner.nb_collect == 0)
+		if (is_surround_boat(game))
+			ride_boat(game);
+		// ft_printf("space press %d\n", i);
 		if (p->movement != SLASH_128)
 		{
+			// ft_printf("run animation %d\n", i);
 			p->movement = SLASH_128;
 			p->spr.index = 0;
 			p->spr.max_index = 6;
 		}
+		
+		i++;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/11 07:38:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/20 13:26:40 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ enum e_move_type
 typedef struct s_player
 {
 	t_sprites			spr;
-	t_point				loc;
 	t_clip				clip;
 	int					logs_count;
 	enum e_move_type	movement;

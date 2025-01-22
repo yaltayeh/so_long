@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/15 17:27:03 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:46:58 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_game_schema
 }	t_game_schema;
 
 int				load_game_schema(t_game_schema *gs, void *mlx_ptr);
-int				destroy_game_schema(t_game_schema **gs_r);
+void				destroy_game_schema(t_game_schema **gs_r);
 t_game_schema	*init_game_schema(void);
 
 #endif

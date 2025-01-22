@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 14:38:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/16 09:20:25 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:46:09 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_schema
 	int			(*check_schema)();
 	int			(*render_schema)();
 	int			(*load_schema)();
-	int			(*destroy_schema)();
+	void		(*destroy_schema)();
 }	t_schema;
 
 int			load_schema(void *_schema, void *data);

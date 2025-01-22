@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:51:32 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/13 17:35:32 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:45:28 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	destroy_schema(void **_schema)
 		schema->components = NULL;
 		schema->nb_components = 0;
 	}
-	ft_fprintf(2, "destroy objects\n");
 	if (schema->resources.images)
 	{
 		i = -1;
@@ -98,8 +97,9 @@ void	destroy_schema(void **_schema)
 					schema->resources.images[i].img_ptr);
 		free(schema->resources.images);
 	}
-	// ft_bzero(schema + sizeof(schema->mlx_ptr), 
-	// 		sizeof(*schema) - sizeof(schema->mlx_ptr));
+	ft_bzero(schema + sizeof(schema->mlx_ptr), 
+			sizeof(*schema) - sizeof(schema->mlx_ptr));
+	schema->destroy_schema = destroy;	
 	if (destroy)
 		destroy(_schema);
 }

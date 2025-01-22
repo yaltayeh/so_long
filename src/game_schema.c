@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/15 18:44:02 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:46:39 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	open_xpm_file(t_image *image, void *mlx_ptr, \
 	return (0);
 }
 
-static int	load_images(t_game_schema *gs, void *mlx_pt)
+static int	load_images(t_game_schema *gs, void *mlx_ptr)
 {
 	t_image_info	images[5];
 	int				nb_images;
@@ -61,7 +61,7 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 	return (0);
 }
 
-int	destroy_game_schema(t_game_schema **gs_r)
+void	destroy_game_schema(t_game_schema **gs_r)
 {
 	t_map			*map;
 
@@ -69,7 +69,6 @@ int	destroy_game_schema(t_game_schema **gs_r)
 	destroy_object((void **)&map);
 	free(*gs_r);
 	*gs_r = NULL;
-	return (0);
 }
 
 int	check_game_schema(t_game_schema *gs, char *map_path)

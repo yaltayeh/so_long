@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/13 16:44:45 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:33:25 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 #include "X11/keysym.h"
 
-# define WIN_WIDTH 1000
-# define WIN_HEIGHT 650
+# define WIN_WIDTH  (128 * 10)
+# define WIN_HEIGHT (128 * 5)
 
 # ifndef TILEDS_PATH
 #  define TILES_PATH "textures/tile.xpm"
@@ -35,7 +35,7 @@
 #  define PLAYER_DELEY 1
 # endif
 # ifndef PLAYER_SPEED
-#  define PLAYER_SPEED 4
+#  define PLAYER_SPEED 3
 # endif
 
 # ifndef FIRE_PATH

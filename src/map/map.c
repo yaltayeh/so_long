@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/15 11:53:21 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:28:20 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	init_tiles(t_tile **tiles_r, t_grid *s_map, \
 			load_tile(tile, schema, get_tile_clip(s_map, t, r, c), (void *)t);
 			tile->spr.obj.relative_location.x = c * t->size;
 			tile->spr.obj.relative_location.y = r * t->size;
+			// tile->spr.obj.relative_location.x = c * t->size + (c + 1) % 2;
+			// tile->spr.obj.relative_location.y = r * t->size + (r + 1) % 2;
 			c++;
 		}
 		r++;
