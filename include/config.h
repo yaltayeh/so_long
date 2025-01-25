@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/20 17:33:25 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/24 21:40:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@
 # endif
 # ifndef TREE_DELEY
 #  define TREE_DELEY 1
+# endif
+
+# ifndef HEALTH_BAR_PATH
+#  define HEALTH_BAR_PATH "textures/health_bar.xpm"
 # endif
 
 # define WASD

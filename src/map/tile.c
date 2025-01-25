@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 22:27:02 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/20 18:47:15 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/24 22:56:08 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void	animate_floor(t_floor *f)
 
 int	load_floor(t_floor *f, int size)
 {
-	if (load_sprites(&f->spr) == -1)
-		return (-1);
+	load_sprites(&f->spr);
 	ft_strlcpy((char *)f, "tiled_data", NAME_SIZE);
 	f->size = size;
 	f->spr.index = 0;

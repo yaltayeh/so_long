@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/22 14:47:52 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/23 00:04:24 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ int end_program(t_game *game)
 		mlx_destroy_image(game->mlx_ptr, game->frame.img_ptr);
 	if (game->gs)
 		destroy_schema((void **)&game->gs);
+#ifdef __linux__
 	if (game->mlx_ptr)
 		mlx_destroy_display(game->mlx_ptr);
+#endif // __linux__
 	free(game->mlx_ptr);
 	printf("Bye\n");
 	exit(0);
@@ -84,7 +86,6 @@ void	ride_boat(t_game *game)
 int	key_press(int keycode, t_game *game)
 {
 	t_player	*p;
-	static int i;
 
 	p = game->player;
 	if (keycode == KEY_UP \
@@ -99,16 +100,12 @@ int	key_press(int keycode, t_game *game)
 		// if (game->gs->banner.nb_collect == 0)
 		if (is_surround_boat(game))
 			ride_boat(game);
-		// ft_printf("space press %d\n", i);
 		if (p->movement != SLASH_128)
 		{
-			// ft_printf("run animation %d\n", i);
 			p->movement = SLASH_128;
 			p->spr.index = 0;
 			p->spr.max_index = 6;
 		}
-		
-		i++;
 	}
 	return (0);
 }

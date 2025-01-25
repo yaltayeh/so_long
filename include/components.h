@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/24 19:31:13 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/24 22:51:51 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "sprites.h"
 # include "object.h"
 # include "schema.h"
+# include "health_bar.h"
 
 typedef struct s_grid		t_grid;
 typedef struct s_game_schema	t_game_schema;
@@ -29,10 +30,11 @@ typedef struct s_fire
 
 typedef struct t_tree
 {
-	t_sprites	spr;
-	int			status;
-	t_clip		clip;
-	int			health;
+	t_sprites		spr;
+	int				status;
+	t_clip			clip;
+	t_health_bar	health_bar;
+	int				health;
 }	t_tree;
 
 enum e_boat_directions

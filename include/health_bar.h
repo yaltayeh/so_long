@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:26:33 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/24 20:34:49 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 07:07:34 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 enum    health_bar_types
 {
 	HB_SOLID_WHITE = 0,
-	HB_BLUE_1 =	8,
+	HB_BLUE_1 =	16,
 	HB_GREEN_1,
 	HB_GRAY_1,
 	HB_RED_1,
 	HB_PURPLE_1,
 	HB_DARK_RED_1,
-	HB_BUBBLE_RED = 16,
+	HB_BUBBLE_RED = 32,
 	HB_BUBBLE_GREEN,
 	HB_BUBBLE_ORANGE,
 	HB_BUBBLE_SELVER,
-	HB_SMALL_BUBBLE_ORANGE = 32,
+	HB_SMALL_BUBBLE_ORANGE = 48,
 	HB_SMALL_BUBBLE_GREEN,
 	HB_SMALL_BUBBLE_RED,
 	HB_SMALL_BUBBLE_SELVER,
@@ -38,10 +38,16 @@ enum    health_bar_types
 typedef struct	s_health_bar
 {
 	t_sprites	spr;
+	t_object	*owner;
 	t_clip		clip;
-	int			*health;
+	int			*health_r;
+	int			damge;
+	t_clip		rec;
+	int			nb_images;
+	
 }	t_health_bar;
 
-int load_health_bar(t_health_bar *health_bar, int *health_r, int health_bar_type);
+void load_health_bar(void *schema, t_health_bar *hb, void *owner, \
+					int *health_r, int type);
 
 #endif

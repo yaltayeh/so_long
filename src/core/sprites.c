@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/22 14:43:20 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 07:03:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,29 @@ void	animate_sprites(void *_spr)
 	void		(*end_move)(t_sprites *);
 
 	spr = (t_sprites *)_spr;
-	if (spr->delay > 0 && spr->run_animate)
+	if (((t_object *)spr)->type[0] == 'S')
 	{
-		animate = spr->animate;
-		end_move = spr->end_move;
-		spr->timer++;
-		if (spr->last_animate == 0 \
-			|| spr->timer - spr->last_animate > spr->delay)
+		if (spr->delay > 0 && spr->run_animate)
 		{
-			spr->last_animate = spr->timer;
-			if (animate)
-				animate(spr);
-			if (spr->max_index > 0)
-				spr->index = (spr->index + 1) % spr->max_index;
-			if (spr->index == 0)
-				if (end_move)
-					end_move(spr);
+			animate = spr->animate;
+			end_move = spr->end_move;
+			spr->timer++;
+			if (spr->last_animate == 0 \
+				|| spr->timer - spr->last_animate > spr->delay)
+			{
+				spr->last_animate = spr->timer;
+				if (animate)
+					animate(spr);
+				if (spr->max_index > 0)
+					spr->index = (spr->index + 1) % spr->max_index;
+				if (spr->index == 0)
+					if (end_move)
+						end_move(spr);
+			}
 		}
 	}
+	if (spr->obj.next)
+		animate_sprites(spr->obj.next);
 }
 
 int	render_sprites(void *_spr, t_image *frame, int layer)
@@ -62,13 +67,14 @@ int	render_sprites(void *_spr, t_image *frame, int layer)
 	return (0);
 }
 
-int	load_sprites(void *_spr)
+void	load_sprites(void *_spr)
 {
 	t_sprites	*spr;
 
 	spr = (t_sprites *)_spr;
 	load_object(spr);
 	ft_strlcpy((char *)spr, "sprites", NAME_SIZE);
+	spr->obj.type[0] = 'S';
 	spr->clips = NULL;
 	spr->nb_clip = 0;
 	spr->delay = 0;
@@ -80,5 +86,4 @@ int	load_sprites(void *_spr)
 	spr->obj.render = render_sprites;
 	spr->animate = NULL;
 	spr->end_move = NULL;
-	return (0);
 }

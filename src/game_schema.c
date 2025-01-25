@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/22 14:46:39 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/24 21:40:15 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	open_xpm_file(t_image *image, void *mlx_ptr, \
 
 static int	load_images(t_game_schema *gs, void *mlx_ptr)
 {
-	t_image_info	images[5];
+	t_image_info	images[6];
 	int				nb_images;
 	int				i;
 
@@ -36,6 +36,7 @@ static int	load_images(t_game_schema *gs, void *mlx_ptr)
 	images[2] = (t_image_info){FIRE_PATH, "fire"};
 	images[3] = (t_image_info){BOAT_PATH, "boat"};
 	images[4] = (t_image_info){TREE_PATH, "tree"};
+	images[5] = (t_image_info){HEALTH_BAR_PATH, "health_bar"};
 	// images[5] = (t_image_info){TREE_PATH, "font"};
 	nb_images = sizeof(images) / sizeof(*images);
 	gs->schema.resources.nb_images = nb_images;
