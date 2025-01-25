@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:49:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/11 07:36:25 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 14:43:19 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	update_camera(t_camera	*camera)
 	t_point			map_size;
 
 	gs = (t_game_schema *)camera->schema;
-	player = schema_get_component_by_name(camera->schema, "player");
+	player = get_children_by_name(camera->schema, "player");
 	if (player)
 	{
 		camera->frame.x = -player->relative_location.x + WIN_WIDTH / 2;

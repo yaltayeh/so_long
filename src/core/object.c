@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 06:59:47 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:23:35 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@ void	render_object(void *_obj, t_image *frame, int layer)
 	render = obj->render;
 	if (render)
 		render(obj, frame, layer);
+	if (obj->childrens)
+		render_object(obj->childrens, frame, layer);
 	if (obj->next)
-	{
-		// ft_printf("render: %s\n", (char *)obj->next);
 		render_object(obj->next, frame, layer);
-	}
 }
 
 void	update_object(void *_obj)
@@ -48,6 +47,8 @@ void	update_object(void *_obj)
 		obj->absolute_location = *obj->parent_location;
 	obj->absolute_location.x += obj->relative_location.x - obj->center_point.x;
 	obj->absolute_location.y += obj->relative_location.y - obj->center_point.y;
+	if (obj->childrens)
+		update_object(obj->childrens);
 	if (obj->next)
 		update_object(obj->next);
 }
@@ -56,6 +57,17 @@ void	defult_destroy_object(void **_obj)
 {
 	free(*_obj);
 	*_obj = NULL;
+}
+
+void	add_children(void *_parent, void *_child)
+{
+	t_object	*parent;
+	t_object	*child;
+
+	parent = (t_object *)_parent;
+	child = (t_object *)_child;
+	child->next = parent->childrens;
+	parent->childrens = child;
 }
 
 void	destroy_object(void **_obj)
@@ -69,8 +81,8 @@ void	destroy_object(void **_obj)
 				obj->relative_location.x, \
 				obj->relative_location.y);
 	destroy = obj->destroy;
-	if (destroy)
-		destroy(_obj);
 	if (obj->next)
 		destroy_object(&obj->next);
+	if (destroy)
+		destroy(_obj);
 }

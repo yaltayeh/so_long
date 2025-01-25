@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/24 22:51:51 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 14:56:25 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ t_tree		*init_tree(t_game_schema *gs, int i);
 t_boat		*init_boat(t_game_schema *gs);
 t_fire		*init_fire(t_game_schema *gs);
 t_player	*init_player(t_game_schema *gs);
-int			load_components(t_game_schema *gs, t_schema *schema, t_grid *o_map);
+int			load_components(t_game_schema *gs, t_grid *o_map);
 void		sort_objects(t_object **objects, int nb_object);
-int 			damage_tree(t_tree *tree, int damage);
+int 		damage_tree(t_tree *tree, int damage);
 
 #endif

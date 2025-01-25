@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:24:14 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 00:39:56 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 13:43:24 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_tree	*init_tree(t_game_schema *gs, int i)
 	tree->spr.obj.destroy = defult_destroy_object;
 	
 	tree->health = 120 - 20 * (i & 1);
-	load_health_bar(gs, &tree->health_bar, tree, &tree->health, HB_DARK_RED_1);
+	load_health_bar(gs, &tree->health_bar, tree, &tree->health, HB_GREEN_1);
 	((t_object *)tree)->next = &tree->health_bar;
 	return (tree);
 }

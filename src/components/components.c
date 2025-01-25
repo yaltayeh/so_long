@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:26:52 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/24 22:51:13 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 14:53:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,54 +16,32 @@
 
 static int	load_component(t_game_schema *gs, int i, char type, t_point loc)
 {
-	t_object	**component_p;
+	t_object	*component;
 
-	component_p = gs->schema.components + i;
-	*component_p = NULL;
+	component = NULL;
 	if (type == 'E')
-		*component_p = (t_object *)init_boat(gs);
+		component = (t_object *)init_boat(gs);
 	else if (type == 'C')
-		*component_p = (t_object *)init_tree(gs, i);
+		component = (t_object *)init_tree(gs, i);
 	else if (type == 'F')
-		*component_p = (t_object *)init_fire(gs);
+		component = (t_object *)init_fire(gs);
 	else if (type == 'P')
-		*component_p = (t_object *)init_player(gs);
-	if (!*component_p)
+		component = (t_object *)init_player(gs);
+	if (!component)
 		return (-1);
-	(*component_p)->relative_location = (t_point){(loc.x * 2 + 1) * TSIZE, \
+	component->relative_location = (t_point){(loc.x * 2 + 1) * TSIZE, \
 												(loc.y * 2 + 1) * TSIZE};
-	(*component_p)->parent_location = (void *)&gs->camera.frame;
+	component->parent_location = (void *)&gs->camera.frame;
+	add_children(gs, component);
 	return (0);
 }
 
-static int	nb_components(t_grid *o_map)
-{
-	int	nb;
-	int	r;
-	int	c;
-
-	nb = 0;
-	r = -1;
-	while (++r < o_map->rows)
-	{
-		c = -1;
-		while (++c < o_map->cols)
-			if (ft_strchr("PECF", o_map->blocks[r][c]))
-				nb++;
-	}
-	return (nb);
-}
-
-int	load_components(t_game_schema *gs, t_schema *schema, t_grid *o_map)
+int	load_components(t_game_schema *gs, t_grid *o_map)
 {
 	int	r;
 	int	c;
 	int	i;
 
-	schema->nb_components = nb_components(o_map);
-	schema->components = ft_calloc(schema->nb_components, sizeof(t_object *));
-	if (!schema->components)
-		return (-1);
 	i = 0;
 	r = -1;
 	while (++r < o_map->rows)

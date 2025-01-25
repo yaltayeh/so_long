@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 07:03:52 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 14:19:03 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	animate_sprites(void *_spr)
 			}
 		}
 	}
+	if (spr->obj.childrens)
+		animate_sprites(spr->obj.childrens);
 	if (spr->obj.next)
 		animate_sprites(spr->obj.next);
 }

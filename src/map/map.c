@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/16 15:28:20 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 19:24:45 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,24 @@ void	destroy_map(t_map **map_p)
 	map->tiles = NULL;
 }
 
+// int	open_map_and_check(t_map *map, const char *map_path)
+// {
+// 	if (load_floor((void *)map, TSIZE) != 0)
+// 		return (-1);
+// 	ft_strlcpy((char *)map, "map", NAME_SIZE);
+// 	map->nb_collect = map_parser(map, map_path);
+// 	if (map->nb_collect < 1)
+// }
+
 int	load_map(t_map *map, const char *map_path)
 {
 	if (load_floor((void *)map, TSIZE) != 0)
 		return (-1);
 	ft_strlcpy((char *)map, "map", NAME_SIZE);
+	map->nb_tiles = map->s_grid.rows * map->s_grid.cols;
 	map->nb_collect = map_parser(map, map_path);
 	if (map->nb_collect < 1)
 		return (-1);
-	map->nb_tiles = map->s_grid.rows * map->s_grid.cols;
 	((t_object *)map)->render = render_map;
 	((t_object *)map)->destroy = destroy_map;
 	return (0);

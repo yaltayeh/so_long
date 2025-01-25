@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/22 14:57:01 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 14:49:10 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_point	valid_move(t_player *player, t_game_schema *gs, \
 		a = 0; b = 0;
 		circle_center.x = new_c * (TSIZE * 2) + TSIZE;
 		circle_center.y = new_r * (TSIZE * 2) + TSIZE;
-		player->touch_component = schema_get_component_by_loacation(gs, circle_center);
+		player->touch_component = get_children_by_loacation(gs, circle_center);
 		if (player->touch_component)
 		{
 			if (ft_strncmp((char *)player->touch_component, "tree", NAME_SIZE) == 0)

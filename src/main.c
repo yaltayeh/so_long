@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/23 00:04:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 14:55:19 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ride_boat(t_game *game)
 	if (!is_surround_boat(game))
 		return ;
 	player = game->player;
-	boat = (t_boat *)schema_get_component_by_name(game->gs, "boat");
+	boat = (t_boat *)get_children_by_name(game->gs, "boat");
 	if (!boat)
 		return ;
 	((t_object *)player)->relative_location = ((t_object *)boat)->relative_location;
@@ -120,7 +120,9 @@ int rander(t_game	*game)
 	game->last_rander = game->time;
 	frame = &game->frame;
 	ft_bzero(frame->buffer, frame->height * frame->size_line);
-	render_schema(game->gs, frame);
+	render_object(game->gs, frame, 0);
+	render_object(game->gs, frame, 1);
+	render_object(game->gs, frame, 2);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, frame->img_ptr, 0, 0);
 	return (0);
 }
@@ -159,7 +161,7 @@ int main(int argc, char **argv)
 
 	if (load_schema(game.gs, game.mlx_ptr) != 0)
 		return (-1);
-	game.player = (void *)schema_get_component_by_name(game.gs, "player");
+	game.player = (void *)get_children_by_name(game.gs, "player");
 
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, key_release, &game);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, key_press, &game);
