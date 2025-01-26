@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 19:08:44 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 21:29:42 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,47 +62,52 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 	return (0);
 }
 
-
-void	swap_objects(t_object **obj1, t_object **obj2)
+void	 update_game_schema(t_game_schema *gs)
 {
-	t_object	*next;
-	t_object	*prev;
+	t_object	*player;
+	t_object	*current;
 	t_object	*tmp;
+	t_object	*components;
 
-	printf("swap: '%s' '%s'\n", (char *)*obj1, (char *)*obj2);
-	next = (*obj1)->next;
-	prev = (*obj1)->prev;
-	(*obj1)->next = (*obj2)->next;
-	(*obj1)->prev = (*obj2)->prev;
-	(*obj2)->next = next;
-	(*obj2)->prev = prev;
-	tmp = *obj1;
-	*obj1 = *obj2;
-	*obj2 = tmp;
-}
-
-void	 sort_components(t_game_schema *gs)
-{
-	t_object	**current;
-	t_object	*tmp;
-	t_object	*cursor;
-	
-	current = (t_object **)&gs->components.childrens;
-	while (*current)
+	components = &gs->components;
+	player = get_children_by_name(components, "player");
+	if (!player->prev)
 	{
-		cursor = (*current)->next;
-		while (cursor)
+		if (!player->next)
+			return ;
+		components->childrens = player->next;
+		((t_object *)components->childrens)->prev = NULL;
+	}
+	else
+	{
+		((t_object *)player->prev)->next = player->next;
+		if (player->next)
+			((t_object *)player->next)->prev = player->prev;
+	}
+	current = components->childrens;
+	while (current)
+	{
+		if (current->relative_location.y < player->relative_location.y)
 		{
-			if ((*current)->relative_location.y > cursor->relative_location.y)
-				swap_objects(current, &cursor);
-			cursor = cursor->next;
+			if (!current->next)
+			{
+				printf("test\n");
+				add_children(components, player);
+				return ;
+			}
+			tmp = current->prev;
+			current->prev = player;
+			player->next = current;
+			if (tmp)
+			{
+				tmp->next = player;
+				player->prev = tmp;
+			}
+			return ;
 		}
-		tmp = (*current)->next;
-		current = &tmp;
-		break;
+		current = current->next;
 	}
 }
-
 
 t_game_schema	*init_game_schema(char *map_path)
 {
@@ -117,7 +122,7 @@ t_game_schema	*init_game_schema(char *map_path)
 	load_object(&gschema->components);
 	load_camera(&gschema->camera, gschema);
 
-	((t_object *)gschema)->update = sort_components;
+	((t_object *)gschema)->update = update_game_schema;
 	((t_object *)gschema)->destroy = destroy_schema;
 	gschema->schema.load_schema = load_game_schema;
 	add_children(gschema, &gschema->camera);
