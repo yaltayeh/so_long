@@ -39,7 +39,6 @@ FILES =	main						\
 		components/components		\
 		components/boat				\
 		components/tree				\
-		map/tile					\
 		map/map_parser				\
 		map/scale_map				\
 		map/map						\

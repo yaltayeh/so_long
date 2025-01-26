@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 14:19:03 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 10:07:22 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,6 @@ int	render_sprites(void *_spr, t_image *frame, int layer)
 	int			i;
 
 	spr = (t_sprites *)_spr;
-	if (layer == 0)
-	{
-		update_object(spr);
-		animate_sprites(spr);
-	}
 	i = 0;
 	while (spr->clips && i < spr->nb_clip)
 	{

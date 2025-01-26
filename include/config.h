@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/24 21:40:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 10:25:12 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 #  define PLAYER_DELEY 1
 # endif
 # ifndef PLAYER_SPEED
-#  define PLAYER_SPEED 3
+#  define PLAYER_SPEED 6 
 # endif
 
 # ifndef FIRE_PATH

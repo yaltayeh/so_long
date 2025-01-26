@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 14:56:25 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 23:16:29 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct t_tree
 	t_sprites		spr;
 	int				status;
 	t_clip			clip;
-	t_health_bar	health_bar;
 	int				health;
 }	t_tree;
 

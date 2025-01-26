@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 14:55:19 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 10:22:25 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ int rander(t_game	*game)
 	game->last_rander = game->time;
 	frame = &game->frame;
 	ft_bzero(frame->buffer, frame->height * frame->size_line);
+	update_object(game->gs);
+	animate_sprites(game->gs);
 	render_object(game->gs, frame, 0);
 	render_object(game->gs, frame, 1);
 	render_object(game->gs, frame, 2);
@@ -137,31 +139,26 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	ft_bzero(&game, sizeof(game));
-	game.gs = init_game_schema();
+	game.gs = init_game_schema(argv[1]);
 	if (game.gs == NULL)
-		return (EXIT_FAILURE);
-	if (check_schema(game.gs, argv[1]) != 0)
-	{
 		end_program(&game);
-		return (-1);
-	}
 	game.width = WIN_WIDTH;
 	game.height = WIN_HEIGHT;
 	game.mlx_ptr = mlx_init();
 	if (game.mlx_ptr == NULL)
-        return (EXIT_FAILURE);
+        end_program(&game);
 
 	game.win_ptr = mlx_new_window(game.mlx_ptr, game.width, game.height, "Lumberjack");
     if (game.win_ptr == NULL)
-		return (EXIT_FAILURE);
+		end_program(&game);
 	game.frame.img_ptr = mlx_new_image(game.mlx_ptr, game.width, game.height);
 	game.frame.width = game.width;
 	game.frame.height = game.height;
 	load_image_data(&game.frame);
 
 	if (load_schema(game.gs, game.mlx_ptr) != 0)
-		return (-1);
-	game.player = (void *)get_children_by_name(game.gs, "player");
+		end_program(&game);
+	game.player = (void *)get_children_by_name(&game.gs->components, "player");
 
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, key_release, &game);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, key_press, &game);

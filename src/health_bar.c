@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 20:02:59 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 07:31:30 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 23:31:12 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,14 @@ void    health_bar_update(t_health_bar *hb)
 	hb->clip.y += 0;
 }
 
-void load_health_bar(void *schema, t_health_bar *hb, void *owner, \
+t_health_bar *init_health_bar(void *schema, void *owner, \
 					int *health_r, int type)
 {
+	t_health_bar	*hb;
+	
+	hb = malloc(sizeof(*hb));
+	if (!hb)
+		return (NULL);
 	load_sprites(hb);
 	ft_strlcpy((char *)hb, "health_bar", NAME_SIZE);
 	hb->owner = owner;
@@ -34,16 +39,15 @@ void load_health_bar(void *schema, t_health_bar *hb, void *owner, \
 	hb->clip = (t_clip){0, 0, 0, 0, 2};
 	hb->health_r = health_r;
 	hb->damge = *health_r;
-
 	if ((type >> 4) == 0)
 		hb->rec = (t_clip){0, 16 * (type & 15), 192, 16, 6};
 	else if ((type >> 4) == 1)
 		hb->rec = (t_clip){0, 16 + 16 * (type & 15), 240, 16, 5};
 	else if ((type >> 4) == 2)
 		hb->rec = (t_clip){64, 112 + 16 * (type & 15), 192, 16, 6};
-
 	hb->spr.image = schema_get_image_by_name(schema, "health_bar");
 	hb->spr.clips = &hb->clip;
 	hb->spr.nb_clip = 1;
 	hb->spr.obj.update = health_bar_update;
+	return (hb);
 }

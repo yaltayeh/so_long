@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:26:33 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 07:07:34 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 23:27:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ typedef struct	s_health_bar
 	int			*health_r;
 	int			damge;
 	t_clip		rec;
-	int			nb_images;
 	
 }	t_health_bar;
 
-void load_health_bar(void *schema, t_health_bar *hb, void *owner, \
+t_health_bar *init_health_bar(void *schema, void *owner, \
 					int *health_r, int type);
 
 #endif

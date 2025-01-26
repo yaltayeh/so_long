@@ -6,34 +6,49 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 19:24:45 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:32:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 
-int	init_tiles(t_tile **tiles_r, t_grid *s_map, \
-						t_floor *t, void *schema)
+t_tile	*init_tile(t_map *map, void *schema, int r, int c)
+{
+	t_tile	*tile;
+
+	tile = malloc(sizeof(*tile));
+	if (!tile)
+		return (NULL);
+	load_sprites((void *)tile);
+	ft_strlcpy((char *)tile, "tile", NAME_SIZE);
+	((t_object *)tile)->parent_location = \
+				&((t_object *)map)->absolute_location;
+	((t_sprites *)tile)->image = schema_get_image_by_name(schema, "tile");
+	((t_sprites *)tile)->clips = get_tile_clip(map, &map->s_grid, r, c);
+	((t_sprites *)tile)->nb_clip = 1;
+	return (tile);
+}
+
+int	init_tiles(t_map *map, void *schema)
 {
 	int		r;
 	int		c;
 	t_tile	*tile;
 
-	*tiles_r = malloc(sizeof(t_tile) * s_map->rows * s_map->cols);
-	if (!*tiles_r)
-		return (-1);
 	r = 0;
-	while (r < s_map->rows)
+	while (r < map->s_grid.rows)
 	{
 		c = 0;
-		while (c < s_map->cols)
+		while (c < map->s_grid.cols)
 		{
-			tile = *tiles_r + (r * s_map->cols + c);
-			load_tile(tile, schema, get_tile_clip(s_map, t, r, c), (void *)t);
-			tile->spr.obj.relative_location.x = c * t->size;
-			tile->spr.obj.relative_location.y = r * t->size;
-			// tile->spr.obj.relative_location.x = c * t->size + (c + 1) % 2;
-			// tile->spr.obj.relative_location.y = r * t->size + (r + 1) % 2;
+			tile = init_tile(map, schema, r, c);
+			if (!tile)
+				return (-1);
+			((t_object *)tile)->relative_location.x = c * TSIZE;
+			((t_object *)tile)->relative_location.y = r * TSIZE;
+			// ((t_object *)tile)->relative_location.x += (c + 1) % 2;
+			// ((t_object *)tile)->relative_location.y += (r + 1) % 2;
+			add_children(map, tile);
 			c++;
 		}
 		r++;
@@ -41,27 +56,7 @@ int	init_tiles(t_tile **tiles_r, t_grid *s_map, \
 	return (0);
 }
 
-static int	render_map(t_map *map, t_image *frame)
-{
-	int	i;
-	int	tiles_count;
-
-	if (!map || !frame || !frame->buffer)
-		return (-1);
-	update_object(map);
-	animate_sprites(map);
-	tiles_count = map->s_grid.rows * map->s_grid.cols;
-	i = 0;
-	while (i < tiles_count)
-	{
-		if (render_sprites(&map->tiles[i], frame, 0) != 0)
-			return (-1);
-		i++;
-	}
-	return (0);
-}
-
-void	destroy_grid(t_grid *grid)
+void	free_grid(t_grid *grid)
 {
 	int		i;
 
@@ -83,12 +78,9 @@ void	destroy_map(t_map **map_p)
 	t_map	*map;
 
 	map = *map_p;
-	destroy_grid(&map->o_grid);
-	destroy_grid(&map->s_grid);
-	destroy_grid(&map->p_grid);
-	if (map->tiles)
-		free(map->tiles);
-	map->tiles = NULL;
+	free_grid(&map->o_grid);
+	free_grid(&map->s_grid);
+	free_grid(&map->p_grid);
 }
 
 // int	open_map_and_check(t_map *map, const char *map_path)
@@ -100,16 +92,47 @@ void	destroy_map(t_map **map_p)
 // 	if (map->nb_collect < 1)
 // }
 
+void	animate_map(t_map *map)
+{
+	int	offset;
+
+	offset = map->size * 3 * map->spr.index;
+	map->big_spot = (t_clip){offset + 0, 0, 64, 64, 0};
+	map->small_spot = (t_clip){offset + 0, 64, 64, 64, 0};
+	map->tileds[0] = (t_clip){offset + 64, 64, 64, 64, 0};
+	map->tileds[1] = (t_clip){offset + 64, 0, 64, 64, 0};
+	map->tileds[2] = (t_clip){offset + 64 * 2, 0, 64, 64, 0};
+	map->tileds[3] = (t_clip){offset + 64 * 2, 64, 64, 64, 0};
+	map->tileds[4] = (t_clip){offset, 64 * 4, 64, 64, 0};
+	map->tileds[5] = (t_clip){offset, 64 * 2, 64, 64, 0};
+	map->tileds[6] = (t_clip){offset + 64 * 2, 64 * 2, 64, 64, 0};
+	map->tileds[7] = (t_clip){offset + 64 * 2, 64 * 4, 64, 64, 0};
+	map->tileds[8] = (t_clip){offset + 64, 64 * 2, 64, 64, 0};
+	map->tileds[9] = (t_clip){offset + 64 * 2, 64 * 3, 64, 64, 0};
+	map->tileds[10] = (t_clip){offset + 64, 64 * 4, 64, 64, 0};
+	map->tileds[11] = (t_clip){offset, 64 * 3, 64, 64, 0};
+	map->tileds[12] = (t_clip){offset + 64, 64 * 3, 64, 64, 0};
+	map->tileds[13] = (t_clip){offset, 64 * 5, 64, 64, 0};
+	map->tileds[14] = (t_clip){offset + 64, 64 * 5, 64, 64, 0};
+	map->tileds[15] = (t_clip){offset + 64 * 2, 64 * 5, 64, 64, 0};
+}
+
 int	load_map(t_map *map, const char *map_path)
 {
-	if (load_floor((void *)map, TSIZE) != 0)
-		return (-1);
+	load_sprites(map);
 	ft_strlcpy((char *)map, "map", NAME_SIZE);
-	map->nb_tiles = map->s_grid.rows * map->s_grid.cols;
+
+	((t_sprites *)map)->index = 0;
+	((t_sprites *)map)->max_index = 4;
+	((t_sprites *)map)->clips = NULL;
+	((t_sprites *)map)->delay = TILED_DELEY;
+	((t_sprites *)map)->obj.render = NULL;
+
+	((t_object *)map)->destroy = destroy_map;
+	((t_sprites *)map)->animate = animate_map;
 	map->nb_collect = map_parser(map, map_path);
 	if (map->nb_collect < 1)
 		return (-1);
-	((t_object *)map)->render = render_map;
-	((t_object *)map)->destroy = destroy_map;
+	map->size = TSIZE;
 	return (0);
 }

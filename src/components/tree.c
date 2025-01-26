@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:24:14 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 13:43:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/25 23:33:19 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	damage_tree(t_tree *tree, int damage)
 
 t_tree	*init_tree(t_game_schema *gs, int i)
 {
-	t_tree	*tree;
+	t_tree			*tree;
+	t_health_bar	*hb;
 
 	tree = malloc(sizeof(t_tree));
 	if (!tree)
@@ -49,9 +50,13 @@ t_tree	*init_tree(t_game_schema *gs, int i)
 	tree->spr.delay = TREE_DELEY;
 	tree->spr.animate = animate_tree;
 	tree->spr.obj.destroy = defult_destroy_object;
-	
 	tree->health = 120 - 20 * (i & 1);
-	load_health_bar(gs, &tree->health_bar, tree, &tree->health, HB_GREEN_1);
-	((t_object *)tree)->next = &tree->health_bar;
+	hb = init_health_bar(gs, tree, &tree->health, HB_GREEN_1);
+	if (hb == NULL)
+	{
+		destroy_object((void **)&tree);
+		return (NULL);
+	}
+	add_children(tree, hb);
 	return (tree);
 }

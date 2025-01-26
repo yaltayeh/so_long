@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 19:27:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 10:31:43 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,53 +54,44 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 	gs->schema.mlx_ptr = mlx_ptr;
 	if (load_images(gs, mlx_ptr) != 0)
 		return (-1);
-	// if (load_map())
-	if (init_tiles(&gs->map.tiles, &gs->map.s_grid, &gs->map.floor, gs) != 0)
+	if (init_tiles(&gs->map, gs) != 0)
 		return (-1);
 	if (load_components((void *)gs, &gs->map.o_grid) != 0)
 		return (-1);
-	((t_object *)&gs->map)->parent_location = (t_point *)&gs->camera.frame;
+	((t_object *)&gs->map)->parent_location = &gs->camera.obj.relative_location;
 	return (0);
 }
 
-// void	destroy_game_schema(t_game_schema **gs_r)
-// {
-// 	t_map			*map;
-
-// 	map = &(*gs_r)->map;
-// 	destroy_object((void **)&map);
-// 	free(*gs_r);
-// 	*gs_r = NULL;
-// }
-
-int	check_game_schema(t_game_schema *gs, char *map_path)
-{
-	return (load_map(&gs->map, map_path));
-}
-
-// int	render_game_schema(t_game_schema *gs, t_image *frame)
-// {
-// 	int		(*render)(void *, t_image *);
-
-// 	update_object(get_children_by_name(gs, "player"));
-// 	update_camera(&gs->camera);
-// 	render = ((t_object *)&gs->map)->render;
-// 	if (render && render(&gs->map, frame) != 0)
-// 		return (-1);
-// 	return (0);
-// }
-
-t_game_schema	*init_game_schema(void)
+t_game_schema	*init_game_schema(char *map_path)
 {
 	t_game_schema	*gschema;
 
 	gschema = ft_calloc(1, sizeof(t_game_schema));
 	if (!gschema)
 		return (NULL);
-	gschema->camera.schema = gschema;
-	gschema->schema.check_schema = check_game_schema;
+	load_object(gschema);
+	load_object(&gschema->components);
+	load_camera(&gschema->camera, gschema);
+	((t_object *)gschema)->destroy = destroy_schema;
 	gschema->schema.load_schema = load_game_schema;
-	// ((t_object *)gschema)->relative_location = render_game_schema;
-	((t_object *)gschema)->destroy = defult_destroy_object;
+	add_children(gschema, &gschema->camera);
+	add_children(gschema, &gschema->map);
+	add_children(gschema, &gschema->components);
+	if (load_map(&gschema->map, map_path) != 0)
+	{
+		destroy_object((void **)&gschema);
+		return (NULL);
+	}
+
+	
+	t_object *cur;
+
+	cur = gschema->schema.obj.childrens;
+	while (cur)
+	{
+		printf("%s\n", (char *)cur);
+		cur = cur->next;
+	}
+	
 	return (gschema);
 }

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/22 14:46:58 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 10:18:08 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_image_info
 typedef struct s_game_schema
 {
 	t_schema	schema;
+	t_object	components;
 	t_map		map;
 	t_camera	camera;
 	t_banner	banner;
@@ -48,6 +49,6 @@ typedef struct s_game_schema
 
 int				load_game_schema(t_game_schema *gs, void *mlx_ptr);
 void				destroy_game_schema(t_game_schema **gs_r);
-t_game_schema	*init_game_schema(void);
+t_game_schema	*init_game_schema(char *map_path);
 
 #endif

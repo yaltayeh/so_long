@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:05:54 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 14:17:24 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 07:35:42 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,14 @@ typedef struct s_object
 	void		(*destroy)();
 }	t_object;
 
-void	add_children(void *_parent, void *_child);
-void	load_object(void *_obj);
-void	render_object(void *obj, t_image *frame, int layer);
-void	update_object(void *_obj);
-void	destroy_object(void **_obj);
-void	defult_destroy_object(void **_obj);
-int		collision_object(void *_obj, void *tangible);
+void		add_children(void *_parent, void *_child);
+void		load_object(void *_obj);
+void		render_object(void *obj, t_image *frame, int layer);
+void		update_object(void *_obj);
+void		destroy_object(void **_obj);
+void		defult_destroy_object(void **_obj);
+int			collision_object(void *_obj, void *tangible);
+t_object	*get_children_by_name(void *_parent, const char *name);
+t_object	*get_children_by_loacation(void *_parent, t_point location);
 
 #endif

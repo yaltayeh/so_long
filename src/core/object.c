@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 19:23:35 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 07:13:01 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	render_object(void *_obj, t_image *frame, int layer)
 	int			(*render)(void *, t_image *, int);
 
 	obj = (t_object *)_obj;
-	render = obj->render;
-	if (render)
-		render(obj, frame, layer);
 	if (obj->childrens)
 		render_object(obj->childrens, frame, layer);
 	if (obj->next)
 		render_object(obj->next, frame, layer);
+	render = obj->render;
+	if (render)
+		render(obj, frame, layer);
 }
 
 void	update_object(void *_obj)
@@ -57,6 +57,39 @@ void	defult_destroy_object(void **_obj)
 {
 	free(*_obj);
 	*_obj = NULL;
+}
+
+t_object	*get_children_by_name(void *_parent, const char *name)
+{
+	t_object	*parent;
+	t_object	*current;
+
+	parent = (t_object *)_parent;
+	current = parent->childrens;
+	while (current)
+	{
+		if (ft_strncmp((char *)current, name, NAME_SIZE) == 0)
+			break;
+		current = current->next;
+	}
+	return (current);
+}
+
+t_object	*get_children_by_loacation(void *_parent, t_point location)
+{
+	t_object	*parent;
+	t_object	*current;
+
+	parent = (t_object *)_parent;
+	current = parent->childrens;
+	while (current)
+	{
+		if (ft_memcmp(&current->relative_location, \
+						&location, sizeof(location)) == 0)
+			break;
+		current = current->next;
+	}
+	return (current);
 }
 
 void	add_children(void *_parent, void *_child)

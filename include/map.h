@@ -6,15 +6,20 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:57:34 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/11 12:08:59 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 00:31:41 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_H
 # define MAP_H
 
-# include "tile.h"
 # include "components.h"
+
+typedef struct s_tile
+{
+	t_sprites	spr;
+}	t_tile;
+
 
 typedef struct s_grid
 {
@@ -25,22 +30,24 @@ typedef struct s_grid
 
 typedef struct s_map
 {
-	t_floor	floor;
+	t_sprites	spr;
+	int			size;
+	t_clip		tileds[16];
+	t_clip		big_spot;
+	t_clip		small_spot;
+
 	t_grid	o_grid; // orginal grid
 	t_grid	s_grid; // scaled grid
 	t_grid	p_grid; // path grid
-	t_tile	*tiles;
-	int		nb_tiles;
 	int		nb_collect;
 }	t_map;
 
 int	map_parser(t_map *map, const char *map_path);
 int	load_map(t_map *map, const char *grid_path);
-int	init_tiles(t_tile **tileds_r, t_grid *s_map, \
-						t_floor *t, void *schema);
 
-t_clip	*get_tile_clip(t_grid *map, t_floor *t, int r, int c);
+int	init_tiles(t_map *map, void *schema);
 
+t_clip	*get_tile_clip(t_map *map, t_grid *grid, int r, int c);
 
 int	scale_grid(t_grid *dst, t_grid *src);
 int	copy_grid(t_grid *dst, t_grid *src);
