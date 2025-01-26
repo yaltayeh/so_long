@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 10:31:43 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 19:08:44 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,48 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 	return (0);
 }
 
+
+void	swap_objects(t_object **obj1, t_object **obj2)
+{
+	t_object	*next;
+	t_object	*prev;
+	t_object	*tmp;
+
+	printf("swap: '%s' '%s'\n", (char *)*obj1, (char *)*obj2);
+	next = (*obj1)->next;
+	prev = (*obj1)->prev;
+	(*obj1)->next = (*obj2)->next;
+	(*obj1)->prev = (*obj2)->prev;
+	(*obj2)->next = next;
+	(*obj2)->prev = prev;
+	tmp = *obj1;
+	*obj1 = *obj2;
+	*obj2 = tmp;
+}
+
+void	 sort_components(t_game_schema *gs)
+{
+	t_object	**current;
+	t_object	*tmp;
+	t_object	*cursor;
+	
+	current = (t_object **)&gs->components.childrens;
+	while (*current)
+	{
+		cursor = (*current)->next;
+		while (cursor)
+		{
+			if ((*current)->relative_location.y > cursor->relative_location.y)
+				swap_objects(current, &cursor);
+			cursor = cursor->next;
+		}
+		tmp = (*current)->next;
+		current = &tmp;
+		break;
+	}
+}
+
+
 t_game_schema	*init_game_schema(char *map_path)
 {
 	t_game_schema	*gschema;
@@ -70,23 +112,25 @@ t_game_schema	*init_game_schema(char *map_path)
 	if (!gschema)
 		return (NULL);
 	load_object(gschema);
+	ft_strlcpy((char *)gschema, "game_schema", NAME_SIZE);
+
 	load_object(&gschema->components);
 	load_camera(&gschema->camera, gschema);
+
+	((t_object *)gschema)->update = sort_components;
 	((t_object *)gschema)->destroy = destroy_schema;
 	gschema->schema.load_schema = load_game_schema;
 	add_children(gschema, &gschema->camera);
-	add_children(gschema, &gschema->map);
 	add_children(gschema, &gschema->components);
 	if (load_map(&gschema->map, map_path) != 0)
 	{
 		destroy_object((void **)&gschema);
 		return (NULL);
 	}
+	add_children(gschema, &gschema->map);
 
-	
 	t_object *cur;
-
-	cur = gschema->schema.obj.childrens;
+	cur = ((t_object *)gschema)->childrens;
 	while (cur)
 	{
 		printf("%s\n", (char *)cur);

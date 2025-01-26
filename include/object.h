@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:05:54 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 07:35:42 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 16:31:04 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_object
 	t_point		center_point;
 	t_point		*parent_location;
 	void		*next;
+	void		*prev;
 	void		*childrens;
 	/*void update_object(t_object *obj)*/
 	void		(*update)();

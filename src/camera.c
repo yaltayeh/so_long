@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:49:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 10:29:45 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/26 15:41:15 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	update_camera(t_camera	*camera)
 
 	gs = (t_game_schema *)camera->schema;
 	player = get_children_by_name(&gs->components, "player");
-	printf("update_camera: player=%p\n", player);
 	location = &camera->obj.relative_location;
 	if (player)
 	{
