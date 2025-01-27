@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:06:41 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:43:08 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,23 @@ static void	run_animate(t_sprites *spr)
 	void		(*animate)(t_sprites *);
 	void		(*end_move)(t_sprites *);
 
+	animate = spr->animate;
+	if (animate)
+		animate(spr);
 	if (spr->delay > 0 && spr->run_animate)
 	{
-		animate = spr->animate;
 		end_move = spr->end_move;
 		spr->timer++;
 		if (spr->last_animate == 0 \
 			|| spr->timer - spr->last_animate > spr->delay)
 		{
 			spr->last_animate = spr->timer;
-			if (animate)
-				animate(spr);
 			if (spr->max_index > 0)
+			{
 				spr->index = (spr->index + 1) % spr->max_index;
-			if (spr->index == 0)
-				if (end_move)
+				if (spr->index == 0 && end_move)
 					end_move(spr);
+			}
 		}
 	}
 }

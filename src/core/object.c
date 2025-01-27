@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:01:11 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:25:13 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	destroy_object(void **_obj)
 				obj->relative_location.x, \
 				obj->relative_location.y);
 	destroy = obj->destroy;
+	if (obj->childrens)
+		destroy_object(&obj->childrens);
 	if (obj->next)
 		destroy_object(&obj->next);
 	if (destroy)

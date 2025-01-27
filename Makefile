@@ -35,7 +35,7 @@ FILES =	main						\
 		core/put_image_to_image		\
 		core/schema					\
 		core/sprites				\
-		player/player_walk			\
+		player/player_movement		\
 		player/player				\
 		components/fire				\
 		components/components		\

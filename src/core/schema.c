@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 15:51:32 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 07:12:46 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:24:24 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	destroy_schema(void **_schema)
 					schema->resources.images[i].img_ptr);
 		free(schema->resources.images);
 	}
+	schema->resources.images = NULL;
 }
 
 t_image	*schema_get_image_by_name(void *_schema, const char *name)

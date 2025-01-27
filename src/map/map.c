@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:58:32 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:48:53 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,19 @@ void	animate_map(t_map *map)
 
 int	open_map_and_check(t_map *map, const char *map_path)
 {
+	size_t	len;
+
+	len = ft_strlen(map_path);
+	if (len < 5)
+	{
+		ft_fprintf(2, "file '%s' doesn't end with .ber\n", map_path);
+		return (1);
+	}
+	if (ft_strcmp(map_path + len - 4, ".ber") != 0)
+	{
+		ft_fprintf(2, "file '%s' doesn't end with .ber\n", map_path);
+		return (1);
+	}
 	map->nb_collect = map_parser(map, map_path);
 	if (map->nb_collect < 1)
 		return (1);

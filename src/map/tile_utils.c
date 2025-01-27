@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:13:24 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:16:48 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:29:12 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_tile	*init_tile(t_map *map, void *schema, int r, int c)
 	ft_strlcpy((char *)tile, "tile", NAME_SIZE);
 	((t_object *)tile)->parent_location = \
 				&((t_object *)map)->absolute_location;
+	((t_object *)tile)->destroy = defult_destroy_object;
 	((t_sprites *)tile)->image = schema_get_image_by_name(schema, "tile");
 	((t_sprites *)tile)->clips = get_tile_clip(map, &map->s_grid, r, c);
 	((t_sprites *)tile)->nb_clip = 1;

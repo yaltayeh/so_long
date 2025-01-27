@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:58:52 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:43:21 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 #include <sys/time.h>
 #include <X11/X.h>
 
+int	is_surround_boat(t_game *game);
+void	ride_boat(t_game *game);
+
+
 int end_program(t_game *game)
 {
 	if (game->mlx_ptr && game->win_ptr)
@@ -23,14 +27,36 @@ int end_program(t_game *game)
 	if (game->mlx_ptr && game->frame.img_ptr)
 		mlx_destroy_image(game->mlx_ptr, game->frame.img_ptr);
 	if (game->gs)
-		destroy_schema((void **)&game->gs);
+		destroy_object((void **)&game->gs);
+		
 #ifdef __linux__
 	if (game->mlx_ptr)
 		mlx_destroy_display(game->mlx_ptr);
 #endif // __linux__
+
 	free(game->mlx_ptr);
 	printf("Bye\n");
 	exit(0);
+}
+
+int	key_press(int keycode, t_game *game)
+{
+	t_player	*p;
+
+	p = game->player;
+	if (keycode == KEY_UP \
+		|| keycode == KEY_DOWN \
+		|| keycode == KEY_RIGHT \
+		|| keycode == KEY_LEFT)
+		player_walk(p, keycode);
+	if (keycode == KEY_SPACE)
+	{
+		// if (game->gs->banner.nb_collect == 0)
+		if (is_surround_boat(game))
+			ride_boat(game);
+		player_slash(p);
+	}
+	return (0);
 }
 
 int key_release(int keycode, t_game *game)
@@ -81,31 +107,6 @@ void	ride_boat(t_game *game)
 	if (!boat)
 		return ;
 	((t_object *)player)->relative_location = ((t_object *)boat)->relative_location;
-}
-
-int	key_press(int keycode, t_game *game)
-{
-	t_player	*p;
-
-	p = game->player;
-	if (keycode == KEY_UP \
-		|| keycode == KEY_DOWN \
-		|| keycode == KEY_RIGHT \
-		|| keycode == KEY_LEFT)
-		return (player_walk(keycode, game));
-	if (keycode == KEY_SPACE)
-	{
-		// if (game->gs->banner.nb_collect == 0)
-		if (is_surround_boat(game))
-			ride_boat(game);
-		if (p->movement != SLASH_128)
-		{
-			p->movement = SLASH_128;
-			p->spr.index = 0;
-			p->spr.max_index = 6;
-		}
-	}
-	return (0);
 }
 
 int rander(t_game	*game)

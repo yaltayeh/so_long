@@ -6,14 +6,18 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:57:34 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:54:40 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:39:06 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_H
 # define MAP_H
 
-# include "components.h"
+// # include "components.h"
+#include "sprites.h"
+#include "schema.h"
+#include "config.h"
+
 
 typedef struct s_tile
 {

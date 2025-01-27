@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 07:54:41 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:03:08 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,37 @@ t_point	valid_move(t_player *player, t_game_schema *gs, \
 	return (new_point);
 }
 
+void update_player(t_player *player)
+{
+	t_point	new_point;
+	t_game_schema	*gs;
+
+	gs = (t_game_schema *)player->gs;
+	player->spr.run_animate = 0;
+	if (player->movement == SLASH_128)
+		((t_object *)player)->center_point = (t_point){64, 32 + 56};
+	else
+		((t_object *)player)->center_point = (t_point){32, 56};
+	if (player->movement == WALK && player->is_walk)
+	{
+		new_point = ((t_object *)player)->relative_location;
+		if (player->direction == FRONT)
+			new_point.y += player->speed;
+		else if (player->direction == BACK)
+			new_point.y -= player->speed;
+		else if (player->direction == LEFT)
+			new_point.x -= player->speed;
+		else if (player->direction == RIGHT)
+			new_point.x += player->speed;
+		((t_object *)player)->relative_location = valid_move(player, gs, &gs->map.o_grid, &gs->map.s_grid, player->spr.obj.relative_location, new_point);
+		player->spr.run_animate = 1;
+	}
+	if (player->movement == SLASH_128)
+		if (player->touch_component && is_object_type(player->touch_component, "tree"))
+			if (((t_tree *)player->touch_component)->status != 2)
+				player->spr.run_animate = 1;
+}
+
 void aminate_player(t_player *player)
 {
 	player->clip.y = 0;
@@ -83,7 +114,6 @@ void aminate_player(t_player *player)
 		player->clip.height = 128;
 		if (player->spr.index & 1)
 			ft_printf("\a");
-		player->spr.obj.center_point = (t_point){64, 32 + 56};
 	}
 	else
 	{
@@ -91,33 +121,7 @@ void aminate_player(t_player *player)
 		player->clip.y += player->direction * 64;
 		player->clip.width = 64;
 		player->clip.height = 64;
-		player->spr.obj.center_point = (t_point){32, 56};
 	}	
-}
-
-void update_player(t_player *player)
-{
-	t_point	new_point;
-
-	player->spr.run_animate = 0;
-	if (player->movement == WALK && player->is_walk)
-	{
-		new_point = player->spr.obj.relative_location;
-		if (player->direction == FRONT)
-			new_point.y += player->speed;
-		else if (player->direction == BACK)
-			new_point.y -= player->speed;
-		else if (player->direction == LEFT)
-			new_point.x -= player->speed;
-		else if (player->direction == RIGHT)
-			new_point.x += player->speed;
-		player->spr.obj.relative_location = valid_move(player, player->gs, &player->gs->map.o_grid, &player->gs->map.s_grid, player->spr.obj.relative_location, new_point);
-		player->spr.run_animate = 1;
-	}
-	if (player->movement == SLASH_128)
-		if (player->touch_component && is_object_type(player->touch_component, "tree"))
-			if (((t_tree *)player->touch_component)->status != 2)
-				player->spr.run_animate = 1;
 }
 
 void end_move_player(t_player *player)
@@ -132,7 +136,7 @@ void end_move_player(t_player *player)
 				player->logs_count++;
 }
 
-t_player	*init_player(t_game_schema *gs)
+t_player	*init_player(void *game_schema)
 {
 	t_player	*player;
 	
@@ -141,25 +145,25 @@ t_player	*init_player(t_game_schema *gs)
 		return (NULL);
 	load_sprites((void *)player);
 	ft_strlcpy((char *)player, "player", NAME_SIZE);
-	player->spr.image = schema_get_image_by_name(gs, "player");
-	player->spr.obj.relative_location = (t_point){0, 0};
-	player->spr.obj.center_point = (t_point){32, 52};
-	player->spr.obj.update = update_player;
-	player->spr.end_move = end_move_player;
-	player->spr.animate = aminate_player;
-	player->gs = gs;
-	player->spr.delay = PLAYER_DELEY;
-	player->spr.index = 0;
-	player->spr.max_index = 9;
-	player->spr.nb_clip = 1;
+	((t_object *)player)->relative_location = (t_point){0, 0};
+	((t_object *)player)->center_point = (t_point){32, 52};
+	((t_object *)player)->update = update_player;
+	((t_object *)player)->destroy = defult_destroy_object;
+	((t_sprites *)player)->image = schema_get_image_by_name(game_schema, "player");
+	((t_sprites *)player)->end_move = end_move_player;
+	((t_sprites *)player)->animate = aminate_player;
+	((t_sprites *)player)->delay = PLAYER_DELEY;
+	((t_sprites *)player)->index = 0;
+	((t_sprites *)player)->max_index = 9;
+	((t_sprites *)player)->nb_clip = 1;
+	((t_sprites *)player)->clips = &player->clip;
+	player->gs = game_schema;
 	player->clip = (t_clip){0, 0, 64, 64, 1};
-	player->spr.clips = &player->clip;
 	player->logs_count = 0;
 	player->is_walk = 0;
 	player->touch_component = NULL;
 	player->movement = WALK;
 	player->direction = FRONT;
 	player->speed = PLAYER_SPEED;
-	player->spr.obj.destroy = defult_destroy_object;
 	return (player);
 }

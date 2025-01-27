@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 09:00:51 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:31:47 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "map.h"
 # include "game_schema.h"
 # include "get_next_line.h"
+# include "components.h"
 
 typedef struct s_game
 {
@@ -37,7 +38,6 @@ typedef struct s_game
 	t_clock			time;
 }	t_game;
 
-int	player_walk(int	keycode, t_game *game);
 int ft_islower(int c);
 int ft_isupper(int c);
 

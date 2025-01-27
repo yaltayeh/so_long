@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:57:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:27:55 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	open_xpm_file(t_image *image, void *mlx_ptr, \
 						char *filename, const char *img_name);
+
 t_object	*pop_player(t_object *components);
 
 static int	load_images(t_game_schema *gs, void *mlx_ptr)
@@ -39,7 +40,7 @@ static int	load_images(t_game_schema *gs, void *mlx_ptr)
 	return (0);
 }
 
-int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
+static int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 {
 	gs->schema.mlx_ptr = mlx_ptr;
 	if (load_images(gs, mlx_ptr) != 0)
@@ -85,6 +86,13 @@ void	update_game_schema(t_game_schema *gs)
 		prev->next = player;
 }
 
+void			uninit_game_schema(void **_gschema)
+{
+	destroy_schema(_gschema);
+	free(*_gschema);
+	*_gschema = NULL;
+}
+
 t_game_schema	*init_game_schema()
 {
 	t_game_schema	*gschema;
@@ -98,10 +106,10 @@ t_game_schema	*init_game_schema()
 	load_camera(&gschema->camera, gschema);
 	load_map(&gschema->map);
 	((t_object *)gschema)->update = update_game_schema;
-	((t_object *)gschema)->destroy = destroy_schema;
+	((t_object *)gschema)->destroy = uninit_game_schema;
 	gschema->schema.load_schema = load_game_schema;
 	add_children(gschema, &gschema->camera);
 	add_children(gschema, &gschema->components);
-	add_children(gschema, &gschema->map);	
+	add_children(gschema, &gschema->map);
 	return (gschema);
 }
