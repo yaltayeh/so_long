@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 10:27:42 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 07:54:41 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ t_point	valid_move(t_player *player, t_game_schema *gs, \
 		player->touch_component = get_children_by_loacation(&gs->components, circle_center);
 		if (player->touch_component)
 		{
-			if (ft_strncmp((char *)player->touch_component, "tree", NAME_SIZE) == 0)
+			if (is_object_type(player->touch_component, "tree"))
 				{a = 30; b = 15;}
-			else if (ft_strncmp((char *)player->touch_component, "fire", NAME_SIZE) == 0)
+			else if (is_object_type(player->touch_component, "fire"))
 				{a = 35; b = 25;}
 			if (collagen_detection(circle_center, new_point, a, b))
 				return (current_point);
@@ -68,7 +68,6 @@ t_point	valid_move(t_player *player, t_game_schema *gs, \
 
 void aminate_player(t_player *player)
 {
-	player->spr.run_animate = 0;
 	player->clip.y = 0;
 	if (player->logs_count >= 9)
 		player->clip.y = 2 * 20 * 64;
@@ -100,6 +99,7 @@ void update_player(t_player *player)
 {
 	t_point	new_point;
 
+	player->spr.run_animate = 0;
 	if (player->movement == WALK && player->is_walk)
 	{
 		new_point = player->spr.obj.relative_location;
@@ -114,9 +114,10 @@ void update_player(t_player *player)
 		player->spr.obj.relative_location = valid_move(player, player->gs, &player->gs->map.o_grid, &player->gs->map.s_grid, player->spr.obj.relative_location, new_point);
 		player->spr.run_animate = 1;
 	}
-	if (player->touch_component && ft_strncmp((char *)player->touch_component, "tree", NAME_SIZE) == 0)
-		if (((t_tree *)player->touch_component)->status != 2)
-			player->spr.run_animate = 1;
+	if (player->movement == SLASH_128)
+		if (player->touch_component && is_object_type(player->touch_component, "tree"))
+			if (((t_tree *)player->touch_component)->status != 2)
+				player->spr.run_animate = 1;
 }
 
 void end_move_player(t_player *player)

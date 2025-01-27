@@ -28,8 +28,10 @@ FILES =	main						\
 		utils						\
 		camera						\
 		game_schema					\
+		game_schema_utils			\
 		health_bar					\
 		core/object					\
+		core/object_utils			\
 		core/put_image_to_image		\
 		core/schema					\
 		core/sprites				\
@@ -40,7 +42,9 @@ FILES =	main						\
 		components/boat				\
 		components/tree				\
 		map/map_parser				\
-		map/scale_map				\
+		map/map_validation			\
+		map/grid_utils				\
+		map/tile_utils				\
 		map/map						\
 		map/print_map_error			\
 		map/get_tile_clip			\

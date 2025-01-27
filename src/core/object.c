@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 07:24:40 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 08:01:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,50 +57,6 @@ void	defult_destroy_object(void **_obj)
 {
 	free(*_obj);
 	*_obj = NULL;
-}
-
-t_object	*get_children_by_name(void *_parent, const char *name)
-{
-	t_object	*parent;
-	t_object	*current;
-
-	parent = (t_object *)_parent;
-	current = parent->childrens;
-	while (current)
-	{
-		if (ft_strncmp((char *)current, name, NAME_SIZE) == 0)
-			break;
-		current = current->next;
-	}
-	return (current);
-}
-
-t_object	*get_children_by_loacation(void *_parent, t_point location)
-{
-	t_object	*parent;
-	t_object	*current;
-
-	parent = (t_object *)_parent;
-	current = parent->childrens;
-	while (current)
-	{
-		if (ft_memcmp(&current->relative_location, \
-						&location, sizeof(location)) == 0)
-			break;
-		current = current->next;
-	}
-	return (current);
-}
-
-void	add_children(void *_parent, void *_child)
-{
-	t_object	*parent;
-	t_object	*child;
-
-	parent = (t_object *)_parent;
-	child = (t_object *)_child;
-	child->next = parent->childrens;
-	parent->childrens = child;
 }
 
 void	destroy_object(void **_obj)

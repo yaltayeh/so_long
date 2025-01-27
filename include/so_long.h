@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/13 16:40:35 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 09:00:51 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,8 @@ typedef struct s_game
 	t_clock			time;
 }	t_game;
 
-int		player_walk(int	keycode, t_game *game);
-
+int	player_walk(int	keycode, t_game *game);
 int ft_islower(int c);
 int ft_isupper(int c);
-
-
 
 #endif

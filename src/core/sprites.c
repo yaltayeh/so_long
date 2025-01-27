@@ -6,45 +6,49 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 10:07:22 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 08:06:41 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sprites.h"
 #include <stdio.h>
 
-void	animate_sprites(void *_spr)
+static void	run_animate(t_sprites *spr)
 {
-	t_sprites	*spr;
 	void		(*animate)(t_sprites *);
 	void		(*end_move)(t_sprites *);
 
-	spr = (t_sprites *)_spr;
-	if (((t_object *)spr)->type[0] == 'S')
+	if (spr->delay > 0 && spr->run_animate)
 	{
-		if (spr->delay > 0 && spr->run_animate)
+		animate = spr->animate;
+		end_move = spr->end_move;
+		spr->timer++;
+		if (spr->last_animate == 0 \
+			|| spr->timer - spr->last_animate > spr->delay)
 		{
-			animate = spr->animate;
-			end_move = spr->end_move;
-			spr->timer++;
-			if (spr->last_animate == 0 \
-				|| spr->timer - spr->last_animate > spr->delay)
-			{
-				spr->last_animate = spr->timer;
-				if (animate)
-					animate(spr);
-				if (spr->max_index > 0)
-					spr->index = (spr->index + 1) % spr->max_index;
-				if (spr->index == 0)
-					if (end_move)
-						end_move(spr);
-			}
+			spr->last_animate = spr->timer;
+			if (animate)
+				animate(spr);
+			if (spr->max_index > 0)
+				spr->index = (spr->index + 1) % spr->max_index;
+			if (spr->index == 0)
+				if (end_move)
+					end_move(spr);
 		}
 	}
-	if (spr->obj.childrens)
-		animate_sprites(spr->obj.childrens);
-	if (spr->obj.next)
-		animate_sprites(spr->obj.next);
+}
+
+void	animate_sprites(void *_spr)
+{
+	t_object	*spr;
+
+	spr = (t_object *)_spr;
+	if (spr->type[0] == 'S')
+		run_animate(_spr);
+	if (spr->childrens)
+		animate_sprites(spr->childrens);
+	if (spr->next)
+		animate_sprites(spr->next);
 }
 
 int	render_sprites(void *_spr, t_image *frame, int layer)

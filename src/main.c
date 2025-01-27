@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 10:22:25 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 08:58:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ int	key_press(int keycode, t_game *game)
 		|| keycode == KEY_DOWN \
 		|| keycode == KEY_RIGHT \
 		|| keycode == KEY_LEFT)
-		{
 		return (player_walk(keycode, game));
-		}
 	if (keycode == KEY_SPACE)
 	{
 		// if (game->gs->banner.nb_collect == 0)
@@ -139,15 +137,16 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	ft_bzero(&game, sizeof(game));
-	game.gs = init_game_schema(argv[1]);
+	game.gs = init_game_schema();
 	if (game.gs == NULL)
+		end_program(&game);
+	if (open_map_and_check(&game.gs->map, argv[1]) != 0)
 		end_program(&game);
 	game.width = WIN_WIDTH;
 	game.height = WIN_HEIGHT;
 	game.mlx_ptr = mlx_init();
 	if (game.mlx_ptr == NULL)
         end_program(&game);
-
 	game.win_ptr = mlx_new_window(game.mlx_ptr, game.width, game.height, "Lumberjack");
     if (game.win_ptr == NULL)
 		end_program(&game);
@@ -156,6 +155,7 @@ int main(int argc, char **argv)
 	game.frame.height = game.height;
 	load_image_data(&game.frame);
 
+	
 	if (load_schema(game.gs, game.mlx_ptr) != 0)
 		end_program(&game);
 	game.player = (void *)get_children_by_name(&game.gs->components, "player");

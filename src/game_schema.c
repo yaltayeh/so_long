@@ -6,24 +6,15 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 07:35:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 08:57:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game_schema.h"
 
-static int	open_xpm_file(t_image *image, void *mlx_ptr, \
-						char *filename, const char *img_name)
-{
-	ft_strlcpy((char *)image, img_name, NAME_SIZE);
-	image->img_ptr = mlx_xpm_file_to_image(mlx_ptr, filename, \
-									&image->width, &image->height);
-	if (!image->img_ptr)
-		return (-1);
-	if (load_image_data(image) != 0)
-		return (-1);
-	return (0);
-}
+int	open_xpm_file(t_image *image, void *mlx_ptr, \
+						char *filename, const char *img_name);
+t_object	*pop_player(t_object *components);
 
 static int	load_images(t_game_schema *gs, void *mlx_ptr)
 {
@@ -37,7 +28,6 @@ static int	load_images(t_game_schema *gs, void *mlx_ptr)
 	images[3] = (t_image_info){BOAT_PATH, "boat"};
 	images[4] = (t_image_info){TREE_PATH, "tree"};
 	images[5] = (t_image_info){HEALTH_BAR_PATH, "health_bar"};
-	// images[5] = (t_image_info){TREE_PATH, "font"};
 	nb_images = sizeof(images) / sizeof(*images);
 	gs->schema.resources.nb_images = nb_images;
 	gs->schema.resources.images = ft_calloc(nb_images, sizeof(t_image));
@@ -62,33 +52,7 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 	return (0);
 }
 
-t_object	*pop_player(t_object *components)
-{
-	t_object	*current;
-	t_object	*prev;
-
-	current = components->childrens;
-	prev = NULL;
-	while (current)
-	{
-		if (ft_strncmp((char *)current, "player", NAME_SIZE) == 0)
-		{
-			if (!prev && !current->next)
-				return (NULL);
-			if (!prev)
-				components->childrens = current->next;
-			else
-				prev->next = current->next;
-			current->next = NULL;
-			return (current);
-		}
-		prev = current;
-		current = current->next;
-	}
-	return (NULL);
-}
-
-void	 update_game_schema(t_game_schema *gs)
+void	update_game_schema(t_game_schema *gs)
 {
 	t_object	*player;
 	t_object	*current;
@@ -121,7 +85,7 @@ void	 update_game_schema(t_game_schema *gs)
 		prev->next = player;
 }
 
-t_game_schema	*init_game_schema(char *map_path)
+t_game_schema	*init_game_schema()
 {
 	t_game_schema	*gschema;
 
@@ -130,29 +94,14 @@ t_game_schema	*init_game_schema(char *map_path)
 		return (NULL);
 	load_object(gschema);
 	ft_strlcpy((char *)gschema, "game_schema", NAME_SIZE);
-
 	load_object(&gschema->components);
 	load_camera(&gschema->camera, gschema);
-
+	load_map(&gschema->map);
 	((t_object *)gschema)->update = update_game_schema;
 	((t_object *)gschema)->destroy = destroy_schema;
 	gschema->schema.load_schema = load_game_schema;
 	add_children(gschema, &gschema->camera);
 	add_children(gschema, &gschema->components);
-	if (load_map(&gschema->map, map_path) != 0)
-	{
-		destroy_object((void **)&gschema);
-		return (NULL);
-	}
-	add_children(gschema, &gschema->map);
-
-	t_object *cur;
-	cur = ((t_object *)gschema)->childrens;
-	while (cur)
-	{
-		printf("%s\n", (char *)cur);
-		cur = cur->next;
-	}
-	
+	add_children(gschema, &gschema->map);	
 	return (gschema);
 }
