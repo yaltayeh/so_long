@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 16:48:03 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 07:24:40 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,9 @@ void	add_children(void *_parent, void *_child)
 {
 	t_object	*parent;
 	t_object	*child;
-	t_object	*old_child;
 
 	parent = (t_object *)_parent;
 	child = (t_object *)_child;
-	old_child = (t_object *)parent->childrens;
-	
-	// printf("add child '%s' to parent '%s'\n", (char *)child, (char *)parent);
-	child->prev = NULL;
-	if (old_child)
-		old_child->prev = child;
 	child->next = parent->childrens;
 	parent->childrens = child;
 }

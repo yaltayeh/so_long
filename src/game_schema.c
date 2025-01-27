@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 21:29:42 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 07:35:29 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,51 +62,63 @@ int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 	return (0);
 }
 
+t_object	*pop_player(t_object *components)
+{
+	t_object	*current;
+	t_object	*prev;
+
+	current = components->childrens;
+	prev = NULL;
+	while (current)
+	{
+		if (ft_strncmp((char *)current, "player", NAME_SIZE) == 0)
+		{
+			if (!prev && !current->next)
+				return (NULL);
+			if (!prev)
+				components->childrens = current->next;
+			else
+				prev->next = current->next;
+			current->next = NULL;
+			return (current);
+		}
+		prev = current;
+		current = current->next;
+	}
+	return (NULL);
+}
+
 void	 update_game_schema(t_game_schema *gs)
 {
 	t_object	*player;
 	t_object	*current;
-	t_object	*tmp;
+	t_object	*prev;
 	t_object	*components;
 
 	components = &gs->components;
-	player = get_children_by_name(components, "player");
-	if (!player->prev)
-	{
-		if (!player->next)
-			return ;
-		components->childrens = player->next;
-		((t_object *)components->childrens)->prev = NULL;
-	}
-	else
-	{
-		((t_object *)player->prev)->next = player->next;
-		if (player->next)
-			((t_object *)player->next)->prev = player->prev;
-	}
+	player = pop_player(components);
+	if (!player)
+		return ;
 	current = components->childrens;
+	prev = NULL;
 	while (current)
 	{
 		if (current->relative_location.y < player->relative_location.y)
 		{
-			if (!current->next)
-			{
-				printf("test\n");
+			if (!prev)
 				add_children(components, player);
-				return ;
-			}
-			tmp = current->prev;
-			current->prev = player;
-			player->next = current;
-			if (tmp)
+			else
 			{
-				tmp->next = player;
-				player->prev = tmp;
+				player->next = current;
+				prev->next = player;
 			}
 			return ;
 		}
+		prev = current;
 		current = current->next;
 	}
+	if (prev)
+		prev->next = player;
 }
 
 t_game_schema	*init_game_schema(char *map_path)
