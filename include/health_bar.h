@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:26:33 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/25 23:27:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/28 06:51:41 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ enum    health_bar_types
 	HB_PURPLE_1,
 	HB_DARK_RED_1,
 	HB_BUBBLE_RED = 32,
-	HB_BUBBLE_GREEN,
-	HB_BUBBLE_ORANGE,
-	HB_BUBBLE_SELVER,
-	HB_SMALL_BUBBLE_ORANGE = 48,
-	HB_SMALL_BUBBLE_GREEN,
 	HB_SMALL_BUBBLE_RED,
+	HB_BUBBLE_GREEN,
+	HB_SMALL_BUBBLE_GREEN,
+	HB_BUBBLE_ORANGE,
+	HB_SMALL_BUBBLE_ORANGE,
+	HB_BUBBLE_SELVER,
 	HB_SMALL_BUBBLE_SELVER,
 };
 

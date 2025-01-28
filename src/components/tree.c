@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:24:14 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:07:23 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/28 06:53:45 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,29 @@ int	damage_tree(t_tree *tree, int damage)
 t_tree	*init_tree(t_game_schema *gs, int i)
 {
 	t_tree			*tree;
+	t_health_bar	*hb;
 
 	tree = malloc(sizeof(t_tree));
 	if (!tree)
 		return (NULL);
 	load_sprites((void *)tree);
 	ft_strlcpy((char *)tree, "tree", NAME_SIZE);
-	tree->spr.image = schema_get_image_by_name(gs, "tree");
+	((t_object *)tree)->center_point = (t_point){56 / 2, 84};
+	((t_object *)tree)->destroy = defult_destroy_object;
+	((t_sprites *)tree)->image = schema_get_image_by_name(gs, "tree");
+	((t_sprites *)tree)->clips = &tree->clip;
+	((t_sprites *)tree)->nb_clip = 1;
+	((t_sprites *)tree)->delay = TREE_DELEY;
+	((t_sprites *)tree)->animate = animate_tree;
 	tree->clip = (t_clip){0, 0, 56, 94, 1};
-	tree->spr.obj.center_point = (t_point){tree->clip.width / 2, 84};
-	tree->spr.clips = &tree->clip;
-	tree->spr.nb_clip = 1;
 	tree->status = i & 1;
-	tree->spr.delay = TREE_DELEY;
-	tree->spr.animate = animate_tree;
-	tree->spr.obj.destroy = defult_destroy_object;
 	tree->health = 120 - 20 * (i & 1);
+	hb = init_health_bar(gs, tree, &tree->health, HB_SMALL_BUBBLE_GREEN);
+	if (!hb)
+	{
+		free(tree);
+		return (NULL);
+	}
+	add_children(tree, hb);
 	return (tree);
 }

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:35:26 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 17:09:49 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/27 23:46:43 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	player_walk(t_player *player, int keycode)
 		player->movement = WALK;
 		((t_sprites *)player)->index = 0;
 		((t_sprites *)player)->max_index = 9;
+		player->spr.delay = 1;
 	}
 	player->is_walk = 1;
 	return ;
@@ -47,6 +48,6 @@ void	player_slash(t_player *player)
 			((t_sprites *)player)->index = 0;
 			((t_sprites *)player)->max_index = 6;
 			player->spr.run_animate = 1;
-			// player->spr.delay = 
+			player->spr.delay = 2;
 		}
 }
