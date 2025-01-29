@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:24:14 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/28 06:53:45 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 07:07:57 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	damage_tree(t_tree *tree, int damage)
 t_tree	*init_tree(t_game_schema *gs, int i)
 {
 	t_tree			*tree;
-	t_health_bar	*hb;
 
 	tree = malloc(sizeof(t_tree));
 	if (!tree)
@@ -51,12 +50,5 @@ t_tree	*init_tree(t_game_schema *gs, int i)
 	tree->clip = (t_clip){0, 0, 56, 94, 1};
 	tree->status = i & 1;
 	tree->health = 120 - 20 * (i & 1);
-	hb = init_health_bar(gs, tree, &tree->health, HB_SMALL_BUBBLE_GREEN);
-	if (!hb)
-	{
-		free(tree);
-		return (NULL);
-	}
-	add_children(tree, hb);
 	return (tree);
 }

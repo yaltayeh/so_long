@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 18:35:26 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 23:46:43 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 07:10:06 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ void	player_slash(t_player *player)
 			((t_sprites *)player)->index = 0;
 			((t_sprites *)player)->max_index = 6;
 			player->spr.run_animate = 1;
-			player->spr.delay = 2;
+			// player->spr.delay = 2;
 		}
 }

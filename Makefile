@@ -29,7 +29,6 @@ FILES =	main						\
 		camera						\
 		game_schema					\
 		game_schema_utils			\
-		health_bar					\
 		core/object					\
 		core/object_utils			\
 		core/put_image_to_image		\

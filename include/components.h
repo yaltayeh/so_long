@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 13:15:01 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 07:08:44 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "sprites.h"
 # include "object.h"
 # include "schema.h"
-# include "health_bar.h"
 # include "player.h"
 
 typedef struct s_grid		t_grid;
