@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 07:00:09 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:21:48 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 07:38:17 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdlib.h>
 # include <libft.h>
-# include <get_next_line.h>
 # include <mlx.h>
 
 # define NAME_SIZE 16

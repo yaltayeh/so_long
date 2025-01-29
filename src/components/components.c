@@ -6,12 +6,11 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:26:52 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 10:01:22 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 07:43:54 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "components.h"
-#include "map.h"
 #include "game_schema.h"
 
 static int	load_component(t_game_schema *gs, int i, char type, t_point loc)
@@ -29,8 +28,8 @@ static int	load_component(t_game_schema *gs, int i, char type, t_point loc)
 		component = (t_object *)init_player(gs);
 	if (!component)
 		return (-1);
-	component->relative_location = (t_point){(loc.x * 2 + 1) * TSIZE, \
-												(loc.y * 2 + 1) * TSIZE};
+	component->relative_location = (t_point){(loc.x * 2 + 1) * 64, \
+												(loc.y * 2 + 1) * 64};
 	component->parent_location = (void *)&gs->camera.obj.relative_location;
 	add_children(&gs->components, component);
 	return (0);

@@ -6,14 +6,11 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 17:43:21 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:12:51 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include <stdio.h>
 #include "so_long.h"
-#include <sys/time.h>
 #include <X11/X.h>
 
 int	is_surround_boat(t_game *game);
@@ -42,8 +39,10 @@ int end_program(t_game *game)
 int	key_press(int keycode, t_game *game)
 {
 	t_player	*p;
+	int			nb_collect;
 
 	p = game->player;
+	nb_collect = game->gs->map.nb_collect;
 	if (keycode == KEY_UP \
 		|| keycode == KEY_DOWN \
 		|| keycode == KEY_RIGHT \
@@ -51,7 +50,7 @@ int	key_press(int keycode, t_game *game)
 		player_walk(p, keycode);
 	if (keycode == KEY_SPACE)
 	{
-		// if (game->gs->banner.nb_collect == 0)
+		if (p->logs_count >= nb_collect)
 		if (is_surround_boat(game))
 			ride_boat(game);
 		player_slash(p);
@@ -84,8 +83,8 @@ int	is_surround_boat(t_game *game)
 	int	c;
 
 	o_grid = &game->gs->map.o_grid;
-	r = ((t_object *)game->player)->relative_location.y / (TSIZE * 2);
-	c = ((t_object *)game->player)->relative_location.x / (TSIZE * 2);
+	r = ((t_object *)game->player)->relative_location.y / (64 * 2);
+	c = ((t_object *)game->player)->relative_location.x / (64 * 2);
 	if (o_grid->blocks[r][c - 1] == 'E' \
 		|| o_grid->blocks[r][c + 1] == 'E' \
 		|| o_grid->blocks[r - 1][c] == 'E' \
@@ -103,10 +102,11 @@ void	ride_boat(t_game *game)
 	if (!is_surround_boat(game))
 		return ;
 	player = game->player;
-	boat = (t_boat *)get_children_by_name(game->gs, "boat");
+	boat = (t_boat *)get_children_by_name(&game->gs->components, "boat");
 	if (!boat)
 		return ;
 	((t_object *)player)->relative_location = ((t_object *)boat)->relative_location;
+	// end_program(game);
 }
 
 int rander(t_game	*game)

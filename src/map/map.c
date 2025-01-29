@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 17:48:53 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 07:50:43 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	animate_map(t_map *map)
 {
 	int	offset;
 
-	offset = map->size * 3 * map->spr.index;
+	offset = 64 * 3 * map->spr.index;
 	map->big_spot = (t_clip){offset + 0, 0, 64, 64, 0};
 	map->small_spot = (t_clip){offset + 0, 64, 64, 64, 0};
 	map->tileds[0] = (t_clip){offset + 64, 64, 64, 64, 0};
@@ -75,13 +75,10 @@ void	load_map(t_map *map)
 	ft_bzero(map, sizeof(*map));
 	load_sprites(map);
 	ft_strlcpy((char *)map, "map", NAME_SIZE);
+	((t_object *)map)->destroy = destroy_map;
 	((t_sprites *)map)->index = 0;
 	((t_sprites *)map)->max_index = 4;
-	((t_sprites *)map)->clips = NULL;
-	((t_sprites *)map)->delay = TILED_DELEY;
-	((t_sprites *)map)->obj.render = NULL;
-	((t_object *)map)->destroy = destroy_map;
+	((t_sprites *)map)->delay = 4;
 	((t_sprites *)map)->animate = animate_map;
 	map->nb_collect = 0;
-	map->size = TSIZE;
 }

@@ -6,20 +6,18 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 07:08:44 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 08:01:06 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COMPONENTS_H
 # define COMPONENTS_H
 
-# include "config.h"
 # include "sprites.h"
-# include "object.h"
 # include "schema.h"
 # include "player.h"
 
-typedef struct s_grid		t_grid;
+typedef struct s_grid			t_grid;
 typedef struct s_game_schema	t_game_schema;
 
 typedef struct s_fire
@@ -50,12 +48,11 @@ typedef struct s_boat
 	enum e_boat_directions	direction;
 }	t_boat;
 
-
 t_tree		*init_tree(t_game_schema *gs, int i);
 t_boat		*init_boat(t_game_schema *gs);
 t_fire		*init_fire(t_game_schema *gs);
 int			load_components(t_game_schema *gs, t_grid *o_map);
 void		sort_objects(t_object **objects, int nb_object);
-int 		damage_tree(t_tree *tree, int damage);
+int			damage_tree(t_tree *tree, int damage);
 
 #endif

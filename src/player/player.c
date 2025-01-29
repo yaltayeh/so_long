@@ -6,12 +6,10 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 17:03:08 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 09:07:22 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include "components.h"
 #include "game_schema.h"
 #include "math.h"
 
@@ -34,22 +32,22 @@ t_point	valid_move(t_player *player, t_game_schema *gs, \
 	t_point	circle_center;
 	double a, b;
 
-	new_c = new_point.x / TSIZE;
-	new_r = new_point.y / TSIZE;
+	new_c = new_point.x / 64;
+	new_r = new_point.y / 64;
 	if (new_c < 0 || new_c > s_map->cols || new_r < 0 || new_r > s_map->rows)
 		return (current_point);
 	if (s_map->blocks[new_r][new_c] == '1' || s_map->blocks[new_r][new_c] == 'E')
 		return (current_point);
 
-	new_c = new_point.x / (TSIZE * 2);
-	new_r = new_point.y / (TSIZE * 2);
+	new_c = new_point.x / (64 * 2);
+	new_r = new_point.y / (64 * 2);
 	if (new_c < 0 || new_c > o_map->cols || new_r < 0 || new_r > o_map->rows)
 		return (current_point);
 	if (o_map->blocks[new_r][new_c] == 'F' || o_map->blocks[new_r][new_c] == 'C')
 	{
 		a = 0; b = 0;
-		circle_center.x = new_c * (TSIZE * 2) + TSIZE;
-		circle_center.y = new_r * (TSIZE * 2) + TSIZE;
+		circle_center.x = new_c * (64 * 2) + 64;
+		circle_center.y = new_r * (64 * 2) + 64;
 		player->touch_component = get_children_by_loacation(&gs->components, circle_center);
 		if (player->touch_component)
 		{
@@ -112,8 +110,6 @@ void aminate_player(t_player *player)
 		player->clip.y += player->direction * 128;
 		player->clip.width = 128;
 		player->clip.height = 128;
-		if (player->spr.index & 1)
-			ft_printf("\a");
 	}
 	else
 	{
@@ -152,7 +148,7 @@ t_player	*init_player(void *game_schema)
 	((t_sprites *)player)->image = schema_get_image_by_name(game_schema, "player");
 	((t_sprites *)player)->end_move = end_move_player;
 	((t_sprites *)player)->animate = aminate_player;
-	((t_sprites *)player)->delay = PLAYER_DELEY;
+	((t_sprites *)player)->delay = 1;
 	((t_sprites *)player)->index = 0;
 	((t_sprites *)player)->max_index = 9;
 	((t_sprites *)player)->nb_clip = 1;

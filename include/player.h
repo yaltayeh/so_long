@@ -6,14 +6,14 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:13:19 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 17:09:59 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:07:51 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PLAYER_H
 # define PLAYER_H
 
-#include "sprites.h"
+# include "sprites.h"
 
 enum e_directions
 {
@@ -45,8 +45,7 @@ typedef struct s_player
 }	t_player;
 
 t_player	*init_player(void *game_schema);
-void    	player_slash(t_player *player);
+void		player_slash(t_player *player);
 void		player_walk(t_player *player, int keycode);
-
 
 #endif

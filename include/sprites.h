@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:09:12 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/24 22:55:37 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 08:07:01 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct s_sprites
 	t_clock		delay;
 	t_clock		timer;
 
-	void			(*animate)();
-	void			(*end_move)();
+	void		(*animate)();
+	void		(*end_move)();
 }	t_sprites;
 
 void	load_sprites(void *_spr);

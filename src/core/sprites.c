@@ -6,12 +6,11 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 17:43:08 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 07:48:26 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sprites.h"
-#include <stdio.h>
 
 static void	run_animate(t_sprites *spr)
 {
@@ -25,8 +24,7 @@ static void	run_animate(t_sprites *spr)
 	{
 		end_move = spr->end_move;
 		spr->timer++;
-		if (spr->last_animate == 0 \
-			|| spr->timer - spr->last_animate > spr->delay)
+		if (spr->timer - spr->last_animate > spr->delay)
 		{
 			spr->last_animate = spr->timer;
 			if (spr->max_index > 0)
@@ -76,7 +74,8 @@ void	load_sprites(void *_spr)
 	spr = (t_sprites *)_spr;
 	load_object(spr);
 	ft_strlcpy((char *)spr, "sprites", NAME_SIZE);
-	spr->obj.type[0] = 'S';
+	((t_object *)spr)->type[0] = 'S';
+	((t_object *)spr)->render = render_sprites;
 	spr->clips = NULL;
 	spr->nb_clip = 0;
 	spr->delay = 0;
@@ -85,7 +84,6 @@ void	load_sprites(void *_spr)
 	spr->timer = 0;
 	spr->index = 0;
 	spr->max_index = 0;
-	spr->obj.render = render_sprites;
 	spr->animate = NULL;
 	spr->end_move = NULL;
 }

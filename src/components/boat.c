@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:26:08 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/20 18:42:09 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 07:45:15 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ t_boat	*init_boat(t_game_schema *gs)
 		return (NULL);
 	load_sprites((void *)boat);
 	ft_strlcpy((char *)boat, "boat", NAME_SIZE);
-	boat->spr.obj.center_point = (t_point){32, 32};
-	boat->spr.image = schema_get_image_by_name(gs, "boat");
-	boat->spr.clips = &boat->clip;
-	boat->spr.index = 0;
-	boat->spr.max_index = 4;
-	boat->spr.nb_clip = 1;
-	boat->spr.delay = BOAT_DELEY;
+	((t_object *)boat)->center_point = (t_point){32, 32};
+	((t_object *)boat)->destroy = defult_destroy_object;
+	((t_sprites *)boat)->image = schema_get_image_by_name(gs, "boat");
+	((t_sprites *)boat)->clips = &boat->clip;
+	((t_sprites *)boat)->index = 0;
+	((t_sprites *)boat)->max_index = 4;
+	((t_sprites *)boat)->nb_clip = 1;
+	((t_sprites *)boat)->delay = 3;
+	((t_sprites *)boat)->animate = animate_boat;
 	boat->direction = DIAGONAL;
-	boat->spr.animate = animate_boat;
-	boat->spr.obj.destroy = defult_destroy_object;
 	return (boat);
 }

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:01:22 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/31 00:04:23 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 07:46:18 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ t_fire	*init_fire(t_game_schema *gs)
 		return (NULL);
 	load_sprites(fire);
 	ft_strlcpy((char *)fire, "fire", NAME_SIZE);
-	fire->spr.obj.center_point = (t_point){66, 46};
-	fire->spr.image = schema_get_image_by_name(gs, "fire");
-	fire->spr.index = 0;
-	fire->spr.max_index = 6;
-	fire->spr.clips = fire->clips;
-	fire->spr.nb_clip = 2;
-	fire->spr.delay = FIRE_DELEY;
-	fire->spr.animate = animate_fire;
-	fire->spr.obj.destroy = defult_destroy_object;
+	((t_object *)fire)->center_point = (t_point){66, 46};
+	((t_object *)fire)->destroy = defult_destroy_object;
+	((t_sprites *)fire)->image = schema_get_image_by_name(gs, "fire");
+	((t_sprites *)fire)->index = 0;
+	((t_sprites *)fire)->max_index = 6;
+	((t_sprites *)fire)->clips = fire->clips;
+	((t_sprites *)fire)->nb_clip = 2;
+	((t_sprites *)fire)->delay = 2;
+	((t_sprites *)fire)->animate = animate_fire;
 	return (fire);
 }

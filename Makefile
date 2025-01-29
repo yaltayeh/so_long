@@ -1,7 +1,7 @@
 NAME = so_long
 
 CC = cc
-CFLAGS += -Wall -Wextra -Werror -g -O2
+CFLAGS += -Wall -Wextra -Werror -g3 -O2
 LDFLAGS = -L./libft -lft
 INC += -I./include -I./libft/include
 
@@ -42,6 +42,7 @@ FILES =	main						\
 		components/tree				\
 		map/map_parser				\
 		map/map_validation			\
+		map/map_validation2			\
 		map/grid_utils				\
 		map/tile_utils				\
 		map/map						\

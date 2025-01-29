@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 17:27:55 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:21:17 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_object	*pop_player(t_object *components);
 
 static int	load_images(t_game_schema *gs, void *mlx_ptr)
 {
-	t_image_info	images[6];
+	t_image_info	images[5];
 	int				nb_images;
 	int				i;
 
@@ -28,7 +28,6 @@ static int	load_images(t_game_schema *gs, void *mlx_ptr)
 	images[2] = (t_image_info){FIRE_PATH, "fire"};
 	images[3] = (t_image_info){BOAT_PATH, "boat"};
 	images[4] = (t_image_info){TREE_PATH, "tree"};
-	images[5] = (t_image_info){HEALTH_BAR_PATH, "health_bar"};
 	nb_images = sizeof(images) / sizeof(*images);
 	gs->schema.resources.nb_images = nb_images;
 	gs->schema.resources.images = ft_calloc(nb_images, sizeof(t_image));
@@ -93,7 +92,7 @@ void			uninit_game_schema(void **_gschema)
 	*_gschema = NULL;
 }
 
-t_game_schema	*init_game_schema()
+t_game_schema	*init_game_schema(void)
 {
 	t_game_schema	*gschema;
 

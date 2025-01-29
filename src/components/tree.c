@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:24:14 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 07:07:57 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 07:22:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_tree	*init_tree(t_game_schema *gs, int i)
 	((t_sprites *)tree)->image = schema_get_image_by_name(gs, "tree");
 	((t_sprites *)tree)->clips = &tree->clip;
 	((t_sprites *)tree)->nb_clip = 1;
-	((t_sprites *)tree)->delay = TREE_DELEY;
+	((t_sprites *)tree)->delay = 0;
 	((t_sprites *)tree)->animate = animate_tree;
 	tree->clip = (t_clip){0, 0, 56, 94, 1};
 	tree->status = i & 1;

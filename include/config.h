@@ -6,33 +6,24 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 17:07:05 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:17:15 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONFIG_H
 # define CONFIG_H
 
-#include "X11/keysym.h"
+# include "X11/keysym.h"
 
-# define WIN_WIDTH  (128 * 10)
-# define WIN_HEIGHT (128 * 5)
+# define WIN_WIDTH  1280
+# define WIN_HEIGHT 768
 
 # ifndef TILEDS_PATH
 #  define TILES_PATH "textures/tile.xpm"
 # endif
-# ifndef TILED_DELEY
-#  define TILED_DELEY 4
-# endif
-# ifndef TSIZE
-#  define TSIZE 64
-# endif
 
 # ifndef PLAYER_PATH
 #  define PLAYER_PATH "textures/lumberjack.xpm"
-# endif
-# ifndef PLAYER_DELEY
-#  define PLAYER_DELEY 1
 # endif
 # ifndef PLAYER_SPEED
 #  define PLAYER_SPEED 6 
@@ -41,44 +32,31 @@
 # ifndef FIRE_PATH
 #  define FIRE_PATH "textures/bonfire.xpm"
 # endif
-# ifndef FIRE_DELEY
-#  define FIRE_DELEY 1
-# endif
 
 # ifndef BOAT_PATH
 #  define BOAT_PATH "textures/boat_64x64.xpm"
 # endif
-# ifndef BOAT_DELEY
-#  define BOAT_DELEY 2
-# endif
 
 # ifndef TREE_PATH
 #  define TREE_PATH "textures/trees_56x94.xpm"
-# endif
-# ifndef TREE_DELEY
-#  define TREE_DELEY 1
-# endif
-
-# ifndef HEALTH_BAR_PATH
-#  define HEALTH_BAR_PATH "textures/health_bar.xpm"
 # endif
 
 # define WASD
 
 # ifdef __linux__
 #  define DELAY		5000
-#  define KEY_SPACE XK_space
-#  define KEY_ESC	XK_Escape
+#  define KEY_SPACE 0x0020
+#  define KEY_ESC	0xff1b
 #  ifdef WASD
-#   define KEY_UP		XK_w
-#   define KEY_DOWN		XK_s
-#   define KEY_RIGHT	XK_d
-#   define KEY_LEFT		XK_a
+#   define KEY_UP		0x0077
+#   define KEY_DOWN		0x0073
+#   define KEY_RIGHT	0x0064
+#   define KEY_LEFT		0x0061
 #  else
-#   define KEY_UP		XK_Up
-#   define KEY_DOWN		XK_Down
-#   define KEY_RIGHT	XK_Right
-#   define KEY_LEFT		XK_Left
+#   define KEY_UP		0xff52
+#   define KEY_DOWN		0xff54
+#   define KEY_RIGHT	0xff53
+#   define KEY_LEFT		0xff51
 #  endif
 # else
 #  define DELAY		400

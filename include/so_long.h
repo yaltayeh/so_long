@@ -6,24 +6,17 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 13:31:47 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 08:06:36 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <stdlib.h>
 # include <stdio.h>
-# include <mlx.h>
 # include <libft.h>
-# include <ft_stack.h>
-# include <fcntl.h>
-# include "config.h"
 # include "map.h"
 # include "game_schema.h"
-# include "get_next_line.h"
-# include "components.h"
 
 typedef struct s_game
 {
@@ -38,7 +31,7 @@ typedef struct s_game
 	t_clock			time;
 }	t_game;
 
-int ft_islower(int c);
-int ft_isupper(int c);
+int	ft_islower(int c);
+int	ft_isupper(int c);
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 12:07:18 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/26 00:18:04 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 07:49:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "map.h"
 
 /*
 if (num == 1)

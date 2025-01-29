@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:05:54 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 07:45:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 08:05:58 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,8 @@ typedef struct s_object
 	t_point		*parent_location;
 	void		*next;
 	void		*childrens;
-	/*void update_object(t_object *obj)*/
 	void		(*update)();
-	/*void render_object(t_object *obj, t_image *frame, int layer)*/
 	int			(*render)();
-	/*void destroy_object(t_object **obj)*/
 	void		(*destroy)();
 }	t_object;
 

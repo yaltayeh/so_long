@@ -6,18 +6,20 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:41:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:23:31 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:16:57 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include <fcntl.h>
 #include <stdio.h>
+#include <get_next_line.h>
 
 int		check_path(t_grid *p_grid, t_grid *o_grid);
 int		valid_characters(t_grid *grid, int *nb);
 void	test_flood_fill(t_grid *p_grid, int *nb, int r, int c);
-int		check_rectangular_surrounded(t_grid *o_grid);
+int		check_surrounded(t_grid *o_grid);
+int		check_rectangular(t_grid *o_grid);
 
 static void	remove_new_line(char *line)
 {
@@ -58,14 +60,18 @@ int	map_parser(t_map *map, const char *map_path)
 	close(fd);
 	if (!map->o_grid.blocks)
 		return (-1);
-	if (check_rectangular_surrounded(&map->o_grid) != 0)
+	if (check_rectangular(&map->o_grid) != 0)
+		return (-1);
+	if (check_surrounded(&map->o_grid) != 0)
+		return (-1);
+	if (scale_grid(&map->o_grid, 6, 10) != 0)
 		return (-1);
 	if (copy_grid(&map->p_grid, &map->o_grid) != 0)
 		return (-1);
 	nb_collect = check_path(&map->p_grid, &map->o_grid);
 	if (nb_collect < 1)
 		return (-1);
-	if (scale_grid(&map->s_grid, &map->o_grid) != 0)
+	if (scale_x2_grid(&map->s_grid, &map->o_grid) != 0)
 		return (-1);
 	return (nb_collect);
 }
