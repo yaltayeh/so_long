@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:41:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 12:16:57 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:17:40 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <get_next_line.h>
-
-int		check_path(t_grid *p_grid, t_grid *o_grid);
-int		valid_characters(t_grid *grid, int *nb);
-void	test_flood_fill(t_grid *p_grid, int *nb, int r, int c);
-int		check_surrounded(t_grid *o_grid);
-int		check_rectangular(t_grid *o_grid);
 
 static void	remove_new_line(char *line)
 {
@@ -63,6 +57,8 @@ int	map_parser(t_map *map, const char *map_path)
 	if (check_rectangular(&map->o_grid) != 0)
 		return (-1);
 	if (check_surrounded(&map->o_grid) != 0)
+		return (-1);
+	if (check_boat_path(&map->o_grid) != 0)
 		return (-1);
 	if (scale_grid(&map->o_grid, 6, 10) != 0)
 		return (-1);

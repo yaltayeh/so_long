@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:57:34 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 11:56:42 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:07:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,12 @@ int	scale_grid(t_grid *o_map, int r, int c);
 int		print_error_line(char **lines, int line_no, int char_no, char *msg);
 int		print_error_number1(t_grid *grid, int *nb);
 int		print_error_number2(t_grid *p_grid, t_grid *o_grid, int *nb);
+
+int		check_path(t_grid *p_grid, t_grid *o_grid);
+int		valid_characters(t_grid *grid, int *nb);
+void	test_flood_fill(t_grid *p_grid, int *nb, int r, int c);
+int		check_surrounded(t_grid *o_grid);
+int		check_rectangular(t_grid *o_grid);
+int		check_boat_path(t_grid *o_grid);
 
 #endif

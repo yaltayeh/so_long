@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:23:16 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 12:46:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 20:36:44 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	scale_grid(t_grid *o_map, int r, int c)
 	new_map.rows = o_map->rows;
 	if (o_map->rows < r)
 		new_map.rows = o_map->rows + ((r - o_map->rows + 1) / 2) * 2;
-	ft_printf("(%d, %d)\n", new_map.rows, new_map.cols);
 	new_map.blocks = ft_calloc(r + 1, sizeof(char *));
 	if (!new_map.blocks)
 		return (-1);
@@ -114,8 +113,6 @@ int	scale_grid(t_grid *o_map, int r, int c)
 				o_map->blocks[r - (new_map.rows - o_map->rows) / 2], \
 				o_map->cols);
 		}
-			
-		ft_printf("%s\n", new_map.blocks[r]);
 		r++;
 	}
 	free_grid(o_map);

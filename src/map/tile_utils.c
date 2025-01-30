@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:13:24 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 10:02:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:37:51 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	init_tiles(t_map *map, void *schema)
 				return (-1);
 			((t_object *)tile)->relative_location.x = c * 64;
 			((t_object *)tile)->relative_location.y = r * 64;
+			((t_object *)tile)->relative_location.x += (c + 1) % 2;
+			((t_object *)tile)->relative_location.y += (r + 1) % 2;
 			add_children(map, tile);
 			c++;
 		}

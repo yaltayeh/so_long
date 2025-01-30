@@ -13,7 +13,7 @@ __ = 32
 def crop(image, x, y, w, h):
 	return (image.crop((x, y, x + w, y + h)))
 
-res_img = PIL.Image.new("RGBA", (_*11 + __*3, __*3))
+res_img = PIL.Image.new("RGBA", (_*11 + __*8, __*3))
 
 # for i, img in enumerate(fonts):
 # 	for l in range(6):
@@ -31,12 +31,21 @@ for i, img in enumerate(fonts):
 	colon = crop(img, _*2, 25 * 5, 15, 25)
 	res_img.paste(colon, [_*10, x + i * 32])
 
+	banner = crop(img2, __*3 + __*9 * i, __*33, __, __)	
+	res_img.paste(banner, [_*11, 32 * i])
+
 	banner = crop(img2, __*4 + __*9 * i, __*33, __*3, __)	
-	res_img.paste(banner, [_*10 + _, 32 * i])
+	res_img.paste(banner, [_*11 + __, 32 * i])
+	
+	banner = crop(img2, __*3 + __*9 * i, __*34, __, __)	
+	res_img.paste(banner, [_*11 + __*4, 32 * i])
+
+	banner = crop(img2, __*4 + __*9 * i, __*34, __*3, __)	
+	res_img.paste(banner, [_*11 + __*5, 32 * i])
 
 
 
 
-res_img.save("fonts.png")
+res_img.save("textures/banner.png")
 
 

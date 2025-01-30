@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:03:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/13 16:41:02 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:11:40 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ int	load_image_data(struct s_image *img)
 	return (0);
 }
 
+t_point	add_point(t_point p1, t_point p2)
+{
+	p1.x += p2.x;
+	p1.y += p2.y;
+	return (p1);
+}
 
 int ft_islower(int c)
 {

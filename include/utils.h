@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 07:00:09 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 07:38:17 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:10:49 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ int		load_image_data(t_image *img);
 
 void	put_image_to_image(t_image *dst, t_image *src, \
 						t_point dst_loc, t_clip clip);
+
+t_point	add_point(t_point p1, t_point p2);
 
 #endif

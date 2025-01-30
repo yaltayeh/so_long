@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 10:02:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:44:30 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,21 @@ t_point	valid_move(t_player *player, t_game_schema *gs, \
 	return (new_point);
 }
 
+int	is_new_movement(t_point old_location, t_point new_location)
+{
+	old_location.x /= 128;
+	old_location.y /= 128;
+	new_location.x /= 128;
+	new_location.y /= 128;
+	if (ft_memcmp(&old_location, &new_location, sizeof(t_point)) == 0)
+		return (0);
+	return (1);
+}
+
 void update_player(t_player *player)
 {
 	t_point	new_point;
+	t_point	old_point;
 	t_game_schema	*gs;
 
 	gs = (t_game_schema *)player->gs;
@@ -86,7 +98,10 @@ void update_player(t_player *player)
 			new_point.x -= player->speed;
 		else if (player->direction == RIGHT)
 			new_point.x += player->speed;
+		old_point = ((t_object *)player)->relative_location;
 		((t_object *)player)->relative_location = valid_move(player, gs, &gs->map.o_grid, &gs->map.s_grid, player->spr.obj.relative_location, new_point);
+		if (is_new_movement(old_point, ((t_object *)player)->relative_location))
+			player->nb_movement += 1;
 		player->spr.run_animate = 1;
 	}
 	if (player->movement == SLASH_128)
@@ -161,5 +176,6 @@ t_player	*init_player(void *game_schema)
 	player->movement = WALK;
 	player->direction = FRONT;
 	player->speed = PLAYER_SPEED;
+	player->nb_movement = 0;
 	return (player);
 }

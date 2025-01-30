@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 10:18:40 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:58:26 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ Clips
 */
 typedef struct s_banner
 {
-	t_object	spr;
+	t_object	obj;
 	t_image		*image;
-	t_clip		clips[14];
-	int			nb_collect;
 	int			*logs_collected;
 	int			*movement;
 }	t_banner;
@@ -55,5 +53,6 @@ typedef struct s_game_schema
 }	t_game_schema;
 
 t_game_schema	*init_game_schema(void);
+void			load_banner(t_banner *banner, t_game_schema *gs);
 
 #endif

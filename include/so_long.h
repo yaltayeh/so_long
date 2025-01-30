@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 08:06:36 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 20:25:14 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <libft.h>
 # include "map.h"
 # include "game_schema.h"
+# include <math.h>
 
 typedef struct s_game
 {

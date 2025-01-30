@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 08:49:59 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 08:56:55 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 18:59:27 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ int	check_path(t_grid *p_grid, t_grid *o_grid)
 	if (nb[0] != 1 || nb[1] != 1 || nb[2] < 1)
 		return (print_error_number1(p_grid, nb));
 	nb_collect = nb[2];
-	if (get_player_location(p_grid, &r, &c) != 0)
-		return (-1);
+	get_player_location(p_grid, &r, &c);
 	test_flood_fill(p_grid, nb, r, c);
 	if (nb[1] != 0 || nb[2] != 0)
 		return (print_error_number2(p_grid, o_grid, nb));

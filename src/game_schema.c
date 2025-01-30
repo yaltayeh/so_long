@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 12:21:17 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:33:43 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_object	*pop_player(t_object *components);
 
 static int	load_images(t_game_schema *gs, void *mlx_ptr)
 {
-	t_image_info	images[5];
+	t_image_info	images[6];
 	int				nb_images;
 	int				i;
 
@@ -28,6 +28,7 @@ static int	load_images(t_game_schema *gs, void *mlx_ptr)
 	images[2] = (t_image_info){FIRE_PATH, "fire"};
 	images[3] = (t_image_info){BOAT_PATH, "boat"};
 	images[4] = (t_image_info){TREE_PATH, "tree"};
+	images[5] = (t_image_info){BANNER_PATH, "banner"};
 	nb_images = sizeof(images) / sizeof(*images);
 	gs->schema.resources.nb_images = nb_images;
 	gs->schema.resources.images = ft_calloc(nb_images, sizeof(t_image));
@@ -49,6 +50,8 @@ static int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 	if (load_components((void *)gs, &gs->map.o_grid) != 0)
 		return (-1);
 	((t_object *)&gs->map)->parent_location = &gs->camera.obj.relative_location;
+	load_banner(&gs->banner, gs);
+	add_children(gs, &gs->banner);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 11:43:13 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/13 16:40:01 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 19:30:32 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print_grid(t_grid *grid)
 	}
 }
 
-void	print_error_grid(t_grid *p_grid, t_grid *o_grid)
+static void	print_error_grid(t_grid *p_grid, t_grid *o_grid)
 {
 	int		r;
 	int		c;
@@ -49,7 +49,7 @@ void	print_error_grid(t_grid *p_grid, t_grid *o_grid)
 			if (o_grid->blocks[r][c] == '0')
 				ft_fprintf(2, "%c\e[0;39m", ' ');
 			else
-				ft_fprintf(2, "%s%c", color, o_grid->blocks[r][c]);
+				ft_fprintf(2, "%s%c\e[0;39m", color, o_grid->blocks[r][c]);
 		}
 		ft_fprintf(2, "\n");
 	}

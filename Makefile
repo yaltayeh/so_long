@@ -24,30 +24,32 @@ else ifeq ($(UNAME_S), Darwin)
 	INC += -I/usr/X11/include -I$(MLX_DIR)
 endif
 
-FILES =	main						\
-		utils						\
-		camera						\
-		game_schema					\
-		game_schema_utils			\
-		core/object					\
-		core/object_utils			\
-		core/put_image_to_image		\
-		core/schema					\
-		core/sprites				\
-		player/player_movement		\
-		player/player				\
-		components/fire				\
-		components/components		\
-		components/boat				\
-		components/tree				\
-		map/map_parser				\
-		map/map_validation			\
-		map/map_validation2			\
-		map/grid_utils				\
-		map/tile_utils				\
-		map/map						\
-		map/print_map_error			\
-		map/get_tile_clip			\
+FILES =	main							\
+		utils							\
+		camera							\
+		game_schema						\
+		game_schema_utils				\
+		banner							\
+		core/object						\
+		core/object_utils				\
+		core/put_image_to_image			\
+		core/schema						\
+		core/sprites					\
+		player/player_movement			\
+		player/player					\
+		components/fire					\
+		components/components			\
+		components/boat					\
+		components/tree					\
+		map/map_parser					\
+		map/map_validation				\
+		map/map_validation2				\
+		map/map_validation_boat_path	\
+		map/grid_utils					\
+		map/tile_utils					\
+		map/map							\
+		map/print_map_error				\
+		map/get_tile_clip				\
 
 OBJECTS = $(FILES:%=$(OBJECT_DIR)/%.o)
 

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 11:12:51 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 20:33:39 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_surround_boat(t_game *game);
 void	ride_boat(t_game *game);
 
 
-int end_program(t_game *game)
+int end_program(t_game *game, int exit_status)
 {
 	if (game->mlx_ptr && game->win_ptr)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
@@ -32,8 +32,11 @@ int end_program(t_game *game)
 #endif // __linux__
 
 	free(game->mlx_ptr);
-	printf("Bye\n");
-	exit(0);
+	if (exit_status == 0)
+		printf("Bye\n");
+	else
+		printf(":(\n");
+	exit(exit_status);
 }
 
 int	key_press(int keycode, t_game *game)
@@ -51,8 +54,8 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == KEY_SPACE)
 	{
 		if (p->logs_count >= nb_collect)
-		if (is_surround_boat(game))
-			ride_boat(game);
+			if (is_surround_boat(game))
+				ride_boat(game);
 		player_slash(p);
 	}
 	return (0);
@@ -72,23 +75,27 @@ int key_release(int keycode, t_game *game)
 		game->player->spr.index = 0;
 	}
 	if (keycode == KEY_ESC)
-		end_program(game);
+		end_program(game, 0);
 	return (0);
 }
 
 int	is_surround_boat(t_game *game)
 {
-	t_grid	*o_grid;
-	int	r;
-	int	c;
+	t_object	*boat;
+	t_object	*player;
+	t_point		b_location;
+	t_point		p_location;
 
-	o_grid = &game->gs->map.o_grid;
-	r = ((t_object *)game->player)->relative_location.y / (64 * 2);
-	c = ((t_object *)game->player)->relative_location.x / (64 * 2);
-	if (o_grid->blocks[r][c - 1] == 'E' \
-		|| o_grid->blocks[r][c + 1] == 'E' \
-		|| o_grid->blocks[r - 1][c] == 'E' \
-		|| o_grid->blocks[r + 1][c] == 'E')
+	boat = get_children_by_name(&game->gs->components, "boat");
+	if (!boat)
+		return (0);
+	player = get_children_by_name(&game->gs->components, "player");
+	if (!player)
+		return (0);
+	p_location = player->relative_location;
+	b_location = boat->relative_location;
+	if (pow(p_location.x - b_location.x, 2) \
+		+ pow(p_location.y - b_location.y, 2) < 100 * 100)
 		return (1);
 	return (0);
 }
@@ -140,17 +147,17 @@ int main(int argc, char **argv)
 	ft_bzero(&game, sizeof(game));
 	game.gs = init_game_schema();
 	if (game.gs == NULL)
-		end_program(&game);
+		end_program(&game, 1);
 	if (open_map_and_check(&game.gs->map, argv[1]) != 0)
-		end_program(&game);
+		end_program(&game, 1);
 	game.width = WIN_WIDTH;
 	game.height = WIN_HEIGHT;
 	game.mlx_ptr = mlx_init();
 	if (game.mlx_ptr == NULL)
-        end_program(&game);
+        end_program(&game, 1);
 	game.win_ptr = mlx_new_window(game.mlx_ptr, game.width, game.height, "Lumberjack");
     if (game.win_ptr == NULL)
-		end_program(&game);
+		end_program(&game, 1);
 	game.frame.img_ptr = mlx_new_image(game.mlx_ptr, game.width, game.height);
 	game.frame.width = game.width;
 	game.frame.height = game.height;
@@ -158,7 +165,7 @@ int main(int argc, char **argv)
 
 	
 	if (load_schema(game.gs, game.mlx_ptr) != 0)
-		end_program(&game);
+		end_program(&game, 1);
 	game.player = (void *)get_children_by_name(&game.gs->components, "player");
 
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, key_release, &game);
