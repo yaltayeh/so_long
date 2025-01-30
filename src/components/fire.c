@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:01:22 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 07:46:18 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:02:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_fire	*init_fire(t_game_schema *gs)
 	((t_sprites *)fire)->index = 0;
 	((t_sprites *)fire)->max_index = 6;
 	((t_sprites *)fire)->clips = fire->clips;
-	((t_sprites *)fire)->nb_clip = 2;
+	((t_sprites *)fire)->nb_clips = 2;
 	((t_sprites *)fire)->delay = 2;
 	((t_sprites *)fire)->animate = animate_fire;
 	return (fire);

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 20:26:08 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 07:45:15 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:02:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_boat	*init_boat(t_game_schema *gs)
 	((t_sprites *)boat)->clips = &boat->clip;
 	((t_sprites *)boat)->index = 0;
 	((t_sprites *)boat)->max_index = 4;
-	((t_sprites *)boat)->nb_clip = 1;
+	((t_sprites *)boat)->nb_clips = 1;
 	((t_sprites *)boat)->delay = 3;
 	((t_sprites *)boat)->animate = animate_boat;
 	boat->direction = DIAGONAL;

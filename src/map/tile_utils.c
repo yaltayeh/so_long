@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:13:24 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 07:18:16 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:02:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_tile	*init_tile(t_map *map, void *schema, int r, int c)
 	((t_object *)tile)->destroy = defult_destroy_object;
 	((t_sprites *)tile)->image = schema_get_image_by_name(schema, "tile");
 	((t_sprites *)tile)->clips = get_tile_clip(map, &map->s_grid, r, c);
-	((t_sprites *)tile)->nb_clip = 1;
+	((t_sprites *)tile)->nb_clips = 1;
 	return (tile);
 }
 

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 17:09:12 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 08:07:01 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:02:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_sprites
 	int			max_index;
 
 	t_clip		*clips;
-	int			nb_clip;
+	int			nb_clips;
 
 	int			run_animate;
 	t_clock		last_animate;

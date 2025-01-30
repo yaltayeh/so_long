@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 07:48:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:02:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	render_sprites(void *_spr, t_image *frame, int layer)
 
 	spr = (t_sprites *)_spr;
 	i = 0;
-	while (spr->clips && i < spr->nb_clip)
+	while (spr->clips && i < spr->nb_clips)
 	{
 		if (spr->clips[i].layer == layer)
 			put_image_to_image(frame, spr->image, \
@@ -77,7 +77,7 @@ void	load_sprites(void *_spr)
 	((t_object *)spr)->type[0] = 'S';
 	((t_object *)spr)->render = render_sprites;
 	spr->clips = NULL;
-	spr->nb_clip = 0;
+	spr->nb_clips = 0;
 	spr->delay = 0;
 	spr->run_animate = 1;
 	spr->last_animate = 0;

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 09:07:22 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:02:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ t_player	*init_player(void *game_schema)
 	((t_sprites *)player)->delay = 1;
 	((t_sprites *)player)->index = 0;
 	((t_sprites *)player)->max_index = 9;
-	((t_sprites *)player)->nb_clip = 1;
+	((t_sprites *)player)->nb_clips = 1;
 	((t_sprites *)player)->clips = &player->clip;
 	player->gs = game_schema;
 	player->clip = (t_clip){0, 0, 64, 64, 1};

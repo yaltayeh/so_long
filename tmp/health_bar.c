@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 20:02:59 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/28 08:52:10 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:02:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_health_bar *init_health_bar(void *schema, void *owner, \
 	((t_object *)hb)->update = health_bar_update;
 	((t_sprites *)hb)->image = schema_get_image_by_name(schema, "health_bar");
 	((t_sprites *)hb)->clips = &hb->clip;
-	((t_sprites *)hb)->nb_clip = 1;
+	((t_sprites *)hb)->nb_clips = 1;
 	
 	hb->clip = (t_clip){0, 0, 0, 0, 2};
 	hb->health_r = health_r;
