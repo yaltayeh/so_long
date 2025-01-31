@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 12:05:54 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 08:05:58 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:47:13 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_object
 {
 	char		name[NAME_SIZE];
 	char		type[NAME_SIZE];
+	t_point		draw_location;
 	t_point		absolute_location;
 	t_point		relative_location;
 	t_point		center_point;

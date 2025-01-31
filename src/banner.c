@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:25:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 23:35:11 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:46:47 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	put_digits(t_banner *banner, t_image *frame, \
 	{
 		offset = cursor;
 		clip = get_digit_clip(number % 10);
-		offset = add_point(offset, banner->obj.absolute_location);
+		offset = add_point(offset, banner->obj.draw_location);
 		offset = add_point(offset, (t_point){32, 0});
 		put_image_to_image(frame, banner->image, offset, clip);
 		cursor.x -= 15;
@@ -63,10 +63,10 @@ static int	render_banner(t_banner *banner, t_image *frame, int layer)
 		return (0);
 	dst_clip = (t_clip){banner->offset.x, banner->offset.y, 4 * 32, 32, 2};
 	put_image_to_image(frame, banner->image, \
-			banner->obj.absolute_location, \
+			banner->obj.draw_location, \
 			dst_clip);
 	put_image_to_image(frame, banner->image, \
-			add_point(banner->obj.absolute_location, (t_point){0, 32 + 8}), \
+			add_point(banner->obj.draw_location, (t_point){0, 32 + 8}), \
 			dst_clip);
 	put_digits(banner, frame, *banner->logs_collected, (t_point){10, 0});
 	put_digits(banner, frame, *banner->movement, (t_point){10, 32 + 8});

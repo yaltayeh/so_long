@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 15:58:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 23:35:44 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:46:47 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	update_object(void *_obj)
 	update = obj->update;
 	if (update)
 		update(obj);
-	obj->absolute_location = (t_point){0, 0};
+	obj->draw_location = (t_point){0, 0};
 	if (obj->parent_location)
-		obj->absolute_location = *obj->parent_location;
-	obj->absolute_location.x += obj->relative_location.x - obj->center_point.x;
-	obj->absolute_location.y += obj->relative_location.y - obj->center_point.y;
+		obj->draw_location = *obj->parent_location;
+	obj->draw_location.x += obj->relative_location.x - obj->center_point.x;
+	obj->draw_location.y += obj->relative_location.y - obj->center_point.y;
 	if (obj->childrens)
 		update_object(obj->childrens);
 	if (obj->next)

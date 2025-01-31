@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 00:16:23 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 07:49:28 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:44:26 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ void	update_player(t_player *player)
 		if (player->touch_component \
 			&& is_object_type(player->touch_component, "tree"))
 			if (((t_tree *)player->touch_component)->status != 2)
+			{
 				player->spr.run_animate = 1;
+				if (player->spr.index & 2)
+					ft_printf("\a");
+			}
 }
 
 void	aminate_player(t_player *player)

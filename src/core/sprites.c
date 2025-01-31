@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 01:57:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 10:02:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:46:47 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	render_sprites(void *_spr, t_image *frame, int layer)
 	{
 		if (spr->clips[i].layer == layer)
 			put_image_to_image(frame, spr->image, \
-						spr->obj.absolute_location, spr->clips[i]);
+						spr->obj.draw_location, spr->clips[i]);
 		i++;
 	}
 	return (0);

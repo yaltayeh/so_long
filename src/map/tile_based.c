@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 07:53:04 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 15:45:58 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:46:47 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ int	render_tile(t_tile *tile, t_image *frame, int layer)
 		cur.x = 0;
 		while (cur.x < 64)
 		{
-			draw_loc = tile->spr.obj.absolute_location;
+			draw_loc = tile->spr.obj.draw_location;
 			draw_loc = add_point(draw_loc, cur);
 			index = (cur.y / (64/MASK_SIZE)) * MASK_SIZE + (cur.x / (64/MASK_SIZE));
 			int *c = &frame->buffer[draw_loc.y * frame->width + draw_loc.x];
 			if (tile->mask[index] == '0')
 				*c = 0x0000ff00;
-			if (tile->mask[index] == '1')
-				*c = 0x00ff0000;
-			if (tile->mask[index] == '*')
-				*c = 0x000000ff;
+			// else if (tile->mask[index] == '1')
+			// 	*c = 0x00ff0000;
+			// else if (tile->mask[index] == '*')
+				// *c = 0x000000ff;
 			cur.x++;
 		}
 		cur.y++;
@@ -58,7 +58,7 @@ t_tile	*init_tile(t_map *map, void *schema, t_cell cell)
 	load_sprites((void *)tile);
 	ft_strlcpy((char *)tile, "tile", NAME_SIZE);
 	((t_object *)tile)->parent_location = \
-				&((t_object *)map)->absolute_location;
+				&((t_object *)map)->draw_location;
 	((t_object *)tile)->destroy = defult_destroy_object;
 	((t_object *)tile)->render = render_tile;
 	((t_sprites *)tile)->image = schema_get_image_by_name(schema, "tile");

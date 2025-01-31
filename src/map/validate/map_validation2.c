@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 08:49:59 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 18:59:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:40:51 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ void	test_flood_fill(t_grid *p_grid, int *nb, int r, int c)
 	test_flood_fill(p_grid, nb, r + 1, c);
 	test_flood_fill(p_grid, nb, r, c + 1);
 	test_flood_fill(p_grid, nb, r, c - 1);
+	test_flood_fill(p_grid, nb, r - 1, c - 1);
+	test_flood_fill(p_grid, nb, r - 1, c + 1);
+	test_flood_fill(p_grid, nb, r + 1, c - 1);
+	test_flood_fill(p_grid, nb, r + 1, c + 1);
 }
 
 int	valid_characters(t_grid *grid, int *nb)

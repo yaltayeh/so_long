@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 23:33:49 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 19:28:55 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	end_program(t_game *game, int exit_status)
 		mlx_destroy_image(game->mlx_ptr, game->frame.img_ptr);
 	if (game->gs)
 		destroy_object((void **)&game->gs);
-	// if (game->mlx_ptr)
-	// 	mlx_destroy_display(game->mlx_ptr);
+	if (game->mlx_ptr)
+		mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	if (exit_status == 0)
 		printf("Bye\n");
