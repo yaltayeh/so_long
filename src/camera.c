@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:49:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 07:53:23 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 08:18:47 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	update_camera(t_camera	*camera)
 			location->x = 0;
 		if (location->y > 0)
 			location->y = 0;
-		map_size.x = gs->map.s_grid.cols * 64;
-		map_size.y = gs->map.s_grid.rows * 64;
+		map_size.x = gs->map.x2_grid.cols * 64;
+		map_size.y = gs->map.x2_grid.rows * 64;
 		if (map_size.x + location->x < WIN_WIDTH)
 			location->x = WIN_WIDTH - map_size.x;
 		if (map_size.y + location->y < WIN_HEIGHT)

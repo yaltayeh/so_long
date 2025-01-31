@@ -6,57 +6,202 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:13:24 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 19:37:51 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 15:47:36 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map.h"
-
-t_tile	*init_tile(t_map *map, void *schema, int r, int c)
-{
-	t_tile	*tile;
-
-	tile = malloc(sizeof(*tile));
-	if (!tile)
-		return (NULL);
-	load_sprites((void *)tile);
-	ft_strlcpy((char *)tile, "tile", NAME_SIZE);
-	((t_object *)tile)->parent_location = \
-				&((t_object *)map)->absolute_location;
-	((t_object *)tile)->destroy = defult_destroy_object;
-	((t_sprites *)tile)->image = schema_get_image_by_name(schema, "tile");
-	((t_sprites *)tile)->clips = get_tile_clip(map, &map->s_grid, r, c);
-	((t_sprites *)tile)->nb_clips = 1;
-	return (tile);
-}
+#include "grid.h"
 
 /*
-	((t_object *)tile)->relative_location.x += (c + 1) % 2;
-	((t_object *)tile)->relative_location.y += (r + 1) % 2;
+if (num == 1)
+	i = 4 + (i + 3) % 4; // outer corners
+else if (num == 3 || num == 7)
+	i = 8 + (i + 1) % 4; // edges	
+else if (num == 15 || num == 27 || num == 31)
+	i = 0 + (i + 0) % 4; // inner corners
+else if (num == 99)
+	i = 0 + (i + 1) % 4; // inner corners
 */
-int	init_tiles(t_map *map, void *schema)
+static int	get_index(unsigned char num)
 {
-	int		r;
-	int		c;
-	t_tile	*tile;
+	int	i;
 
-	r = 0;
-	while (r < map->s_grid.rows)
+	i = 0;
+	if (num == 0)
+		return (14);
+	while (!(num >> 7 != 1 && num & 1))
 	{
-		c = 0;
-		while (c < map->s_grid.cols)
-		{
-			tile = init_tile(map, schema, r, c);
-			if (!tile)
-				return (-1);
-			((t_object *)tile)->relative_location.x = c * 64;
-			((t_object *)tile)->relative_location.y = r * 64;
-			((t_object *)tile)->relative_location.x += (c + 1) % 2;
-			((t_object *)tile)->relative_location.y += (r + 1) % 2;
-			add_children(map, tile);
-			c++;
-		}
-		r++;
+		num = num << 1 | num >> 7;
+		i++;
 	}
-	return (0);
+	i /= 2;
+	if (num == 1)
+		i = 4 + (i + 3) % 4;
+	else if (num == 3 || num == 7)
+		i = 8 + (i + 1) % 4;
+	else if (num == 15 || num == 27 || num == 31)
+		i = 0 + (i + 0) % 4;
+	else if (num == 99)
+		i = 0 + (i + 1) % 4;
+	else
+		return (12);
+	return (i);
+}
+
+int	get_tile_index(t_grid *x2_grid, t_cell cell)
+{
+	unsigned char	num;
+	t_cell			*cells;
+	int				i;
+
+	if (x2_grid->blocks[cell.r][cell.c] == '0')
+		return (12);
+	cells = (t_cell [8]){{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, \
+						{1, 1}, {1, 0}, {1, -1}, {0, -1}};
+	num = 0;
+	i = -1;
+	while (++i < 8)
+	{
+		cells[i].r += cell.r;
+		cells[i].c += cell.c;
+		num <<= 1;
+		if (cells[i].c < 0 || cells[i].c >= x2_grid->cols \
+			|| cells[i].r < 0 || cells[i].r >= x2_grid->rows)
+			continue ;
+		if (x2_grid->blocks[cells[i].r][cells[i].c] == '0')
+			num |= 1;
+	}
+	return (get_index(num));
+}
+
+const char	*get_tile_mask(int index)
+{
+	const char	*masks[16];
+
+	// inner corners
+	masks[0] = "00***111"
+			   "00***111"
+			   "00****11"
+			   "000*****"
+			   "0000****"
+			   "00000***"
+			   "00000000"
+			   "00000000";
+	masks[1] = "00000000"
+			   "00000000"
+			   "00000***"
+			   "0000****"
+			   "000*****"
+			   "00****11"
+			   "00***111"
+			   "00***111";
+	masks[2] = "00000000"
+			   "00000000"
+			   "***00000"
+			   "****0000"
+			   "*****000"
+			   "11****00"
+			   "111***00"
+			   "111***00";
+	masks[3] = "111***00"
+			   "111***00"
+			   "11****00"
+			   "*****000"
+			   "****0000"
+			   "***00000"
+			   "00000000"
+			   "00000000";
+
+	// outer corner
+	masks[4] = "111***00"
+			   "111***00"
+			   "111*****"
+			   "1111****"
+			   "11111***"
+			   "11111111"
+			   "11111111"
+			   "11111111";
+	masks[5] = "11111111"
+			   "11111111"
+			   "11111111"
+			   "11111***"
+			   "1111****"
+			   "111*****"
+			   "111***00"
+			   "111***00";
+	masks[6] = "11111111"
+			   "11111111"
+			   "11111111"
+			   "***11111"
+			   "****1111"
+			   "*****111"
+			   "00***111"
+			   "00***111";
+	masks[7] = "00***111"
+			   "00***111"
+			   "*****111"
+			   "****1111"
+			   "***11111"
+			   "11111111"
+			   "11111111"
+			   "11111111";
+
+	// edges
+	masks[8] =  "11111111"
+				"11111111"
+			    "11111111"
+			    "********"
+			    "********"
+			    "********"
+			    "00000000"
+			    "00000000";
+	masks[9] =  "00***111"
+				"00***111"
+			    "00***111"
+			    "00***111"
+			    "00***111"
+			    "00***111"
+			    "00***111"
+			    "00***111";
+	masks[10] = "00000000"
+				"00000000"
+			    "********"
+			    "********"
+			    "********"
+			    "11111111"
+			    "11111111"
+			    "11111111";
+	masks[11] = "111***00"
+				"111***00"
+			    "111***00"
+			    "111***00"
+			    "111***00"
+			    "111***00"
+			    "111***00"
+			    "111***00";
+	
+	// full grass
+	masks[12] = "00000000"
+				"00000000"
+				"00000000"
+				"00000000"
+				"00000000"
+				"00000000"
+				"00000000"
+				"00000000";
+
+	// full water [13 - 15]
+	masks[13] = "11111111"
+				"11111111"
+				"11111111"
+				"11111111"
+				"11111111"
+				"11111111"
+				"11111111"
+				"11111111";
+	if (index < 0)
+		index = 12;
+	if (index >= 13)
+		index = 13;
+	return (masks[index]);
 }

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:03:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 12:11:40 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 22:53:56 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ t_point	add_point(t_point p1, t_point p2)
 	return (p1);
 }
 
-int ft_islower(int c)
+int	ft_islower(int c)
 {
 	return (c >= 'a' && c <= 'z');
 }
 
-int ft_isupper(int c)
+int	ft_isupper(int c)
 {
 	return (c >= 'A' && c <= 'Z');
 }

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:18:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 08:59:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 23:36:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,3 @@ int	check_surrounded(t_grid *o_grid)
 	o_grid->rows = r;
 	return (0);
 }
-

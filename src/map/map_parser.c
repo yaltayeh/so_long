@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:41:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 19:17:40 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 08:18:47 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	map_parser(t_map *map, const char *map_path)
 	nb_collect = check_path(&map->p_grid, &map->o_grid);
 	if (nb_collect < 1)
 		return (-1);
-	if (scale_x2_grid(&map->s_grid, &map->o_grid) != 0)
+	if (scale_x2_grid(&map->x2_grid, &map->o_grid) != 0)
 		return (-1);
 	return (nb_collect);
 }

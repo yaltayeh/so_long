@@ -6,16 +6,11 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 11:33:43 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 23:34:00 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game_schema.h"
-
-int	open_xpm_file(t_image *image, void *mlx_ptr, \
-						char *filename, const char *img_name);
-
-t_object	*pop_player(t_object *components);
 
 static int	load_images(t_game_schema *gs, void *mlx_ptr)
 {
@@ -50,7 +45,7 @@ static int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 	if (load_components((void *)gs, &gs->map.o_grid) != 0)
 		return (-1);
 	((t_object *)&gs->map)->parent_location = &gs->camera.obj.relative_location;
-	load_banner(&gs->banner, gs);
+	load_banner(&gs->banner, gs, B_DARK_NEUTRAL);
 	add_children(gs, &gs->banner);
 	return (0);
 }
@@ -88,7 +83,7 @@ void	update_game_schema(t_game_schema *gs)
 		prev->next = player;
 }
 
-void			uninit_game_schema(void **_gschema)
+void	uninit_game_schema(void **_gschema)
 {
 	destroy_schema(_gschema);
 	free(*_gschema);

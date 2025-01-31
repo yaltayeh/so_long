@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 23:34:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 11:58:26 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/30 23:14:11 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,21 @@
 # include "camera.h"
 # include "components.h"
 
+enum e_banner_theme
+{
+	B_RED,
+	B_DARK_RED,
+	B_NEUTRAL,
+	B_DARK_NEUTRAL,
+	B_WHITE,
+	B_DARK_WHITE,
+};
 
-/*
-Clips
-	0:		banner up
-	1:		icon
-	2-6:	digits
-	7:		banner down
-	8: 		icon
-	9-13:	digits
-*/
 typedef struct s_banner
 {
 	t_object	obj;
 	t_image		*image;
+	t_point		offset;
 	int			*logs_collected;
 	int			*movement;
 }	t_banner;
@@ -53,6 +54,9 @@ typedef struct s_game_schema
 }	t_game_schema;
 
 t_game_schema	*init_game_schema(void);
-void			load_banner(t_banner *banner, t_game_schema *gs);
+void			load_banner(t_banner *banner, t_game_schema *gs, int theme);
+int				open_xpm_file(t_image *image, void *mlx_ptr, \
+						char *filename, const char *img_name);
+t_object		*pop_player(t_object *components);
 
 #endif

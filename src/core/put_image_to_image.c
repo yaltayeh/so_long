@@ -6,13 +6,13 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 23:22:42 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/12/12 10:53:35 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 09:31:15 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-static int	blend_color(int c1, int c2)
+int	blend_color(int c1, int c2)
 {
 	unsigned char	*_c1;
 	unsigned char	*_c2;

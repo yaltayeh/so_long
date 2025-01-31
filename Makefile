@@ -1,7 +1,7 @@
 NAME = so_long
 
 CC = cc
-CFLAGS += -Wall -Wextra -Werror -g3 -O2
+CFLAGS += -Wall -Wextra -Werror -O2
 LDFLAGS = -L./libft -lft
 INC += -I./include -I./libft/include
 
@@ -35,6 +35,7 @@ FILES =	main							\
 		core/put_image_to_image			\
 		core/schema						\
 		core/sprites					\
+		player/player_hook				\
 		player/player_movement			\
 		player/player					\
 		components/fire					\
@@ -42,14 +43,14 @@ FILES =	main							\
 		components/boat					\
 		components/tree					\
 		map/map_parser					\
-		map/map_validation				\
-		map/map_validation2				\
-		map/map_validation_boat_path	\
+		map/validate/map_validation		\
+		map/validate/map_validation2	\
+		map/validate/map_validation_boat_path	\
 		map/grid_utils					\
 		map/tile_utils					\
 		map/map							\
 		map/print_map_error				\
-		map/get_tile_clip				\
+		map/tile_based					\
 
 OBJECTS = $(FILES:%=$(OBJECT_DIR)/%.o)
 
