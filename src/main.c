@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 19:28:55 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/01 11:15:10 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	end_program(t_game *game, int exit_status)
 		mlx_destroy_image(game->mlx_ptr, game->frame.img_ptr);
 	if (game->gs)
 		destroy_object((void **)&game->gs);
-	if (game->mlx_ptr)
-		mlx_destroy_display(game->mlx_ptr);
+	// if (game->mlx_ptr)
+	// 	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	if (exit_status == 0)
-		printf("Bye\n");
+		printf("Bye :)\n");
 	else
-		printf(":(\n");
+		printf("Error :(\n");
 	exit(exit_status);
 }
 
@@ -65,66 +65,11 @@ void	ride_boat(t_game *game)
 		return ;
 	((t_object *)player)->relative_location = \
 			((t_object *)boat)->relative_location;
-	end_program(game, 0);
-}
-
-int	key_press(int keycode, t_game *game)
-{
-	t_player	*p;
-	int			nb_collect;
-
-	p = game->player;
-	nb_collect = game->gs->map.nb_collect;
-	if (keycode == KEY_UP \
-		|| keycode == KEY_DOWN \
-		|| keycode == KEY_RIGHT \
-		|| keycode == KEY_LEFT)
-		player_walk(p, keycode);
-	if (keycode == KEY_SPACE)
-	{
-		if (p->logs_count >= nb_collect)
-			if (is_surround_boat(game))
-				ride_boat(game);
-		player_slash(p);
-	}
-	return (0);
-}
-
-int	key_release(int keycode, t_game *game)
-{
-	if (keycode == KEY_UP \
-		|| keycode == KEY_DOWN \
-		|| keycode == KEY_RIGHT \
-		|| keycode == KEY_LEFT)
-		game->player->is_walk = 0;
-	if (keycode == KEY_SPACE)
-	{
-		game->player->movement = WALK;
-		game->player->spr.max_index = 9;
-		game->player->spr.index = 0;
-	}
-	if (keycode == KEY_ESC)
-		end_program(game, 0);
-	return (0);
-}
-
-int	rander(t_game *game)
-{
-	t_image	*frame;
-
-	game->time++;
-	if (game->time - game->last_rander < DELAY)
-		return (0);
-	game->last_rander = game->time;
-	frame = &game->frame;
-	ft_bzero(frame->buffer, frame->height * frame->size_line);
-	update_object(game->gs);
-	animate_sprites(game->gs);
-	render_object(game->gs, frame, 0);
-	render_object(game->gs, frame, 1);
-	render_object(game->gs, frame, 2);
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, frame->img_ptr, 0, 0);
-	return (0);
+	player->move_lock = 1;
+	boat->move_lock = 0;
+	((t_object *)player)->parent_location = &boat->spr.obj.absolute_location;
+	((t_object *)player)->relative_location = (t_point){0,0};
+	// end_program(game, 0);
 }
 
 int	main(int argc, char **argv)

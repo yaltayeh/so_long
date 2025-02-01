@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 20:02:59 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 19:46:47 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 22:18:57 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_health_bar *init_health_bar(void *schema, void *owner, \
 	load_sprites(hb);
 	ft_strlcpy((char *)hb, "health_bar", NAME_SIZE);
 	hb->owner = owner;
-	((t_object *)hb)->parent_location = &hb->owner->draw_location;
+	((t_object *)hb)->parent_location = &hb->owner->absolute_location;
 	((t_object *)hb)->update = health_bar_update;
 	((t_sprites *)hb)->image = schema_get_image_by_name(schema, "health_bar");
 	((t_sprites *)hb)->clips = &hb->clip;

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 08:49:59 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 19:40:51 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 22:52:12 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,22 +76,34 @@ int	valid_characters(t_grid *grid, int *nb)
 	return (0);
 }
 
-int	check_path(t_grid *p_grid, t_grid *o_grid)
+int	check_path(t_grid *o_grid)
 {
 	int		r;
 	int		c;
 	int		nb[3];
 	int		nb_collect;
+	t_grid	p_grid;
 
 	ft_bzero(nb, sizeof(nb));
-	if (valid_characters(p_grid, nb) != 0)
+	if (valid_characters(o_grid, nb) != 0)
+		return (-1);
+	if (copy_grid(&p_grid, o_grid) != 0)
 		return (-1);
 	if (nb[0] != 1 || nb[1] != 1 || nb[2] < 1)
-		return (print_error_number1(p_grid, nb));
+	{
+		print_error_number1(&p_grid, nb);
+		free_grid(&p_grid);
+		return (-1);
+	}
 	nb_collect = nb[2];
-	get_player_location(p_grid, &r, &c);
-	test_flood_fill(p_grid, nb, r, c);
+	get_player_location(&p_grid, &r, &c);
+	test_flood_fill(&p_grid, nb, r, c);
 	if (nb[1] != 0 || nb[2] != 0)
-		return (print_error_number2(p_grid, o_grid, nb));
+	{
+		print_error_number2(&p_grid, o_grid, nb);
+		free_grid(&p_grid);
+		return (-1);
+	}
+	free_grid(&p_grid);
 	return (nb_collect);
 }

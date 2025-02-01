@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:13:19 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 11:38:42 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/01 01:26:47 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_player
 	void				*gs;
 	t_object			*touch_component;
 	int					nb_movement;
+	int					move_lock;
 }	t_player;
 
 t_player	*init_player(void *game_schema);

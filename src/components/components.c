@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:26:52 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 07:43:54 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 22:22:42 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	load_component(t_game_schema *gs, int i, char type, t_point loc)
 		return (-1);
 	component->relative_location = (t_point){(loc.x * 2 + 1) * 64, \
 												(loc.y * 2 + 1) * 64};
-	component->parent_location = (void *)&gs->camera.obj.relative_location;
+	component->parent_location = (void *)&gs->camera.obj.absolute_location;
 	add_children(&gs->components, component);
 	return (0);
 }

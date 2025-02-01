@@ -29,7 +29,7 @@ FILES =	main							\
 		camera							\
 		game_schema						\
 		game_schema_utils				\
-		banner							\
+		hooks							\
 		core/object						\
 		core/object_utils				\
 		core/put_image_to_image			\
@@ -38,6 +38,8 @@ FILES =	main							\
 		player/player_hook				\
 		player/player_movement			\
 		player/player					\
+		player/valid_move				\
+		components/banner				\
 		components/fire					\
 		components/components			\
 		components/boat					\
@@ -46,10 +48,10 @@ FILES =	main							\
 		map/validate/map_validation		\
 		map/validate/map_validation2	\
 		map/validate/map_validation_boat_path	\
+		map/validate/print_map_error	\
 		map/grid_utils					\
 		map/tile_utils					\
 		map/map							\
-		map/print_map_error				\
 		map/tile_based					\
 
 OBJECTS = $(FILES:%=$(OBJECT_DIR)/%.o)

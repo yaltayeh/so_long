@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 05:25:17 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 08:18:47 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 22:52:28 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	destroy_map(t_map **map_p)
 	map = *map_p;
 	free_grid(&map->o_grid);
 	free_grid(&map->x2_grid);
-	free_grid(&map->p_grid);
 }
 
 void	animate_map(t_map *map)

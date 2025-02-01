@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:27:06 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/29 08:01:06 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/01 01:34:45 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define COMPONENTS_H
 
 # include "sprites.h"
-# include "schema.h"
 # include "player.h"
+# include "game_schema.h"
 
 typedef struct s_grid			t_grid;
 typedef struct s_game_schema	t_game_schema;
@@ -43,9 +43,12 @@ enum e_boat_directions
 
 typedef struct s_boat
 {
-	t_sprites				spr;
-	t_clip					clip;
-	enum e_boat_directions	direction;
+	t_sprites	spr;
+	t_clip		clip;
+	int			direction;
+	int			move_lock;
+	int			is_move;
+	t_game_schema		*gs;
 }	t_boat;
 
 t_tree		*init_tree(t_game_schema *gs, int i);

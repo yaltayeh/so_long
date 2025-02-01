@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 11:42:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 00:17:08 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/01 01:27:08 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_player	*init_player(void *gs)
 		return (NULL);
 	load_sprites((void *)player);
 	ft_strlcpy((char *)player, "player", NAME_SIZE);
-	((t_object *)player)->relative_location = (t_point){0, 0};
 	((t_object *)player)->center_point = (t_point){32, 52};
 	((t_object *)player)->update = update_player;
 	((t_object *)player)->destroy = defult_destroy_object;
@@ -52,5 +51,6 @@ t_player	*init_player(void *gs)
 	player->direction = FRONT;
 	player->speed = PLAYER_SPEED;
 	player->nb_movement = 0;
+	player->move_lock = 0;
 	return (player);
 }

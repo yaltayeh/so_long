@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 18:48:35 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 19:31:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 22:46:14 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	get_boat_location(t_grid *p_grid, int *r, int *c)
 }
 
 int	test_flood_fill_boat(t_grid *p_grid2, int r, int c)
-{	
+{
 	if (r < 0 || r >= p_grid2->rows || c < 0 || c >= p_grid2->cols)
 		return (1);
 	if (p_grid2->blocks[r][c] != '1' && p_grid2->blocks[r][c] != 'E')
@@ -60,8 +60,6 @@ static void	print_error_grid(t_grid *p_grid2, t_grid *o_grid)
 		while (++c < o_grid->cols)
 		{
 			color = "\e[0;39m";
-			// if (ft_islower(p_grid2->blocks[r][c]))
-			// 	color = "\e[0;32m";
 			if (p_grid2->blocks[r][c] == 'W')
 				color = "\e[0;91m";
 			ft_fprintf(2, "%s%c\e[0;39m", color, o_grid->blocks[r][c]);
@@ -79,16 +77,21 @@ int	print_boat_path_error(t_grid *o_grid, t_grid *p_grid2)
 
 int	check_boat_path(t_grid *o_grid)
 {
-	int	r;
-	int	c;
+	int		r;
+	int		c;
 	t_grid	p_grid2;
-	
+
 	if (copy_grid(&p_grid2, o_grid) != 0)
 		return (-1);
 	r = 0;
 	c = 0;
 	get_boat_location(&p_grid2, &r, &c);
 	if (test_flood_fill_boat(&p_grid2, r, c))
+	{
+		free_grid(&p_grid2);
 		return (0);
-	return (print_boat_path_error(o_grid, &p_grid2));
+	}
+	print_boat_path_error(o_grid, &p_grid2);
+	free_grid(&p_grid2);
+	return (-1);
 }

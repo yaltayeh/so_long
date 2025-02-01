@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:57:34 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 08:42:55 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 22:51:20 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct s_map
 	t_clip		small_spot;
 	t_grid		o_grid;
 	t_grid		x2_grid;
-	t_grid		p_grid;
 	int			nb_collect;
 }	t_map;
 
@@ -38,7 +37,7 @@ int		print_error_line(char **lines, int line_no, int char_no, char *msg);
 int		print_error_number1(t_grid *grid, int *nb);
 int		print_error_number2(t_grid *p_grid, t_grid *o_grid, int *nb);
 
-int		check_path(t_grid *p_grid, t_grid *o_grid);
+int		check_path(t_grid *o_grid);
 int		valid_characters(t_grid *grid, int *nb);
 void	test_flood_fill(t_grid *p_grid, int *nb, int r, int c);
 int		check_surrounded(t_grid *o_grid);

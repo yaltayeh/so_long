@@ -6,12 +6,11 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:23:16 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 08:04:43 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/01/31 22:39:30 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
 
 int	copy_grid(t_grid *dst, t_grid *src)
 {
@@ -32,7 +31,6 @@ int	copy_grid(t_grid *dst, t_grid *src)
 	}
 	return (0);
 }
-
 
 int	free_grid(t_grid *grid)
 {

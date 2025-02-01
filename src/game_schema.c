@@ -6,11 +6,12 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 23:34:00 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/01 01:36:30 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "game_schema.h"
+#include "components.h"
 
 static int	load_images(t_game_schema *gs, void *mlx_ptr)
 {
@@ -44,7 +45,7 @@ static int	load_game_schema(t_game_schema *gs, void *mlx_ptr)
 		return (-1);
 	if (load_components((void *)gs, &gs->map.o_grid) != 0)
 		return (-1);
-	((t_object *)&gs->map)->parent_location = &gs->camera.obj.relative_location;
+	((t_object *)&gs->map)->parent_location = &gs->camera.obj.absolute_location;
 	load_banner(&gs->banner, gs, B_DARK_NEUTRAL);
 	add_children(gs, &gs->banner);
 	return (0);
@@ -106,7 +107,7 @@ t_game_schema	*init_game_schema(void)
 	((t_object *)gschema)->destroy = uninit_game_schema;
 	gschema->schema.load_schema = load_game_schema;
 	add_children(gschema, &gschema->camera);
-	add_children(gschema, &gschema->components);
 	add_children(gschema, &gschema->map);
+	add_children(gschema, &gschema->components);
 	return (gschema);
 }
