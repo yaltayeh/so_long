@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 08:01:54 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 08:05:58 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:01:57 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_grid
 int		scale_x2_grid(t_grid *dst, t_grid *src);
 int		copy_grid(t_grid *dst, t_grid *src);
 int		free_grid(t_grid *grid);
-int		scale_grid(t_grid *o_map, int rows, int cols);
+int		map_normalization(t_grid *o_map, int rows, int cols);
 
 
 #endif

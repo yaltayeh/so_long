@@ -6,14 +6,14 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/01 11:15:10 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:15:22 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include <X11/X.h>
 
-int	end_program(t_game *game, int exit_status)
+void	end_program(t_game *game, int exit_status)
 {
 	if (game->mlx_ptr && game->win_ptr)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
@@ -21,8 +21,8 @@ int	end_program(t_game *game, int exit_status)
 		mlx_destroy_image(game->mlx_ptr, game->frame.img_ptr);
 	if (game->gs)
 		destroy_object((void **)&game->gs);
-	// if (game->mlx_ptr)
-	// 	mlx_destroy_display(game->mlx_ptr);
+	if (game->mlx_ptr)
+		mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	if (exit_status == 0)
 		printf("Bye :)\n");
@@ -68,8 +68,7 @@ void	ride_boat(t_game *game)
 	player->move_lock = 1;
 	boat->move_lock = 0;
 	((t_object *)player)->parent_location = &boat->spr.obj.absolute_location;
-	((t_object *)player)->relative_location = (t_point){0,0};
-	// end_program(game, 0);
+	((t_object *)player)->relative_location = (t_point){0, 0};
 }
 
 int	main(int argc, char **argv)
@@ -105,7 +104,7 @@ int	main(int argc, char **argv)
 	game.player = (void *)get_children_by_name(&game.gs->components, "player");
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, key_release, &game);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, key_press, &game);
-	mlx_hook(game.win_ptr, DestroyNotify, 0, end_program, &game);
+	mlx_hook(game.win_ptr, DestroyNotify, 0, cross_button, &game);
 	game.last_rander = 0;
 	game.time = 0;
 	mlx_loop_hook(game.mlx_ptr, rander, &game);

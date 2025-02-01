@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 07:53:04 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/01 11:22:45 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/01 19:47:15 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,36 @@
 
 int	blend_color(int c1, int c2);
 
-
 int	render_tile(t_tile *tile, t_image *frame, int layer)
 {
-	render_sprites(tile, frame, layer);
 	t_point	cur;
 	t_point	draw_loc;
 	int		index;
+	int		*c;
 
+	render_sprites(tile, frame, layer);
 	if (layer != 0)
 		return (0);
-	cur.y = 0;
-	while (cur.y < 64)
+	cur.y = -1;
+	while (++cur.y < 64)
 	{
-		cur.x = 0;
-		while (cur.x < 64)
+		cur.x = -1;
+		while (++cur.x < 64)
 		{
 			draw_loc = tile->spr.obj.draw_location;
 			draw_loc = add_point(draw_loc, cur);
 			if (draw_loc.x < 0 || draw_loc.x >= frame->width
 				|| draw_loc.y < 0 || draw_loc.y >= frame->height)
-			{
-				cur.x++;
-				continue;
-			}
-			index = (cur.y / (64/MASK_SIZE)) * MASK_SIZE + (cur.x / (64/MASK_SIZE));
-			int *c = &frame->buffer[draw_loc.y * frame->width + draw_loc.x];
-			if (tile->mask[index] == '0')
-				*c |= 0xf000ff00;
-			else if (tile->mask[index] == '1')
+				continue ;
+			index = (cur.y / (64 / MASK_SIZE)) * MASK_SIZE \
+					+ (cur.x / (64 / MASK_SIZE));
+			c = &frame->buffer[draw_loc.y * frame->width + draw_loc.x];
+			if (tile->mask[index] == '*')
 				*c |= 0xf0ff0000;
-			else if (tile->mask[index] == '*')
-				*c |= 0xf00000ff;
-			cur.x++;
 		}
-		cur.y++;
 	}
 	return (0);
 }
-
 
 t_tile	*init_tile(t_map *map, void *schema, t_cell cell)
 {
@@ -67,7 +58,7 @@ t_tile	*init_tile(t_map *map, void *schema, t_cell cell)
 				&((t_object *)map)->absolute_location;
 	((t_object *)tile)->destroy = defult_destroy_object;
 	((t_object *)tile)->render = render_sprites;
-	((t_object *)tile)->render = render_tile;
+	// ((t_object *)tile)->render = render_tile;
 	((t_sprites *)tile)->image = schema_get_image_by_name(schema, "tile");
 	tile->index = get_tile_index(&map->x2_grid, cell);
 	tile->mask = get_tile_mask(tile->index);
@@ -97,6 +88,8 @@ int	init_tiles(t_map *map, void *schema)
 				return (-1);
 			((t_object *)tile)->relative_location.x = cell.c * 64;
 			((t_object *)tile)->relative_location.y = cell.r * 64;
+			// ((t_object *)tile)->relative_location.x += (cell.c + 1) % 2;
+			// ((t_object *)tile)->relative_location.y += (cell.r + 1) % 2;
 			add_children(map, tile);
 			cell.c++;
 		}

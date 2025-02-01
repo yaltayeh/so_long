@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 13:49:11 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 08:18:47 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:15:51 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,20 @@
 
 void	update_camera(t_camera	*camera)
 {
-	t_object		*player;
+	t_object		*victom;
 	t_game_schema	*gs;
 	t_point			map_size;
 	t_point			*location;
 
 	gs = (t_game_schema *)camera->schema;
-	player = get_children_by_name(&gs->components, "player");
+	victom = get_children_by_name(&gs->components, "player");
+	if (((t_player *)victom)->move_lock)
+		victom = get_children_by_name(&gs->components, "boat");
 	location = &camera->obj.relative_location;
-	if (player)
+	if (victom)
 	{
-		location->x = -player->relative_location.x + WIN_WIDTH / 2;
-		location->y = -player->relative_location.y + WIN_HEIGHT / 2;
+		location->x = -victom->relative_location.x + WIN_WIDTH / 2;
+		location->y = -victom->relative_location.y + WIN_HEIGHT / 2;
 		if (location->x > 0)
 			location->x = 0;
 		if (location->y > 0)

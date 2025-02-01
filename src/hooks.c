@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 22:58:58 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 22:59:13 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:15:30 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,11 @@ int	rander(t_game *game)
 	render_object(game->gs, frame, 1);
 	render_object(game->gs, frame, 2);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, frame->img_ptr, 0, 0);
+	return (0);
+}
+
+int	cross_button(t_game *game)
+{
+	end_program(game, 0);
 	return (0);
 }

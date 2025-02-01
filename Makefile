@@ -52,6 +52,7 @@ FILES =	main							\
 		map/grid_utils					\
 		map/tile_utils					\
 		map/map							\
+		map/map_normalization			\
 		map/tile_based					\
 
 OBJECTS = $(FILES:%=$(OBJECT_DIR)/%.o)

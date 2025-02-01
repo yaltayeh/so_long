@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:23:16 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 22:39:30 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/01 17:00:45 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,42 +79,6 @@ int	scale_x2_grid(t_grid *dst, t_grid *src)
 				dst->blocks[r][c] = '0';
 		}
 	}
-	return (0);
-}
-
-int	scale_grid(t_grid *o_map, int rows, int cols)
-{
-	t_grid	new_map;
-
-	if (o_map->cols >= cols && o_map->rows >= rows)
-		return (0);
-	new_map.cols = o_map->cols;
-	if (o_map->cols < cols)
-		new_map.cols = o_map->cols + ((cols - o_map->cols + 1) / 2) * 2;
-	new_map.rows = o_map->rows;
-	if (o_map->rows < rows)
-		new_map.rows = o_map->rows + ((rows - o_map->rows + 1) / 2) * 2;
-	new_map.blocks = ft_calloc(rows + 1, sizeof(char *));
-	if (!new_map.blocks)
-		return (-1);
-	rows = 0;
-	while (rows < new_map.rows)
-	{
-		new_map.blocks[rows] = ft_calloc(new_map.cols + 1, sizeof(char));
-		if (!new_map.blocks[rows])
-			return (free_grid(&new_map));
-		ft_memset(new_map.blocks[rows], '1', new_map.cols);
-		if ((new_map.rows - o_map->rows) / 2 <= rows \
-			&& rows < (o_map->rows + (new_map.rows - o_map->rows) / 2))
-		{
-			ft_memcpy(new_map.blocks[rows] + (new_map.cols - o_map->cols) / 2, \
-				o_map->blocks[rows - (new_map.rows - o_map->rows) / 2], \
-				o_map->cols);
-		}
-		rows++;
-	}
-	free_grid(o_map);
-	ft_memcpy(o_map, &new_map, sizeof(t_grid));
 	return (0);
 }
 
