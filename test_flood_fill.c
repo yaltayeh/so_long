@@ -2,6 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define NB_COLS 10
+#define NB_ROWS 9
+
 typedef struct s_cell
 {
 	int r;
@@ -57,12 +60,12 @@ int	test_flood_fill(char *map, int r, int c)
 	add_new_cell(&lst, &tail, r, c);
 	while (pop_cell(&lst, &tail, &r, &c))
 	{
-		if (r < 0 || r >= 9 || c < 0 || c >= 9)
+		if (r < 0 || r >= NB_ROWS || c < 0 || c >= NB_COLS)
 			continue;
-		if (map[r * 9 + c] != '0')
+		if (map[r * NB_COLS + c] != '0')
 			continue;
 		i++;
-		map[r * 9 + c] = '1' + i / 10;
+		map[r * NB_COLS + c] = '2' + i / 10;
 		if (!add_new_cell(&lst, &tail, r - 1, c)
 			|| !add_new_cell(&lst, &tail, r + 1, c)
 			|| !add_new_cell(&lst, &tail, r, c - 1)
@@ -81,23 +84,22 @@ int	test_flood_fill(char *map, int r, int c)
 
 int main()
 {
-	char	*map = "000000000"
-				   "000000000"
-				   "000000000"
-				   "000000000"
-				   "000000000"
-				   "000000000"
-				   "000000000"
-				   "000000000"
-				   "000000000";
+	char	*map = "0000000001"
+				   "0111111101"
+				   "0100000101"
+				   "0101110101"
+				   "0101010101"
+				   "0101000101"
+				   "0101111101"
+				   "0100000001"
+				   "0111111111";
 	
 	map = strdup(map);
-	for (int r = 0; r < 9; r++)
-		printf("%.9s\n", map + r * 9);
 	test_flood_fill(map, 4, 4);
-	printf("\n\n");
-	for (int r = 0; r < 9; r++)
-		printf("%.9s\n", map + r * 9);
-
-	
+	for (int r = 0; r < NB_ROWS; r++)
+	{
+		for (int c = 0; c < NB_COLS; c++)
+			printf("%c", map[r * NB_COLS + c]);
+		printf("\n");
+	}
 }

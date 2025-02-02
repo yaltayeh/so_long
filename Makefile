@@ -39,6 +39,7 @@ FILES =	main							\
 		player/player_movement			\
 		player/player					\
 		player/valid_move				\
+		player/update_player			\
 		components/banner				\
 		components/fire					\
 		components/components			\

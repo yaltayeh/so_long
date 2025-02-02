@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 23:48:50 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/01 01:36:30 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 00:50:57 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,7 @@ void	update_game_schema(t_game_schema *gs)
 	while (current)
 	{
 		if (current->relative_location.y < player->relative_location.y)
-		{
-			if (!prev)
-				add_children(components, player);
-			else
-			{
-				player->next = current;
-				prev->next = player;
-			}
-			return ;
-		}
+			return (insert_player(current, prev, player, components));
 		prev = current;
 		current = current->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 08:47:44 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/27 08:59:28 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 00:51:06 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,16 @@ t_object	*pop_player(t_object *components)
 		current = current->next;
 	}
 	return (NULL);
+}
+
+void	insert_player(t_object *current, t_object *prev, \
+						t_object *player, t_object *components)
+{
+	if (!prev)
+		add_children(components, player);
+	else
+	{
+		player->next = current;
+		prev->next = player;
+	}
 }

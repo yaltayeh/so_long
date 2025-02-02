@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/01 17:15:22 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 00:57:29 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	end_program(t_game *game, int exit_status)
 		mlx_destroy_image(game->mlx_ptr, game->frame.img_ptr);
 	if (game->gs)
 		destroy_object((void **)&game->gs);
-	if (game->mlx_ptr)
-		mlx_destroy_display(game->mlx_ptr);
+	// if (game->mlx_ptr)
+	// 	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	if (exit_status == 0)
 		printf("Bye :)\n");
@@ -71,6 +71,26 @@ void	ride_boat(t_game *game)
 	((t_object *)player)->relative_location = (t_point){0, 0};
 }
 
+int	game_init(t_game *game, char *map_path)
+{
+	ft_bzero(game, sizeof(*game));
+	game->gs = init_game_schema();
+	if (game->gs == NULL)
+		return (-1);
+	if (open_map_and_check(&game->gs->map, map_path) != 0)
+		return (-1);
+	game->width = WIN_WIDTH;
+	game->height = WIN_HEIGHT;
+	game->mlx_ptr = mlx_init();
+	if (game->mlx_ptr == NULL)
+		return (-1);
+	game->win_ptr = mlx_new_window(game->mlx_ptr, \
+						game->width, game->height, "Lumberjack");
+	if (game->win_ptr == NULL)
+		return (-1);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	game;
@@ -80,20 +100,7 @@ int	main(int argc, char **argv)
 		ft_fprintf(2, "Usege: %s map.ber\n", argv[0]);
 		return (1);
 	}
-	ft_bzero(&game, sizeof(game));
-	game.gs = init_game_schema();
-	if (game.gs == NULL)
-		end_program(&game, 1);
-	if (open_map_and_check(&game.gs->map, argv[1]) != 0)
-		end_program(&game, 1);
-	game.width = WIN_WIDTH;
-	game.height = WIN_HEIGHT;
-	game.mlx_ptr = mlx_init();
-	if (game.mlx_ptr == NULL)
-		end_program(&game, 1);
-	game.win_ptr = mlx_new_window(game.mlx_ptr, \
-						game.width, game.height, "Lumberjack");
-	if (game.win_ptr == NULL)
+	if (game_init(&game, argv[1]) != 0)
 		end_program(&game, 1);
 	game.frame.img_ptr = mlx_new_image(game.mlx_ptr, game.width, game.height);
 	game.frame.width = game.width;

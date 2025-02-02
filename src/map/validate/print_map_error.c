@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 11:43:13 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 19:30:32 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 01:20:10 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ int	print_error_number2(t_grid *p_grid, t_grid *o_grid, int *nb)
 		ft_fprintf(2, "Player cannot access to '%d' collectibles\n", nb[2]);
 	ft_fprintf(2, "\n");
 	ft_fprintf(2, "\e[0;39m");
+	free_grid(p_grid);
 	return (-1);
 }

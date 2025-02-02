@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 22:55:53 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/01 01:39:25 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 01:48:52 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,11 @@ int	is_detection(t_game_schema *gs, t_player *player, t_point new_location)
 	if (player->touch_component)
 	{
 		if (is_object_type(player->touch_component, "tree"))
-		{
 			if (collagen_detection(circle_center, new_location, 30, 15))
 				return (1);
-		}
-		else if (is_object_type(player->touch_component, "fire"))
-		{
+		if (is_object_type(player->touch_component, "fire"))
 			if (collagen_detection(circle_center, new_location, 35, 25))
 				return (1);
-		}
 	}
 	player->touch_component = NULL;
 	return (0);
