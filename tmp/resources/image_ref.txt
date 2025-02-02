@@ -1,5 +1,0 @@
-https://di3goalmeida.itch.io/ground-tile/devlog/627832/adding-a-new-animated-water-tileset-64x64
-https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_fur_gold&head=Human_male_fur_gold&hairextl=none&ponytail=none&hair=none&hat=Armet_gold&clothes=none&chainmail=none&apron=none&belt=none&backpack_straps=none&armour=Legion_gold&backpack=none&cargo=none&sash=none&legs=Armour_brass&shoes=none&weapon=Arming_Sword_gold&shield=Shield_round_brown&ammo=none&shadow=Shadow_shadow
-
-
-lumberjack: https://sanderfrenken.github.io/Universal-LPC-Spritesheet-Character-Generator/#?body=Body_color_light&head=Human_male_light&shadow=Shadow_shadow&weapon=Smash_axe&hat=Hood_hood_brown&accessory=none&hat_trim=none&neck=none&shoulders=Mantal_brown&arms=none&bauldron=Bauldron_brown&bracers=Bracers_ceramic&wrists=Cuffs_bluegray&gloves=Gloves_walnut&clothes=none&overalls=none&apron=Apron_leather&bandages=none&jacket=none&cape=Solid_leather&backpack_straps=Straps_black&backpack=Basket_round&cargo=Wood_9_logs&quiver=none&legs=Pants_brown&shoes=Boots_brown&shoes_plate=none
