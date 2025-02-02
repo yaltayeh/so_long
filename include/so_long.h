@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:36:48 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/01 14:44:27 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 11:52:49 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,16 @@ typedef struct s_game
 	t_clock			time;
 }	t_game;
 
-int	ft_islower(int c);
-int	ft_isupper(int c);
+int		ft_islower(int c);
+int		ft_isupper(int c);
 
 int		is_surround_boat(t_game *game);
 void	ride_boat(t_game *game);
-void	end_program(t_game *game, int exit_status);
+void	end_program(void *_game, int exit_status);
 
-int	key_press(int keycode, t_game *game);
-int	key_release(int keycode, t_game *game);
-int	rander(t_game *game);
-int	cross_button(t_game *game);
-
+int		key_press(int keycode, t_game *game);
+int		key_release(int keycode, t_game *game);
+int		rander(t_game *game);
+int		cross_button(t_game *game);
 
 #endif

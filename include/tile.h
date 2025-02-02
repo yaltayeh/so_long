@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 08:24:29 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/31 15:22:40 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 11:46:55 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define MASK_SIZE 8
 
-typedef struct s_map t_map;
+typedef struct s_map	t_map;
 
 typedef struct s_tile
 {

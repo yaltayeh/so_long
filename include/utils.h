@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 07:00:09 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/01 21:07:17 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 11:47:12 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,7 @@ void	put_image_to_image(t_image *dst, t_image *src, \
 						t_point dst_loc, t_clip clip);
 
 t_point	add_point(t_point p1, t_point p2);
+
+int		is_new_movement(t_point old_location, t_point new_location);
 
 #endif

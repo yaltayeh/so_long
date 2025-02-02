@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 10:03:56 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 22:53:56 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 11:38:23 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,15 @@ int	ft_islower(int c)
 int	ft_isupper(int c)
 {
 	return (c >= 'A' && c <= 'Z');
+}
+
+int	is_new_movement(t_point old_location, t_point new_location)
+{
+	old_location.x /= 128;
+	old_location.y /= 128;
+	new_location.x /= 128;
+	new_location.y /= 128;
+	if (ft_memcmp(&old_location, &new_location, sizeof(t_point)) == 0)
+		return (0);
+	return (1);
 }

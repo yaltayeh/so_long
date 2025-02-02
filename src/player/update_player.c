@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 01:25:31 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/02 01:52:31 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 10:47:03 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,6 @@
 
 t_point		valid_move(t_game_schema *gs, t_player *player, \
 						t_point new_location);
-
-static int	is_new_movement(t_point old_location, t_point new_location)
-{
-	old_location.x /= 128;
-	old_location.y /= 128;
-	new_location.x /= 128;
-	new_location.y /= 128;
-	if (ft_memcmp(&old_location, &new_location, sizeof(t_point)) == 0)
-		return (0);
-	return (1);
-}
 
 static void	set_new_location(t_game_schema *gs, t_player *player)
 {

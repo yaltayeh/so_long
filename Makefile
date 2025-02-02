@@ -80,8 +80,8 @@ test:
 
 clean:
 	rm -rf $(OBJECTS)
-#	@$(MAKE) -C libft clean
-#	@$(MAKE) -C $(MLX_DIR) clean
+	@$(MAKE) -C libft clean
+	@$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
 	rm -rf $(NAME)

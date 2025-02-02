@@ -6,23 +6,26 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/02 00:57:29 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 11:40:02 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include <X11/X.h>
 
-void	end_program(t_game *game, int exit_status)
+void	end_program(void *_game, int exit_status)
 {
+	t_game	*game;
+
+	game = (t_game *)_game;
 	if (game->mlx_ptr && game->win_ptr)
 		mlx_destroy_window(game->mlx_ptr, game->win_ptr);
 	if (game->mlx_ptr && game->frame.img_ptr)
 		mlx_destroy_image(game->mlx_ptr, game->frame.img_ptr);
 	if (game->gs)
 		destroy_object((void **)&game->gs);
-	// if (game->mlx_ptr)
-	// 	mlx_destroy_display(game->mlx_ptr);
+	if (game->mlx_ptr)
+		mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	if (exit_status == 0)
 		printf("Bye :)\n");
@@ -88,12 +91,19 @@ int	game_init(t_game *game, char *map_path)
 						game->width, game->height, "Lumberjack");
 	if (game->win_ptr == NULL)
 		return (-1);
+	game->frame.img_ptr = mlx_new_image(game->mlx_ptr, \
+										game->width, game->height);
+	if (game->frame.img_ptr == NULL)
+		return (-1);
+	game->frame.width = game->width;
+	game->frame.height = game->height;
 	return (0);
 }
 
 int	main(int argc, char **argv)
 {
 	t_game	game;
+	t_boat	*boat;
 
 	if (argc != 2)
 	{
@@ -102,13 +112,12 @@ int	main(int argc, char **argv)
 	}
 	if (game_init(&game, argv[1]) != 0)
 		end_program(&game, 1);
-	game.frame.img_ptr = mlx_new_image(game.mlx_ptr, game.width, game.height);
-	game.frame.width = game.width;
-	game.frame.height = game.height;
 	load_image_data(&game.frame);
 	if (load_schema(game.gs, game.mlx_ptr) != 0)
 		end_program(&game, 1);
 	game.player = (void *)get_children_by_name(&game.gs->components, "player");
+	boat = (t_boat *)get_children_by_name(&game.gs->components, "boat");
+	boat->game = &game;
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, key_release, &game);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, key_press, &game);
 	mlx_hook(game.win_ptr, DestroyNotify, 0, cross_button, &game);

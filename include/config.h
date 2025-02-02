@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 21:11:43 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/01/30 11:30:01 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 11:46:28 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@
 # ifndef BANNER_PATH
 #  define BANNER_PATH "textures/banner.xpm"
 # endif
-
-
-
 
 # define WASD
 
