@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 21:23:16 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/01 17:00:45 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:21:13 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	copy_grid(t_grid *dst, t_grid *src)
 
 	dst->rows = src->rows;
 	dst->cols = src->cols;
-	dst->blocks = ft_calloc(dst->rows, sizeof(char *));
+	dst->blocks = ft_calloc(dst->rows + 1, sizeof(char *));
 	if (!dst->blocks)
 		return (-1);
 	r = 0;
@@ -39,7 +39,7 @@ int	free_grid(t_grid *grid)
 	i = 0;
 	if (grid->blocks)
 	{
-		while (i < grid->rows && grid->blocks[i])
+		while (grid->blocks[i])
 		{
 			free(grid->blocks[i]);
 			grid->blocks[i] = NULL;
@@ -60,7 +60,7 @@ int	scale_x2_grid(t_grid *dst, t_grid *src)
 
 	dst->rows = src->rows * 2;
 	dst->cols = src->cols * 2;
-	dst->blocks = ft_calloc(dst->rows, sizeof(char *));
+	dst->blocks = ft_calloc(dst->rows + 1, sizeof(char *));
 	if (!dst->blocks)
 		return (-1);
 	r = -1;

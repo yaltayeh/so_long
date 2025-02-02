@@ -1,7 +1,7 @@
 NAME = so_long
 
 CC = cc
-CFLAGS += -Wall -Wextra -Werror -O2
+CFLAGS += -Wall -Wextra -Werror -O2 -g
 LDFLAGS = -L./libft -lft -lm
 INC += -I./include -I./libft/include -I$(MLX_DIR)
 
