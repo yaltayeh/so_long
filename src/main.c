@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 23:15:36 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/02 11:40:02 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:34:28 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	end_program(void *_game, int exit_status)
 		mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	if (exit_status == 0)
-		printf("Bye :)\n");
+		ft_printf("Bye :)\n");
 	else
-		printf("Error :(\n");
+		ft_printf("Error :(\n");
 	exit(exit_status);
 }
 

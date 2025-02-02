@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 22:41:25 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/01 17:01:57 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:23:16 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ int	check_map(t_map	*map)
 	int	nb_collect;
 
 	if (check_rectangular(&map->o_grid) != 0)
+	{
+		ft_printf("error rectangular \n");
 		return (-1);
+	}
 	if (check_surrounded(&map->o_grid) != 0)
 		return (-1);
 	if (check_boat_path(&map->o_grid) != 0)

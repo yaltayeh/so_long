@@ -55,28 +55,20 @@ static void	print_error_grid(t_grid *p_grid, t_grid *o_grid)
 	}
 }
 
-int	print_error_line(char **lines, int line_no, int char_no, char *msg)
+int	print_error_line(char **lines, int line_no, char *msg)
 {
 	int		i;
-	int		n;
-	size_t	msg_len;
 
 	i = line_no - 2;
 	if (i < 0)
 		i = 0;
 	while (lines[i] && i < line_no)
 	{
-		fprintf(stderr, "%i: %n%s\n", i + 1, &n, lines[i]);
+		ft_fprintf(2, "%i: %s\n", i + 1, lines[i]);
 		i++;
 	}
-	fprintf(stderr, "\e[0;91m%i: %n%s\n", i + 1, &n, lines[i]);
-	n -= 7;
-	fprintf(stderr, "%*s^\n", n + char_no, "");
-	msg_len = ft_strlen(msg);
-	n = n + char_no - msg_len / 2;
-	if (n < 0)
-		n = 0;
-	fprintf(stderr, "%*s%s\n\n\e[0;39m", n, "", msg);
+	ft_fprintf(2, "\e[0;91m%i: %s\n", i + 1, lines[i]);
+	ft_fprintf(2, "%s\n\n\e[0;39m", msg);
 	return (-1);
 }
 

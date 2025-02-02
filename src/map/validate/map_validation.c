@@ -38,8 +38,7 @@ static int	check_surrounded_helper(t_grid *o_grid, int r)
 	while (o_grid->blocks[r][i] == '1' || o_grid->blocks[r][i] == 'E')
 		i++;
 	if (o_grid->blocks[r][i] != '\0')
-		return (print_error_line(o_grid->blocks, r, i, \
-									"map not closed"));
+		return (print_error_line(o_grid->blocks, r, "map not closed"));
 	return (0);
 }
 
@@ -57,10 +56,8 @@ int	check_surrounded(t_grid *o_grid)
 				&& o_grid->blocks[r][o_grid->cols - 1] != 'E'))
 		{
 			if (o_grid->blocks[r][0] != '1')
-				return (print_error_line(o_grid->blocks, r, 0, \
-								"map not closed"));
-			return (print_error_line(o_grid->blocks, r, o_grid->cols - 1, \
-								"map not closed"));
+				return (print_error_line(o_grid->blocks, r, "map not closed"));
+			return (print_error_line(o_grid->blocks, r, "map not closed"));
 		}
 	}
 	if (r > 0 && check_surrounded_helper(o_grid, r - 1) != 0)

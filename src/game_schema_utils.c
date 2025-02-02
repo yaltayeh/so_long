@@ -19,7 +19,10 @@ int	open_xpm_file(t_image *image, void *mlx_ptr, \
 	image->img_ptr = mlx_xpm_file_to_image(mlx_ptr, filename, \
 									&image->width, &image->height);
 	if (!image->img_ptr)
+	{
+		ft_fprintf(2, "Can't open '%s' image\n", filename);
 		return (-1);
+	}
 	if (load_image_data(image) != 0)
 		return (-1);
 	return (0);

@@ -62,7 +62,7 @@ int	valid_characters(t_grid *grid, int *nb)
 		{
 			if (!ft_strchr("01PECF", grid->blocks[r][c]))
 			{
-				print_error_line(grid->blocks, r, c, "character not valid");
+				print_error_line(grid->blocks, r, "character not valid");
 				return (-1);
 			}
 			if (grid->blocks[r][c] == 'P')

@@ -34,16 +34,6 @@ t_point	add_point(t_point p1, t_point p2)
 	return (p1);
 }
 
-int	ft_islower(int c)
-{
-	return (c >= 'a' && c <= 'z');
-}
-
-int	ft_isupper(int c)
-{
-	return (c >= 'A' && c <= 'Z');
-}
-
 int	is_new_movement(t_point old_location, t_point new_location)
 {
 	old_location.x /= 128;
