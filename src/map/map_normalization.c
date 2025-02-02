@@ -6,7 +6,7 @@
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 17:00:51 by yaltayeh          #+#    #+#             */
-/*   Updated: 2025/02/01 17:14:54 by yaltayeh         ###   ########.fr       */
+/*   Updated: 2025/02/02 18:30:20 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	map_normalization(t_grid *o_grid, int rows, int cols)
 	new_map.rows = o_grid->rows;
 	if (o_grid->rows < rows)
 		new_map.rows = o_grid->rows + ((rows - o_grid->rows + 1) / 2) * 2;
-	new_map.blocks = ft_calloc(rows + 1, sizeof(char *));
+	new_map.blocks = ft_calloc(new_map.rows + 1, sizeof(char *));
 	if (!new_map.blocks)
 		return (-1);
 	if (inject_new_value(o_grid, &new_map) != 0)

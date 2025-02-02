@@ -59,6 +59,8 @@ LIBFT_SOURCES =	\
 		ft_string/ft_strtok.c			\
 		ft_string/ft_atoi.c				\
 		ft_string/ft_atou.c				\
+		ft_string/ft_islower.c			\
+		ft_string/ft_isupper.c			\
 
 LIBFT_SOURCES +=	\
 		ft_memory/ft_bzero.c			\
@@ -95,30 +97,6 @@ LIBFT_SOURCES += \
 LIBFT_SOURCES += \
 		get_next_line/get_next_line.c		\
 		get_next_line/get_next_line_utils.c	\
-
-LIBFT_SOURCES += \
-		ft_stack/ft_init_node.c				\
-		ft_stack/ft_init_stack.c			\
-		ft_stack/ft_stack_size.c			\
-											\
-		ft_stack/ft_stack_head_pop.c		\
-		ft_stack/ft_stack_head_push.c		\
-		ft_stack/ft_stack_head_iter.c		\
-											\
-		ft_stack/ft_stack_tail_push.c		\
-		ft_stack/ft_stack_tail_pop.c		\
-		ft_stack/ft_stack_tail_iter.c		\
-											\
-		ft_stack/ft_cmp_node.c				\
-		ft_stack/ft_stack_fn_caller.c		\
-		ft_stack/ft_stack_copy_reverse.c	\
-		ft_stack/ft_stack_copy.c			\
-		ft_stack/ft_stack_mapi.c			\
-											\
-		ft_stack/ft_stack_search.c			\
-											\
-		ft_stack/ft_stack_delnode.c			\
-		ft_stack/ft_stack_clear.c			\
 
 #
 

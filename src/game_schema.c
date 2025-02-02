@@ -28,6 +28,8 @@ static int	load_images(t_game_schema *gs, void *mlx_ptr)
 	nb_images = sizeof(images) / sizeof(*images);
 	gs->schema.resources.nb_images = nb_images;
 	gs->schema.resources.images = ft_calloc(nb_images, sizeof(t_image));
+	if (!gs->schema.resources.images)
+		return (-1);
 	i = -1;
 	while (++i < nb_images)
 		if (open_xpm_file(&gs->schema.resources.images[i], \

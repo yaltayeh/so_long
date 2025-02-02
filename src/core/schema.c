@@ -54,8 +54,9 @@ void	destroy_schema(void **_schema)
 	{
 		i = -1;
 		while (++i < schema->resources.nb_images)
-			mlx_destroy_image(schema->mlx_ptr, \
-					schema->resources.images[i].img_ptr);
+			if (schema->resources.images[i].img_ptr)
+				mlx_destroy_image(schema->mlx_ptr, \
+						schema->resources.images[i].img_ptr);
 		free(schema->resources.images);
 	}
 	schema->resources.images = NULL;
