@@ -32,9 +32,6 @@ typedef struct s_game
 	t_clock			time;
 }	t_game;
 
-int		ft_islower(int c);
-int		ft_isupper(int c);
-
 int		is_surround_boat(t_game *game);
 void	ride_boat(t_game *game);
 void	end_program(void *_game, int exit_status);

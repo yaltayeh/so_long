@@ -28,9 +28,9 @@ void	end_program(void *_game, int exit_status)
 		mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
 	if (exit_status == 0)
-		printf("Bye :)\n");
+		ft_printf("Bye :)\n");
 	else
-		printf("Error :(\n");
+		ft_printf("Error :(\n");
 	exit(exit_status);
 }
 

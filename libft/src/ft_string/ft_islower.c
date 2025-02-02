@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stack_clear.c                                   :+:      :+:    :+:   */
+/*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yaltayeh <yaltayeh@student.42amman.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 00:41:38 by yaltayeh          #+#    #+#             */
-/*   Updated: 2024/11/02 11:11:27 by yaltayeh         ###   ########.fr       */
+/*   Created: 2024/08/26 20:30:27 by yaltayeh          #+#    #+#             */
+/*   Updated: 2024/11/02 00:43:46 by yaltayeh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_stack.h"
-
-void	ft_stack_clear(t_stack **stack)
+int	ft_islower(int c)
 {
-	if (!stack || !*stack)
-		return ;
-	while ((*stack)->head)
-	{
-		(*stack)->head->parent = *stack;
-		ft_stack_delnode((*stack)->head);
-	}
-	free(*stack);
-	*stack = NULL;
+	return (c >= 'a' && c <= 'z');
 }

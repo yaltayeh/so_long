@@ -25,6 +25,8 @@ int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_isspace(int c);
+int		ft_isupper(int c);
+int		ft_islower(int c);
 
 size_t	ft_strlen(const char *s);
 

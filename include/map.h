@@ -33,7 +33,7 @@ typedef struct s_map
 void	load_map(t_map *map);
 int		open_map_and_check(t_map *map, const char *map_path);
 
-int		print_error_line(char **lines, int line_no, int char_no, char *msg);
+int		print_error_line(char **lines, int line_no, char *msg);
 int		print_error_number1(t_grid *grid, int *nb);
 int		print_error_number2(t_grid *p_grid, t_grid *o_grid, int *nb);
 

@@ -61,7 +61,7 @@ $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.c
 
 clean:
 	rm -rf $(OBJECTS)
-	@$(MAKE) -C libft clean
+	@$(MAKE) -C libft fclean
 	@$(MAKE) -C $(MLX_DIR) clean
 
 fclean: clean
