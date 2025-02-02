@@ -1,8 +1,0 @@
-*.o
-*.a
-.vscode
-build
-*a.out*
-so_long
-test/*
-!test/*.c
